@@ -1,0 +1,2 @@
+TARGET not defined, using target 'native'
+  CC        philosphers.c
