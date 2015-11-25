@@ -1,0 +1,141 @@
+.TH "apps/Emma-Rest6/Emma-CFS-API.h" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+apps/Emma-Rest6/Emma-CFS-API.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBFile\fP"
+.br
+.ti -1c
+.RI "struct \fBLoggable\fP"
+.br
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCFS_SYSTEM_OFFSET\fP   200"
+.br
+.ti -1c
+.RI "#define \fBLOGGABLE\fP()"
+.br
+.ti -1c
+.RI "#define \fBCFS_REPORT_COUNT\fP   4"
+.br
+.RI "\fINumber of report slot. \fP"
+.ti -1c
+.RI "#define \fBCFS_REPORT_OFFSET\fP   ( CFS_SYSTEM_OFFSET + sizeof (struct \fBFile\fP) )"
+.br
+.ti -1c
+.RI "#define \fBCFS_REPORT_OFFSET_END\fP   ( CFS_REPORT_OFFSET + ( CFS_REPORT_COUNT * sizeof(struct \fBReport\fP) ) )"
+.br
+.ti -1c
+.RI "#define \fBREPORT_NEW\fP(data, buf)   file_new 		(data,buf, &conn->root, sizeof(struct \fBReport\fP), CFS_REPORT_OFFSET, CFS_REPORT_OFFSET_END)"
+.br
+.RI "\fISave a new report for notification in the first empty slot in EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBREPORT_UPDATE\fP(data, buf)   file_update (data,buf, &conn->root, sizeof(struct \fBReport\fP), CFS_REPORT_OFFSET, CFS_REPORT_OFFSET_END)"
+.br
+.RI "\fIUpdate a report for notification in EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBREPORT_READ\fP(out, type)   file_read		(out, type, &conn->root, sizeof(struct \fBReport\fP), -1, CFS_REPORT_OFFSET, CFS_REPORT_OFFSET_END)"
+.br
+.RI "\fIRead the next report in the EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBREPORT_OPEN\fP(out, id)   file_read		(out, CFS_BEGIN, &conn->root, sizeof(struct \fBReport\fP), id, CFS_REPORT_OFFSET, CFS_REPORT_OFFSET_END)"
+.br
+.RI "\fIRead a specific report in the EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBREPORT_FORMAT\fP(buf, buff2)   file_delete	(buf,buff2,&conn->root, -1,sizeof(struct \fBReport\fP), CFS_REPORT_OFFSET, CFS_REPORT_OFFSET_END)"
+.br
+.RI "\fIFormat all the report slot in EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBREPORT_DELETE\fP(buf, buff2, id)   file_delete	(buf,buff2, &conn->root, id,sizeof(struct \fBReport\fP), CFS_REPORT_OFFSET, CFS_REPORT_OFFSET_END)"
+.br
+.RI "\fIDelete a specific report. \fP"
+.ti -1c
+.RI "#define \fBCFS_LOG_COUNT\fP   20"
+.br
+.RI "\fINumber of log slot. \fP"
+.ti -1c
+.RI "#define \fBCFS_LOG_OFFSET\fP   CFS_REPORT_OFFSET_END"
+.br
+.ti -1c
+.RI "#define \fBCFS_LOG_OFFSET_END\fP   ( CFS_LOG_OFFSET + ( CFS_LOG_COUNT * sizeof(struct \fBRessource\fP) ) )"
+.br
+.ti -1c
+.RI "#define \fBLOG_NEW\fP(data, buf, cfs)   file_new 		(data,buf, cfs, sizeof(struct \fBRessource\fP), CFS_LOG_OFFSET, CFS_LOG_OFFSET_END)"
+.br
+.RI "\fISave a new log in the first empty slot in EEPROM memory found since cfs. \fP"
+.ti -1c
+.RI "#define \fBLOG_UPDATE\fP(data, buf, cfs)   file_update (data,buf, cfs, sizeof(struct \fBRessource\fP), CFS_LOG_OFFSET, CFS_LOG_OFFSET_END)"
+.br
+.RI "\fIUpdate a log in EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBLOG_READ\fP(out, type, cfs)   file_read		(out, type, cfs, sizeof(struct \fBRessource\fP), -1, CFS_LOG_OFFSET, CFS_LOG_OFFSET_END)"
+.br
+.RI "\fIRead the next log in the EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBLOG_OPEN\fP(out, id, cfs)   file_read		(out, CFS_BEGIN, cfs, sizeof(struct \fBRessource\fP), id, CFS_LOG_OFFSET, CFS_LOG_OFFSET_END)"
+.br
+.RI "\fIRead a specific log in the EEPROM memory. \fP"
+.ti -1c
+.RI "#define \fBLOG_FORMAT\fP(buf, buff2, cfs)   file_delete	(buf,buff2, cfs, -1,sizeof(struct \fBRessource\fP), CFS_LOG_OFFSET, CFS_LOG_OFFSET_END)"
+.br
+.RI "\fIFormat all the log slot. \fP"
+.ti -1c
+.RI "#define \fBLOG_DELETE\fP(buf, buff2, cfs, id)   file_delete	(buf,buff2, cfs, id,sizeof(struct \fBRessource\fP), CFS_LOG_OFFSET, CFS_LOG_OFFSET_END)"
+.br
+.RI "\fIDelete a specific log. \fP"
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBEMPTY\fP, \fBUSED\fP }"
+.br
+.ti -1c
+.RI "enum { \fBCFS_BEGIN\fP, \fBCFS_NEXT\fP, \fBCFS_FIRST_EMPTY\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char \fBfile_new\fP (void *data, char *Buff, struct \fBFile\fP *root, int size, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for saving a new data slot in EEPROM memory. \fP"
+.ti -1c
+.RI "char \fBfile_update\fP (void *data, char *Buff, struct \fBFile\fP *root, int size, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for updating a data slot in EEPROM memory. \fP"
+.ti -1c
+.RI "char \fBfile_delete\fP (void *buf, char *Buff, struct \fBFile\fP *root, int id, int size, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for deleting in EEPROM memory. \fP"
+.ti -1c
+.RI "char \fBfile_read\fP (void *data, char type, struct \fBFile\fP *root, int size, int id, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for reading in EEPROM memory. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file of EMMA-Rest6 CFS 
+.PP
+\fBAuthor:\fP
+.RS 4
+Clement DUHART <duhart.clement@gmail.com> 
+.RE
+.PP
+
+.PP
+Definition in file \fBEmma-CFS-API.h\fP.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

@@ -1,0 +1,10 @@
+Name: twitter
+Contact: Johan Van den Brande <johan@vandenbrande.com>
+URL: http://www.vandenbrande.com/
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: CVS 2009-11-23
+Intended platforms: All (C64)
+Tested platforms: C64
+Description:
+A Twitter client library for Contiki.

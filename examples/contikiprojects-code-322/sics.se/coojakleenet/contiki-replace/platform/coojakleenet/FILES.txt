@@ -1,0 +1,25 @@
+mote_driver.c
+Contiki bootup and schedulers. Replaces init code in contiki-cooja-main.c
+
+network_driver.c, network_driver.h
+Kleenet specific, starts all Contiki instances
+
+concrete_queue.c, concrete_queue.h
+COOJA platform extension to replay concrete values
+
+---
+
+Makefile.coojakleenet
+Platform makefile. Includes platform/cooja/Makefile.cooja
+
+contiki-cooja-main.c
+Moved Contiki bootup to separate function contiki_init(), no functional differences
+
+cooja_mt.c, cooja_mtarch.c
+Stripped away all multithreading functionality. May affect execution!
+
+cooja-radio.c
+Kleenet version of the radio drvier
+
+log.c
+Set IMPLEMENT_PRINTF=0

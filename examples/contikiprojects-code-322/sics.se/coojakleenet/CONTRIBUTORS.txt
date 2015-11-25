@@ -1,0 +1,5 @@
+Kleenet COOJA project
+
+Contributors:
+Raimondas Sasnauskas, raimondas.sasnauskas@cs.rwth-aachen.de
+Fredrik Osterlind, SICS, fros@sics.se

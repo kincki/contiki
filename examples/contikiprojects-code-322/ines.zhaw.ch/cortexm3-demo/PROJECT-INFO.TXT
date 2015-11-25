@@ -1,0 +1,12 @@
+Name: cortexm3-demo
+Contact: Urs Beerli <berl@zhaw.ch>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: 2.4 (15-02-2010)
+Intended platforms: lm3s8962
+Tested platforms: lm3s8962-evk
+Description:
+The CortexM3-Demo shows a running Contiki port on the MCU LM3S8962 of
+TI/LuminaryMicro. The demo contains the Contiki webserver over Ethernet/IPv4.
+To compile the project take a look at: examples/webserver-lm3s8962/README

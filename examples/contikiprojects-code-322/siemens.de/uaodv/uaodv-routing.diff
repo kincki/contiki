@@ -1,0 +1,127 @@
+Index: core/net/uaodv-rt.c
+===================================================================
+RCS file: /cvsroot/contiki/contiki-2.x/core/net/uaodv-rt.c,v
+retrieving revision 1.7
+diff -u -r1.7 uaodv-rt.c
+--- core/net/uaodv-rt.c	13 May 2007 15:14:48 -0000	1.7
++++ core/net/uaodv-rt.c	9 Oct 2009 13:55:26 -0000
+@@ -46,6 +46,17 @@
+ #define UAODV_NUM_RT_ENTRIES 8
+ #endif
+ 
++#include "util.h"
++
++#define DEBUG 0
++
++#if DEBUG
++#include <stdio.h>
++#define PRINTF(...) printf(__VA_ARGS__)
++#else
++#define PRINTF(...)
++#endif
++
+ /*
+  * LRU (with respect to insertion time) list of route entries.
+  */
+@@ -104,6 +115,19 @@
+ }
+ 
+ struct uaodv_rt_entry *
++uaodv_rt_reverse_lookup_neighbor(uip_ipaddr_t *nexthop)
++{
++  struct uaodv_rt_entry *e;
++
++  for(e = list_head(route_table); e != NULL; e = e->next) {
++    if(uip_ipaddr_cmp(nexthop, &e->nexthop)) {
++      return e;
++    }
++  }
++  return NULL;
++}
++
++struct uaodv_rt_entry *
+ uaodv_rt_lookup(uip_ipaddr_t *dest)
+ {
+   struct uaodv_rt_entry *e;
+@@ -145,3 +169,18 @@
+       break;
+   }
+ }
++/*---------------------------------------------------------------------------*/
++void
++uaodv_rt_print_all(void)
++{
++  struct uaodv_rt_entry *e;
++
++  PRINTF("routing table:\n");
++  for(e = list_head(route_table); e != NULL; e = e->next) {
++      PRINTF("  " IP_FORMAT " via " IP_FORMAT ", hops = %d, bad = %d\n",
++              IP_PARAMS(&e->dest),
++              IP_PARAMS(&e->nexthop),
++              e->hop_count,
++              e->is_bad);
++  }
++}
+Index: core/net/uaodv-rt.h
+===================================================================
+RCS file: /cvsroot/contiki/contiki-2.x/core/net/uaodv-rt.h,v
+retrieving revision 1.4
+diff -u -r1.4 uaodv-rt.h
+--- core/net/uaodv-rt.h	9 May 2007 13:45:16 -0000	1.4
++++ core/net/uaodv-rt.h	9 Oct 2009 13:55:26 -0000
+@@ -56,9 +56,11 @@
+ uaodv_rt_add(uip_ipaddr_t *dest, uip_ipaddr_t *nexthop,
+ 	     unsigned hop_count, const u32_t *seqno);
+ struct uaodv_rt_entry *uaodv_rt_lookup_any(uip_ipaddr_t *dest);
++struct uaodv_rt_entry *uaodv_rt_reverse_lookup_neighbor(uip_ipaddr_t *nexthop);
+ struct uaodv_rt_entry *uaodv_rt_lookup(uip_ipaddr_t *dest);
+ void uaodv_rt_remove(struct uaodv_rt_entry *e);
+ void uaodv_rt_lru(struct uaodv_rt_entry *e);
+ void uaodv_rt_flush_all(void);
++void uaodv_rt_print_all(void);
+ 
+ #endif /* __UAODV_RT_H__ */
+Index: core/net/uip.h
+===================================================================
+RCS file: /cvsroot/contiki/contiki-2.x/core/net/uip.h,v
+retrieving revision 1.24
+diff -u -r1.24 uip.h
+--- core/net/uip.h	6 Apr 2009 13:18:50 -0000	1.24
++++ core/net/uip.h	9 Oct 2009 13:55:27 -0000
+@@ -1359,6 +1359,7 @@
+   int (*activate)(void);
+   int (*deactivate)(void);
+   uip_ipaddr_t *(*lookup)(uip_ipaddr_t *destipaddr, uip_ipaddr_t *nexthop);
++  void (*unreachable)(uip_ipaddr_t *destipaddr);
+ };
+ 
+ #if UIP_CONF_ROUTER
+Index: core/net/uip-nd6.c
+===================================================================
+RCS file: /cvsroot/contiki/contiki-2.x/core/net/uip-nd6.c,v
+retrieving revision 1.6
+diff -u -r1.6 uip-nd6.c
+--- core/net/uip-nd6.c	20 Feb 2009 07:59:36 -0000	1.6
++++ core/net/uip-nd6.c	9 Oct 2009 13:55:27 -0000
+@@ -437,6 +438,11 @@
+             router = uip_nd6_defrouter_lookup(neighbor);
+             if(router != NULL)
+               uip_nd6_defrouter_rm(router);
++
++#if UIP_CONF_ROUTER
++            if(uip_router)
++                uip_router->unreachable(&neighbor->ipaddr);
++#endif
+             /* remove neighbor cache entry */
+             uip_nd6_nbrcache_rm(neighbor);
+             continue;
+Index: core/net/routing/Makefile.routing
+===================================================================
+RCS file: /cvsroot/contiki/contiki-2.x/core/net/routing/Makefile.routing,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.routing
+--- core/net/routing/Makefile.routing	6 Apr 2009 13:11:25 -0000	1.1
++++ core/net/routing/Makefile.routing	9 Oct 2009 13:55:27 -0000
+@@ -1 +1,2 @@
+ CONTIKI_SOURCEFILES += rimeroute.c
++CONTIKI_SOURCEFILES += uaodvroute.c uaodv.c uaodv-rt.c

@@ -1,0 +1,18 @@
+ifndef CONTIKI
+  $(error CONTIKI not defined! You must specify where CONTIKI resides!)
+endif
+
+SENSORS    = adc-sensors.c button-sensor.c radio-sensor.c
+DRIVERS    = spi-arch.c cc2500-jmk.c sensors.c irq.c
+COMMANDS   = shell-lsensors.c shell-rsensors.c
+
+CONTIKI_TARGET_DIRS = . dev 
+
+CONTIKI_TARGET_MAIN = contiki-rf2500-main.c
+
+CONTIKI_TARGET_SOURCEFILES += $(CONTIKI_TARGET_MAIN) $(COMMANDS) $(DRIVERS) $(SENSORS) 
+
+MCU=msp430x2274
+include $(CONTIKI)/cpu/msp430/Makefile.msp430
+
+contiki-$(TARGET).a: ${addprefix $(OBJECTDIR)/,symbols.o}

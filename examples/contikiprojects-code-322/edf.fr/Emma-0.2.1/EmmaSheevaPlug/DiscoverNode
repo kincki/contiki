@@ -1,0 +1,95 @@
+#!/bin/sh
+# EMMA Gateway - Network Discovery Utilities Suite
+#   Copyright (C) 2010  Clement Duhart - Samuel Martin Moro
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Clement Duhart: <duhart.clement@gmail.com>
+#   Samuel Martin Moro: <faust64@gmail.com>
+#
+
+. /opt/emma/core/DiscoverFunctions
+
+NOTIFY="[DiscoverNode]"
+if ! test -e $KEYDEV; then
+    $BINDIR/DiscoverNetwork stop
+    exit $NODEV
+elif ! test -e $LOCKFILE; then
+    echo "Can't start: DiscoverNetwork Daemon is not running" >&2
+    exit $NODAEMON
+fi
+echo "$NOTIFY starting" >>$LOGFILE
+
+test "$1" -a "$1" = "-f" && force=y
+# if grepping out local ip
+#DEVIP=
+#GetDevice
+
+while :
+do
+#getting element
+    test `awk 'END{print NR}' $TMPSCAN` -eq 0 && break
+#grepping out local ip
+#   elt=`egrep -v "^PING|$DEVIP" $TMPSCAN | head -1 | awk '{print $4}'`
+    elt=`egrep -v "^PING" $TMPSCAN | head -1 | awk '{print $4}' | sed 's,.$,,'`
+
+#stopping discovery, editing scan file
+    pid=`cat $LOCKFILE`
+    kill -TSTP $pid
+    echo "g/$elt/d\nw" | ed - $TMPSCAN >/dev/null 2>&1
+    echo "g/^PING/d\nw" | ed - $TMPSCAN >/dev/null 2>&1
+    kill -CONT $pid
+
+#getting node
+    addr=`echo $elt | sed "s,^fe80:,$PREFIX:,"`
+    test "$addr" -a ! "$addr" = "fe8" && node="$ROOT/$NetName/{$addr}" || node=
+
+#checking node and last data modification
+    if test -z "$node"; then
+	continue
+    elif test -e $node/lock -a -z "$force"; then
+	echo "$NOTIFY skipping $addr: locked for discovery" >>$LOGFILE
+	continue
+    elif test -e $node/status -a -z "$force"; then
+	if grep $STAT_CONN $node/status >/dev/null; then
+	    lastmod=`find $node -name data -exec stat -c %Y {} \; | sort -u | tail -1`
+	    if test "$lastmod"; then
+		curdate=`date +%s`
+		limit=`expr 60 '*' $IDLETIME`
+		limit=`expr $curdate - $limit`
+		if test "$lastmod" -gt $limit; then
+		    echo "$NOTIFY skipping $addr: already updated in the last $IDLETIME minutes" >>$LOGFILE
+		    continue
+		fi
+	    fi
+	elif grep $STAT_IGNR $node/status >/dev/null; then
+	    echo "$NOTIFY ignoring $addr" >>$LOGFILE
+	    continue
+	fi
+    fi
+
+#launching background discovery
+    if test "$node" -a ! -d "$node"; then
+	echo "$NOTIFY new discovered node $addr" >>$LOGFILE
+	mkdir $node
+    else
+	echo "$NOTIFY updating node $addr" >>$LOGFILE
+    fi
+    $RADVRCS stop
+    $RADVRCS start
+    $BINDIR/DiscoverRessource $addr $STAT_RETR >/dev/null 2>&1 &
+done
+echo "$NOTIFY done" >>$LOGFILE
+
+exit 0

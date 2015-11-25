@@ -1,0 +1,21 @@
+The goal of this project is to make a full-featured port of the Contiki OS
+to the ez430 RF2500 board, which is manufactured by Texas Instruments.
+
+Current state of affairs is documented in the file 
+"Contiki OS port to ez430-RF2500.pdf" , which should reside in the same
+directory as the file you are currently reading.
+
+Presently most of the memory is occupied by the serial line shell and
+all drivers run as an application process. Those who would like to contribute
+would do well by becoming accustomed to debugging with GDB (or some
+well-configurable front-end of it).
+
+The worst current problem is the small RAM of 1kb. One possible way to go
+would be removing the serial line shell and trying to include a communication
+stack, if the size of the RAM is sufficient.
+
+Next step then would be to port sensor drivers to proper APIs.
+
+
+27.04.2010                                      Wincent Balin
+

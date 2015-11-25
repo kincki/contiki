@@ -1,0 +1,637 @@
+.TH "EMMA_Rest6_API" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+EMMA_Rest6_API \- 
+.PP
+test  
+
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBEmma-API.h\fP"
+.br
+.in -1c
+.SS "Implemented functions depending of the CPU / Plateform"
+This function must be implemented for using full EMMA HARDWARE API. 
+.in +1c
+.ti -1c
+.RI "void \fBinitPWM\fP (void)"
+.br
+.ti -1c
+.RI "void \fBsetPWM\fP (char pin, int val)"
+.br
+.ti -1c
+.RI "int \fBgetPWM\fP (char pin)"
+.br
+.ti -1c
+.RI "void \fBi2c_init\fP (void)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_start\fP (unsigned char address)"
+.br
+.ti -1c
+.RI "int \fBi2c_start_wait\fP (unsigned char address)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_rep_start\fP (unsigned char address)"
+.br
+.ti -1c
+.RI "void \fBi2c_stop\fP (void)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_write\fP (unsigned char data)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_readAck\fP (void)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_readNak\fP (void)"
+.br
+.in -1c
+.SS "Implemented functions for each EMMA Applications"
+This must be never used. \fBRESSOURCES_INIT\fP \fBRESSOURCES_LOADER\fP 
+.in +1c
+.ti -1c
+.RI "void \fBressources_init\fP ()"
+.br
+.ti -1c
+.RI "void \fBressources_loader\fP ()"
+.br
+.in -1c
+.SS "Ressource functions API"
+ 
+.in +1c
+.ti -1c
+.RI "#define \fBRESSOURCES_LOADER\fP()   void ressources_loader()"
+.br
+.RI "\fILoader of ressources in Emma-Rest6 Engine.
+.br
+ This function must be implemented in the file : /contiki-2.x/plateform/{MyApps}/Agent-Rest6.c. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCES_INIT\fP()   void ressources_init()"
+.br
+.RI "\fIInit function called by Emma Core on starting device.
+.br
+ This function must be implemented in the file : /contiki-2.x/plateform/{MyApps}/Agent-Rest6.c. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_INIT\fP(sensor)   volatile struct \fBRessource\fP sensor"
+.br
+.RI "\fIDeclaration of a ressource in the Emma-Rest6 Engine
+.br
+ A new declaration of ressource will allocate slot for data ressource and data log. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_UNIT\fP(sensor, unite)"
+.br
+.RI "\fIInitialization of the ressource unit. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_SET\fP(sensor, setFunc)   sensor.setData = setFunc"
+.br
+.RI "\fIInitialization of the setter function for a ressource. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_GET\fP(sensor, getFunc)   sensor.getData = getFunc"
+.br
+.RI "\fIInitialization of the getter function for a ressource. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_LOAD\fP(sensor)   extern struct \fBRessource\fP sensor"
+.br
+.RI "\fIGet an external ressource. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_LIST\fP(name)"
+.br
+.RI "\fICreate a new ressource list. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_LIST_LOAD\fP(name)   extern list_t name"
+.br
+.RI "\fILoad an external ressource list. \fP"
+.in -1c
+.SS "Hardware Digit Functions API"
+ 
+.in +1c
+.ti -1c
+.RI "#define \fBHARDWARE_DIGIT_GET\fP(port, pin)   ((port & ( 1 << pin)) > 0)"
+.br
+.RI "\fIReturn the current value of a specify pin. \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_DIGIT_SET_UP\fP(port, pin)   port |= (1 << pin)"
+.br
+.RI "\fISet up a specify pin. \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_DIGIT_SET_DOWN\fP(port, pin)   port &= ~(1<<pin)"
+.br
+.RI "\fISet down a specify pin. \fP"
+.in -1c
+.SS "Hardware PWM (Pulse Width Modulation) API"
+ 
+.in +1c
+.ti -1c
+.RI "#define \fBHARDWARE_PWM_INIT\fP()   initPWM()"
+.br
+.RI "\fIInitialize the four standard PWM (OCR1A, OCR1B, OCR3A, OCR3B). \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_PWM_SET\fP(pin, val)   setPWM(pin,val)"
+.br
+.RI "\fISet the value of a specify pwm. \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_PWM_GET\fP(pin)   getPWM(pin)"
+.br
+.RI "\fIGet the value of a specify pwm. \fP"
+.in -1c
+.SS "Hardware Two Wire Interface (I2C) API"
+ 
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_READ_FLAG\fP   1"
+.br
+.ti -1c
+.RI "#define \fBI2C_WRITE_FLAG\fP   0"
+.br
+.ti -1c
+.RI "#define \fBI2C_INIT\fP()   i2c_init()"
+.br
+.RI "\fIInterface function for init TWI(I2C) interface, all plateforms must implement this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_START\fP(addr)   i2c_start(addr)"
+.br
+.RI "\fIInterface function for start TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_START_WAIT\fP(addr)   i2c_start_wait(addr)"
+.br
+.RI "\fIWaiting Interface function for start TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_REP_START\fP(addr)   i2c_rep_start(addr)"
+.br
+.RI "\fIInterface function for repeating start TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_STOP\fP()   i2c_stop()"
+.br
+.RI "\fIInterface function for stopping and releasing TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_WRITE\fP(data)   i2c_write(data)"
+.br
+.RI "\fIInterface function for sending a byte over TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_READ_ACK\fP()   i2c_readAck()"
+.br
+.RI "\fIInterface function for reading one byte from TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_READ_NACK\fP()   i2c_readNak()"
+.br
+.RI "\fIInterface function for reading one byte if followed by a stop condition from TWI(I2C) communication, all plateform must implements this function. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+test 
+
+Energy Monitoring & Management Agent for IPV6 RestFull HTTP Copyright (C) 2010 DUHART Clément <duhart.clement@gmail.com>
+.PP
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+.PP
+All rights reserved. 
+.SH "Define Documentation"
+.PP 
+.SS "#define HARDWARE_DIGIT_GET(port, pin)   ((port & ( 1 << pin)) > 0)"
+.PP
+Return the current value of a specify pin. \fBParameters:\fP
+.RS 4
+\fIport\fP PORT name of the pin 
+.br
+\fIpin\fP PIN number on the specify port 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The current value of the pin. 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 147 of file Emma-API.h.
+.SS "#define HARDWARE_DIGIT_SET_DOWN(port, pin)   port &= ~(1<<pin)"
+.PP
+Set down a specify pin. \fBParameters:\fP
+.RS 4
+\fIport\fP PORT name of the pin 
+.br
+\fIpin\fP PIN number on the specify port 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return; 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 167 of file Emma-API.h.
+.SS "#define HARDWARE_DIGIT_SET_UP(port, pin)   port |= (1 << pin)"
+.PP
+Set up a specify pin. \fBParameters:\fP
+.RS 4
+\fIport\fP PORT name of the pin 
+.br
+\fIpin\fP PIN number on the specify port 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return. 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 157 of file Emma-API.h.
+.SS "#define HARDWARE_PWM_GET(pin)   getPWM(pin)"
+.PP
+Get the value of a specify pwm. \fBParameters:\fP
+.RS 4
+\fIpin\fP PWM pin number target 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return; 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP.
+.PP
+Definition at line 200 of file Emma-API.h.
+.SS "#define HARDWARE_PWM_INIT()   initPWM()"
+.PP
+Initialize the four standard PWM (OCR1A, OCR1B, OCR3A, OCR3B). \fBReturns:\fP
+.RS 4
+No return; 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP.
+.PP
+Definition at line 183 of file Emma-API.h.
+.SS "#define HARDWARE_PWM_SET(pin, val)   setPWM(pin,val)"
+.PP
+Set the value of a specify pwm. \fBParameters:\fP
+.RS 4
+\fIpin\fP PWM pin number target 
+.br
+\fIval\fP PWM value between 0-1024 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return; 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP.
+.PP
+Definition at line 192 of file Emma-API.h.
+.SS "#define I2C_INIT()   i2c_init()"
+.PP
+Interface function for init TWI(I2C) interface, all plateforms must implement this function. \fBReturns:\fP
+.RS 4
+No return. 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 217 of file Emma-API.h.
+.SS "#define I2C_READ_ACK()   i2c_readAck()"
+.PP
+Interface function for reading one byte from TWI(I2C) communication, all plateform must implements this function. \fBReturns:\fP
+.RS 4
+The readed data byte. 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 276 of file Emma-API.h.
+.SS "#define I2C_READ_NACK()   i2c_readNak()"
+.PP
+Interface function for reading one byte if followed by a stop condition from TWI(I2C) communication, all plateform must implements this function. \fBReturns:\fP
+.RS 4
+The readed data byte. 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 284 of file Emma-API.h.
+.SS "#define I2C_REP_START(addr)   i2c_rep_start(addr)"
+.PP
+Interface function for repeating start TWI(I2C) communication, all plateform must implements this function. \fBParameters:\fP
+.RS 4
+\fIaddress\fP Address of the target device. 
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI0\fP Success in target device access. 
+.br
+\fI1\fP Fail in configuration of the communication 
+.br
+\fI2\fP Fail in target device access. (Bad address) 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 250 of file Emma-API.h.
+.SS "#define I2C_START(addr)   i2c_start(addr)"
+.PP
+Interface function for start TWI(I2C) communication, all plateform must implements this function. \fBParameters:\fP
+.RS 4
+\fIaddress\fP Address of the target device. 
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI0\fP Success in target device access. 
+.br
+\fI1\fP Fail in configuration of the communication 
+.br
+\fI2\fP Fail in target device access. (Bad address) 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 228 of file Emma-API.h.
+.SS "#define I2C_START_WAIT(addr)   i2c_start_wait(addr)"
+.PP
+Waiting Interface function for start TWI(I2C) communication, all plateform must implements this function. \fBParameters:\fP
+.RS 4
+\fIaddress\fP Address of the target device. 
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI0\fP Success in target device access. 
+.br
+\fI1\fP Fail in configuration of the communication 
+.br
+\fI2\fP Fail in target device access. (Bad address) 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 239 of file Emma-API.h.
+.SS "#define I2C_STOP()   i2c_stop()"
+.PP
+Interface function for stopping and releasing TWI(I2C) communication, all plateform must implements this function. \fBReturns:\fP
+.RS 4
+No return. 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 258 of file Emma-API.h.
+.SS "#define I2C_WRITE(data)   i2c_write(data)"
+.PP
+Interface function for sending a byte over TWI(I2C) communication, all plateform must implements this function. \fBParameters:\fP
+.RS 4
+\fIdata\fP Byte to send. 
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI0\fP Success in sending data. 
+.br
+\fI1\fP Fail in sending data 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBressources.c\fP.
+.PP
+Definition at line 268 of file Emma-API.h.
+.SS "#define RESSOURCE_GET(sensor, getFunc)   sensor.getData = getFunc"
+.PP
+Initialization of the getter function for a ressource. \fBParameters:\fP
+.RS 4
+\fIsensor\fP Name of the concerned ressource. 
+.br
+\fIgetFunc\fP Pointer on the getter function which must have the prototype : int func(void); 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Return the current value. 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 97 of file Emma-API.h.
+.SS "#define RESSOURCE_INIT(sensor)   volatile struct \fBRessource\fP sensor"
+.PP
+Declaration of a ressource in the Emma-Rest6 Engine
+.br
+ A new declaration of ressource will allocate slot for data ressource and data log. \fBParameters:\fP
+.RS 4
+\fIsensor\fP Name of the new ressource, this name will be used for the publish attribute 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return value 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 65 of file Emma-API.h.
+.SS "#define RESSOURCE_LIST(name)"\fBValue:\fP
+.PP
+.nf
+volatile void *LIST_CONCAT(name,_list) = NULL; \
+         volatile list_t name = (list_t)&LIST_CONCAT(name,_list)
+.fi
+.PP
+Create a new ressource list. \fBParameters:\fP
+.RS 4
+\fIsensor\fP Name of the ressource list. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return; 
+.RE
+.PP
+
+.PP
+Definition at line 115 of file Emma-API.h.
+.SS "#define RESSOURCE_LIST_LOAD(name)   extern list_t name"
+.PP
+Load an external ressource list. \fBParameters:\fP
+.RS 4
+\fIsensor\fP Name of the ressource list. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return; 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 125 of file Emma-API.h.
+.SS "#define RESSOURCE_LOAD(sensor)   extern struct \fBRessource\fP sensor"
+.PP
+Get an external ressource. \fBParameters:\fP
+.RS 4
+\fIsensor\fP Name of the concerned ressource. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return; 
+.RE
+.PP
+
+.PP
+Definition at line 106 of file Emma-API.h.
+.SS "#define RESSOURCE_SET(sensor, setFunc)   sensor.setData = setFunc"
+.PP
+Initialization of the setter function for a ressource. \fBParameters:\fP
+.RS 4
+\fIsensor\fP Name of the concerned ressource. 
+.br
+\fIsetFunc\fP Pointer on the setter function which must have the prototype : void func(int data); 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return value 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 87 of file Emma-API.h.
+.SS "#define RESSOURCE_UNIT(sensor, unite)"\fBValue:\fP
+.PP
+.nf
+strcpy((char*)sensor.name,#sensor '\0'); \
+                        list_add(ressources_list, (char*)&sensor); \
+                        strcpy((char*)sensor.unit,#unite '\0')
+.fi
+.PP
+Initialization of the ressource unit. \fBParameters:\fP
+.RS 4
+\fIsensor\fP Name of the ressource to set the unit. 
+.br
+\fIunite\fP Name of the unit, this name is used for published data attribute. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+No return value 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 75 of file Emma-API.h.
+.SS "#define RESSOURCES_INIT()   void ressources_init()"
+.PP
+Init function called by Emma Core on starting device.
+.br
+ This function must be implemented in the file : /contiki-2.x/plateform/{MyApps}/Agent-Rest6.c. \fBReturns:\fP
+.RS 4
+No return 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 55 of file Emma-API.h.
+.SS "#define RESSOURCES_LOADER()   void ressources_loader()"
+.PP
+Loader of ressources in Emma-Rest6 Engine.
+.br
+ This function must be implemented in the file : /contiki-2.x/plateform/{MyApps}/Agent-Rest6.c. \fBReturns:\fP
+.RS 4
+No return 
+.RE
+.PP
+
+.PP
+\fBExamples: \fP
+.in +1c
+\fBRest6-Agent-actuator.c\fP, and \fBRest6-Agent-sensor.c\fP.
+.PP
+Definition at line 46 of file Emma-API.h.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

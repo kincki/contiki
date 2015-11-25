@@ -1,0 +1,30 @@
+
+#echo "Looking for IPV4 address"
+#sleep 1
+#WANIP=$(ip -4 addr show dev wlan0 | awk '/inet / {print $2}' | cut -d/ -f1)
+
+#if [ -n "$WANIP" ]
+#then
+# echo "Found IPV4 address "$WANIP
+# V6PREFIX=$(printf '2002:%02x%02x:%02x%02x' $(echo $WANIP | tr . ' '))
+# ip tunnel add tun6to4 mode sit ttl 255 remote any local $WANIP
+# ip link set tun6to4 mtu 1280
+# ip link set tun6to4 up
+# ip addr add $V6PREFIX:0::1/16 dev tun6to4
+# ip addr add $V6PREFIX:1::1/64 dev eth0
+# ip -6 route add 2000::/3 via ::10.43.42.2 dev tun6to4
+# kill -HUP $(cat /var/run/radvd.pid)
+
+#fi
+
+echo "Configuration of the IP adress of the gateway"
+ip -6 address add 3ffe:0501:ffff:0100:0206:98ff:fe00:0231 dev usb0
+
+echo "Add route throw the gateway USB0"
+ip -6 route add  bbbb:0000:0000:0000:0206:98ff:fe00:0232/64 dev usb0
+
+echo "Activating IPV6 forwarding"
+echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
+
+echo "Starting Radvd forwarding IPV6 by sending global address by routing advertisement (RA)"
+/usr/sbin/radvd start

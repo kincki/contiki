@@ -1,0 +1,10 @@
+Name: Cooja radio medium tests
+Contact: Fredrik Osterlind <fros@sics.se>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: 2.5
+Intended platforms:
+Tested platforms:
+Description:
+A set of COOJA simulations that profiles the simulated radio mediums.

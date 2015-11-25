@@ -1,0 +1,13 @@
+Name: Cooja PowerTracker plugin
+Contact: Adam Dunkels <adam@sics.se>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: CVS 2010-01-15
+Intended platforms: Tmote Sky in Cooja simulation
+Tested platforms: Tmote Sky
+Description:
+A Cooja plugin that shows a window with the average duty cycle of the
+Tmote Sky radio. This can be used to measure the power consumption of
+the network as well as to assess the power overhead of a duty cycling
+MAC protocol.

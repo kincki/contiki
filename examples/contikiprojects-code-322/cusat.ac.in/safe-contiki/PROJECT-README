@@ -1,0 +1,26 @@
+'Safe Contiki' is a humble attempt to make Contiki free of Safety violations.
+'Deputy' is used to achieve this. Deputy is a tool used to eliminate memory 
+and type safety violations (like Null pointer reference, array out of bound 
+exception, etc) from C programs which are otherwise impossible to detect by 
+an ordinary compliler. Since Contiki is fully written in C and it make 
+extensive use of pointers and since memory and type safety violations make 
+severe problems with wireless sensor nodes, Contiki is an ideal target for 
+Deputization.
+
+The project aims to modify all the kernel files of Contiki which are around 
+300 in number. Currently only around 70 files have been modified. The work was 
+started with the Instant-Contiki 2.2.1 version. Since then a number of 
+modifications were done on Contiki. However we continue with the modifications
+on the original source files; once the work is over, we will merge the changes
+with the latest version then available.
+
+The project is a laborious one requiring a huge amount of manual work. 
+Anyone interested can contribute to the work and their details will be 
+displayed in the CONTRIBUTORS list.
+
+Deputy is an open source software available at http://deputy.cs.berkeley.edu/. 
+The Annotations of Deputy are easy to learn and use. Please go through the 
+quick reference at http://deputy.cs.berkeley.edu/quickref.html. The Deputy
+manual is available at http://deputy.cs.berkeley.edu/manual.html.
+
+If interested, please mail to tomsypaul at hotmail.com

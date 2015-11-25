@@ -1,0 +1,8 @@
+Name: MuChMAC module
+Contact: Joris Borms <joris.borms@vub.ac.be>
+Contiki version: CVS januari 2010
+Intended platforms: any (wireless) networked system
+Tested platforms: Sentilla JCreate (currently only supports CC2420 platforms)
+Description:
+A MAC layer using multiple channels dynamically while using drift compensation
+to reduce protocol overhead under low traffic loads (EWSN2010)

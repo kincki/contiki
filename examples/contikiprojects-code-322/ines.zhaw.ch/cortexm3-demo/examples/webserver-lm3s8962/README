@@ -1,0 +1,58 @@
+********************************************************************************
+ *  _____       ______   ____
+ * |_   _|     |  ____|/ ____|  Institute of Embedded Systems
+ *   | |  _ __ | |__  | (___    Wireless Group
+ *   | | | '_ \|  __|  \___ \   Zuercher Hochschule Winterthur
+ *  _| |_| | | | |____ ____) |  (University of Applied Sciences)
+ * |_____|_| |_|______|_____/   8401 Winterthur, Switzerland
+ *
+ *******************************************************************************
+Date: 28-04-2010 Author: Urs Beerli, berl@zhaw.ch
+ 
+ 
+Steps to compile Contiki 2.4 for LM3S8962 Evaluation Board:
+http://www.luminarymicro.com/products/lm3s8962_can_ethernet_evaluation_kit.html
+
+
+1. Download/Checkout contikiprojects/ines.zhaw.ch/cortexm3-demo
+
+2. Download/Checkout contiki/core (2.4, 15-02-2010) to cortexm3-demo/core
+
+3. Download newest libraries from LuminaryMicro (tested revision 5821)
+    1. Visit http://www.luminarymicro.com/products/software_updates.html
+    2. Download SW-EK-LM3S8962-xxxx EK-LM3S8962 Firmware Development Package
+       (you need to register)
+   
+4. Copy the following files/folders from the driver library to contiki:
+    - StellarisWare/driverlib (all .c, .h files and Makefile, gcc folder) 
+      --> cpu/lm3s8962/driverlib
+    - StellarisWare/makedefs 
+      --> cpu/lm3s8962/makedefs
+    - StellarisWare/inc (all .c, .h files)
+      --> cpu/lm3s8962/inc
+    - StellarisWare/utils (uartstdio.c, uartstdio.h, ustdlib.c, ustdlib.h)
+      --> cpu/lm3s8962/utils
+    - StellarisWare/boards/ek-lm3s8962/hello/startup_gcc.c
+      --> cpu/lm3s8962/startup_gcc.c
+			Change the system stack 'pulStack' of 64 to 256 (line 47)
+    - StellarisWare/boards/ek-lm3s8962/hello/hello_codered.ld
+      --> cpu/lm3s8962/linkerscript.ld
+    - StellarisWare/boards/ek-lm3s8962/drivers (rit128x96x4.c&rit128x96x4.h)
+      --> cpu/lm3s8962/drivers
+
+5. Download/Install "Sourcery G++ Lite Edition" from www.codesourcery.com
+    1. http://www.codesourcery.com/sgpp/lite/arm/download.html
+    2. Take "EABI" - Sourcery G++ Lite xxx
+    
+6. Run "make" in examples/webserver-lm3s8962
+    (if you are working with Windows and using LM Flash from LuminaryMicro, 
+    add the installation folder of LM Flash to your environment path and run
+    "make prog", after compilation the .bin-file will be immediately 
+    downloaded)
+    
+7. Contiki Webserver is now available under:
+    IP:   192.168.2.2
+    Mask: 255.255.255.0
+		
+8. Serial Debug Interface on the installed COM-Port of the CortexM3 (UART0):
+    Bit/s: 115200, Databits: 8, Parity: None, Stopbits: 1, Flowcontrol: None

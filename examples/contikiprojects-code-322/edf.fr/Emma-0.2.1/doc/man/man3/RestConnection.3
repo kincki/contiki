@@ -1,0 +1,49 @@
+.TH "RestConnection" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+RestConnection \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "struct \fBFile\fP \fBroot\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBmethod\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBurl\fP [URI_INCOMMING_MAX_SIZE]"
+.br
+.ti -1c
+.RI "struct psock \fBSocket\fP"
+.br
+.ti -1c
+.RI "struct pt \fBSocketPt\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBSocketBuff\fP [BUFFER_SOCKET_SIZE]"
+.br
+.ti -1c
+.RI "unsigned char \fBBuff\fP [BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "unsigned char \fBBuff2\fP [BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "unsigned char \fBMiniBuff\fP [BUFFERMINI_SIZE]"
+.br
+.ti -1c
+.RI "unsigned short int \fBtimeout\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 139 of file Emma-Rest6.h.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

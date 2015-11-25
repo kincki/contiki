@@ -1,0 +1,115 @@
+#!/bin/sh
+# EMMA Gateway - Network Discovery Utilities Suite
+#   Copyright (C) 2010  Clement Duhart - Samuel Martin Moro
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Clement Duhart: <duhart.clement@gmail.com>
+#   Samuel Martin Moro: <faust64@gmail.com>
+#
+
+. /opt/emma/core/DiscoverFunctions
+
+#TODO
+# -> revoire config reseau locale
+#    @DiscoverFunctions $IPV4 $LOCALNET
+#    @DiscoverFunctions Base6to4Interface
+
+Prg=$0
+NOTIFY="[DiscovreNetwork]"
+Usage()
+{
+    (
+	echo "$Prg: usage"
+	echo "	$Prg [start|stop|restart]"
+    ) >&2
+    exit $USAGE
+}
+
+test -z "$1" && Usage
+
+case "$1" in
+    start)
+	if test -e $LOCKFILE; then
+	    echo "Can't start: DiscoverNetwork Daemon is already running" >&2
+	    exit $NODAEMON
+	fi
+#checking for IPv6 forwarding & curl IPv6 support
+	if IPv6Checks; then
+#checking config and starting radvd
+	    if GetDevice; then
+#set ip config and clean discover files
+		CleanEmmasMess
+		echo "$NOTIFY starting on `date`" >>$LOGFILE
+#running discovery
+		cpt=0
+		while :
+		do
+		    if ping6 ff02::1 -I $DEV -c 1 >/dev/null 2>&1; then
+			break
+		    fi
+		    sleep 1
+		    if test $cpt -gt 5; then
+			echo "$NOTIFY: unable to start ping6 through $DEV" >>$LOGFILE
+			echo "no dev!"
+			UnsetIPv6Conf
+			exit $NODEV
+		    fi
+		    cpt=`expr $cpt + 1`
+		done
+		SetIPv6Conf >/dev/null 2>&1	# route
+		if DiscoverItfs; then
+		    echo "succesfully started: [`cat $LOCKFILE`]"
+		    AddCronJob
+		     ifconfig $DEV | awk '/[ 	]*inet6 addr: .*[sS]cope:[gG]lobal/{print $3}' | sed 's,/.*,,' | awk -F : '{printf("%04s:%04s:%04s:%04s:%04s:%04s:%04s:%04s", $1, $2, $3, $4, $5, $6, $7, $8);}' | sed 's/ /0/g' >$TMPID
+		    break ;
+		else
+		    echo "$NOTIFY: failed to start" >>$LOGFILE
+		    UnsetIPv6Conf
+		    $rm -f $LOCKFLIE
+		fi
+	    fi
+	fi
+	exit $NODAEMON
+	;;
+
+    stop)
+	if ! test -e $LOCKFILE; then
+	    echo "Can't stop: DiscoverNetwork is not running" >&2
+	    exit $NODAEMON
+	fi
+	pid=`cat $LOCKFILE`
+	echo "$NOTIFY stopped `date`" >>$LOGFILE
+	if ps ax | grep "^[ 	]*$pid[	 ]*" >/dev/null; then
+	    UnsetIPv6Conf
+	    DelCronJob
+	    ( kill $pid || kill -9 $pid ) >/dev/null 2>&1
+	else
+	    echo "Can't stop: unable to find the process back" >&2
+	fi
+	CleanEmmasMess
+	rm -f $LOCKFILE
+	;;
+
+    restart)
+	$0 stop
+	$0 start
+	;;
+
+    *)
+	Usage
+	;;
+esac
+
+exit 0

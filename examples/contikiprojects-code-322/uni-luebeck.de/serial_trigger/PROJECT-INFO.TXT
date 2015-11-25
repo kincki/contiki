@@ -1,0 +1,36 @@
+Name: serial_trigger
+
+Contact: 
+Carlo Alberto Boano <cboano@iti.uni-luebeck.de>
+
+
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+
+
+Contiki version: 2.4
+
+
+Intended platforms: Tmote Sky
+
+Tested platforms: Tmote Sky
+
+
+Description:
+ A simple example on how to trigger a communication from another mote via the serial port (in order to avoid sending unreliable triggers over the air).
+Two motes are involved: a main mote, and an answering mote. 
+The main mote sends on the serial interface a string composed of three parameters:
+- the channel where to send the burst
+- the address of the destination where the packets should be sent
+- the amount of packets to be sent
+The java interface will redirect the output from one serial port to another one. 
+The answering mote will receive the string on its serial interface, process it, and send the data accrdingly as requested.
+
+
+How to run: 
+- Download the java rxtx libraries from http://www.rxtx.org/ and place dll and jar files in the same folder
+- make main_mote.upload MOTES=XX
+- make answering_mote.upload MOTES=YY
+- make bind
+- Set XX as main mote and YY as answering mote and click on "Bind the two Motes!"
+
+IMPORTANT: Remember to add the http://www.rxtx.org/ libraries!

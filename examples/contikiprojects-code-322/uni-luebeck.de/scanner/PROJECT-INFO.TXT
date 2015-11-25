@@ -1,0 +1,27 @@
+Name: interferer_scanner
+
+Contact: 
+Carlo Alberto Boano <cboano@iti.uni-luebeck.de>
+
+
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+
+
+Contiki version: 2.4
+
+
+Intended platforms: Tmote Sky (and others with CC2420).
+
+Tested platforms: Tmote Sky
+
+
+Description:
+ A simple example on how to use the CC2420 radio to quickly scan interference in a given channel of the 2.4 GHz spectrum
+
+scanner_1: Fast scan with 1-bit precision
+scanner_2: Fast scan with all dBm values
+scanner_3: Histogram of noise + channel vacancy in a given channel
+scanner_4: Slow scanner
+scanner_5: Histogram of noise in all channels
+scanner_6: Histogram of noise in all channels [both 0 and 1]
+scanner_7: Show average noise in the channel

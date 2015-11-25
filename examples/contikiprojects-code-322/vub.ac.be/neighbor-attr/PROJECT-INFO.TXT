@@ -1,0 +1,13 @@
+Name: Neighbor Attribute Lib
+Contact: Joris Borms <joris.borms@vub.ac.be>
+Contiki version: CVS 2009-11-23
+Intended platforms: any (wireless) networked system
+Tested platforms: Sentilla JCreate
+Description:
+A small library that helps keeping track of various neighbor node properties.
+This way there is no need to create different neighbor tables all over the place,
+there is one central table, and different applications/modules/... can simply 
+specify the parameters they want to add. Aside from saving some programming time,
+this should save some memory, especially for wide (IPv6) rime addresses.
+
+note: I'm unsure whether to support this or node-addr. Any ideas? :)

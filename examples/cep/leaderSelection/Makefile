@@ -1,4 +1,4 @@
-CONTIKI_PROJECT = example-broadcast-leader-1 example-broadcast-leader-2 example-broadcast-leader-3
+CONTIKI_PROJECT = leader-1 leader-2 leader-3 leader-cnd
 all: $(CONTIKI_PROJECT)
 
 CONTIKI = ../../..

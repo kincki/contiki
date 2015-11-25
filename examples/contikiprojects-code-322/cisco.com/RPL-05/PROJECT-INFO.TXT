@@ -1,0 +1,15 @@
+Name: cisco.com, RPL-05
+Contact: Mathilde Durvy <mdurvy@cisco.com>
+         Marco Valente  <marcvale@cisco.com>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: CVS 2010-03-07
+Intended platforms: AVR Raven (should work on other but not tested).
+Tested platforms: AVR Raven
+Description:
+An early implementation of RPL - The IPv6 Routing Protocol for Low
+power and Lossy Networks. This implementation was used during the IPSO
+Anaheim interop event. It is based on draft-ietf-roll-rpl-05. For more
+information see the doxygen doc (availably by running doxygen in the
+doc directory).

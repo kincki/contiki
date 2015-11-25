@@ -1,0 +1,12 @@
+Name: IPsec
+Contact: Simon Duquennoy <simonduq@sics.se>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: 2.5
+Intended platforms: Any
+Tested platforms: Tmote Sky
+Description:
+An IPsec implementation for Contiki, including extended 6lowpan header compression.
+For more details, see "Securing Communication in 6LoWPAN with Compressed IPsec", in
+proceedings of IEEE DCOSS'11. To get started, see README file.

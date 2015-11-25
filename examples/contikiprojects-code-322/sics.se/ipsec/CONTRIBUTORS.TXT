@@ -1,0 +1,5 @@
+Simon Duquennoy <simonduq@sics.se> 
+Shahid Raza <shahid@sics.se> (Definition of 6lowpan compression for IPsec)
+Dogan Yazar <dogan@sics.se> (AH support)
+
+

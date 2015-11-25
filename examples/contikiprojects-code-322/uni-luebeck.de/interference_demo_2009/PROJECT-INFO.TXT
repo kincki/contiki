@@ -1,0 +1,43 @@
+Name: interference_demo
+
+Short description:
+ SenSys demo 2009 "Generation of Controllable Radio Interference for Protocol Testing in Wireless Sensor Networks".
+
+Reference: Carlo Alberto Boano, Kay Römer, Zhitao He, Thiemo Voigt, Marco Zuniga, and Andreas Willig. Generation of Controllable Radio Interference for Protocol Testing in Wireless Sensor Networks. In Proceedings of the 7th International Conference on Embedded Networked Sensor Systems (SenSys), demo session. Pag. 301-302, ACM Press, ISBN: 978-1-60558-519-2. Berkeley, California, USA. November 2009.
+
+Contact: 
+Carlo Alberto Boano <cboano@iti.uni-luebeck.de>
+
+
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+
+
+Contiki version: 2.4
+
+
+Intended platforms: Tmote Sky
+
+Tested platforms: Tmote Sky
+
+
+Long description: 
+A pair of sensor nodes (sensys_tx and sensys_rx) are communicating on channel CHANNEL_SENDER (default is 24).
+The statistics of the communication (SNR, LQI, PRR) are sent to a base station (sensys_base) using a different channel CHANNEL_BASE (default is 22). The base station collects this information and display it in the GUI.
+A fourth node (sensys_jammer) will act as an interferer on the channel CHANNEL_SENDER. At a certain point, depending on the distance and the transmission power (that can be controlled using the Tmote Sky user button) the communication between the communicating pair will be broken. 
+A fifth node (sensys_scanner) can optionally scan the 2.4 GHz frequencies and display the ongoing noise (pretty much as a spectrum analyzer).
+
+
+How to run: 
+Check and eventually change the node IDs of the motes involved in the communication, and upload the programs. 
+How to display the user interface:
+1. With an unified GUI. 
+  - Install the rxtxserial librarier from http://www.rxtx.org/ and run the GUI.java (Java GUI folder)
+2. Display the GUIs separately for each mote
+  - make viewrssi for sensys_scanner
+  - make viewinterferer for sensys_jammer
+  - make viewbase for sensys_base
+
+
+Video:
+http://carloalbertoboano.com/documents/demo_sensys09.wmv
+

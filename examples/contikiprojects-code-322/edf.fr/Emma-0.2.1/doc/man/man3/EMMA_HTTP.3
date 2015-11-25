@@ -1,0 +1,202 @@
+.TH "E.M.M.A RestFull HTTP API" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+E.M.M.A RestFull HTTP API \- 
+.PP
+E.M.M.A RestFull HTTP API is a network interface API for communication between different nodes on HTTP IPV6 Protocol.
+.br
+.  
+E.M.M.A RestFull HTTP API is a network interface API for communication between different nodes on HTTP IPV6 Protocol.
+.br
+. 
+
+E.M.M.A RestFull HTTP is composed by :
+.br
+ 
+.PD 0
+
+.IP "\(bu" 2
+An URI mechanism for publishing and sharing ressource datas. 
+.IP "\(bu" 2
+An URI mechanism for configuring the network interractions of the node.
+.PP
+.PD 0
+.IP "\(bu" 2
+\fBURI available :\fP 
+.IP "\(bu" 2
+\fBReturn Error Code\fP
+.PP
+.SH "URI available :"
+.PP
+.PD 0
+.IP "\(bu" 2
+GET /
+.br
+ Response : 
+.PP
+.nf
+   [
+    {
+     'name':'ressource',
+     'uri':'http://[host ::ipv6]/data/ { name } /'
+    }, [...]
+   ]
+
+.fi
+.PP
+
+.PP
+.PD 0
+.IP "\(bu" 2
+GET /data/ { * | RessourceName }/
+.br
+ Response : 
+.PP
+.nf
+{
+'name':'brightness',
+'unit':'lux',
+'InstatenousRate':'2'
+}
+
+.fi
+.PP
+
+.PP
+.PD 0
+.IP "\(bu" 2
+GET /data/ { * | RessourceName } /report/ { * | ReportId } /
+.br
+ Response : 
+.PP
+.nf
+{
+'host':'[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]',
+'uri':'notify.php',
+'port':'80',
+'method':'GET',
+'body':'',
+'period':'100',
+'min':'30',
+'max':'150'
+}
+
+.fi
+.PP
+
+.PP
+.PD 0
+.IP "\(bu" 2
+GET /data/ { * | RessourceName } /log/ { * | LogId } /
+.br
+ Response : 
+.PP
+.nf
+[
+{
+'id':'192',
+'name':'temperature',
+'value':'30',
+'time':'165'
+},[...]
+]
+
+.fi
+.PP
+
+.PP
+.PD 0
+.IP "\(bu" 2
+POST /data/ { * | RessourceName } /report/
+.br
+ Body 
+.PP
+.nf
+{
+'host':'[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]',
+'uri':'notify.php',
+'port':'80',
+'method':'GET',
+'name':'{ * | RessourceName }',
+'body':'',
+'period':'100',
+'min':'30',
+'max':'150'
+}
+
+.fi
+.PP
+
+.PP
+.PD 0
+.IP "\(bu" 2
+DELETE /data/ { * | RessourceName } /report/ { * | IdReport }/
+.br
+
+.PP
+.PD 0
+.IP "\(bu" 2
+PUT /data/{*|RessourceName}\\/
+.br
+ Body : 
+.PP
+.nf
+ {
+  'value':'XXX'
+ }
+
+.fi
+.PP
+
+.PP
+.PD 0
+.IP "\(bu" 2
+PUT /data/ { * | RessourceName } /report/ { IdReport }/
+.br
+ Body : 
+.PP
+.nf
+{
+'host':'[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]',
+'uri':'notify.php',
+'port':'80',
+'method':'GET',
+'body':'',
+'period':'100',
+'min':'30',
+'max':'150'
+}
+
+.fi
+.PP
+
+.PP
+.SH "Return Error Code"
+.PP
+.PD 0
+.IP "\(bu" 2
+200 OK 
+.IP "\(bu" 2
+400 Bad Request 
+.IP "\(bu" 2
+403 Forbidden 
+.IP "\(bu" 2
+404 Not Found 
+.IP "\(bu" 2
+405 Method Not Allowed 
+.IP "\(bu" 2
+408 Request Timeout 
+.IP "\(bu" 2
+411 Length required 
+.IP "\(bu" 2
+413 Entity too long 
+.IP "\(bu" 2
+414 Uri too large 
+.IP "\(bu" 2
+500 Internal Error 
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

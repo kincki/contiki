@@ -1,0 +1,2 @@
+# This file runs and stops EMMA Network Discovery
+ACTION=="add", SUBSYSTEM=="usb", SYSFS{idVendor}=="03eb", RUN+="/opt/emma/core/DiscoverNetwork start"

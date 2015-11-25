@@ -1,0 +1,105 @@
+# EMMA Gateway - Network Discovery Utilities Suite
+#   Copyright (C) 2010  Clement Duhart - Samuel Martin Moro
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Clement Duhart: <duhart.clement@gmail.com>
+#   Samuel Martin Moro: <faust64@gmail.com>
+#
+
+# IP forwarding /proc path
+FRWD6=/proc/sys/net/ipv6/conf/all/forwarding
+
+# DIRS & FILES
+BINDIR=/opt/emma/core/		# binary files root directory
+INCDIR=/opt/emma/core/		# include files root directory
+LOGDIR=/opt/emma/log/		# log files root directory
+LOCKDIR=/var/lock		# lock files root directory
+TMPDIR=/tmp			# temp files root directory
+TMPSCAN=$TMPDIR/emma-scan	# temp file for scanning
+TMPELT=$TMPDIR/emma-element	# temp file for node discovery
+TMPLIST=$TMPDIR/emma-list	# temp file for node recovery
+TMPID=$TMPDIR/emma-id		# temp IP
+LOGFILE=$LOGDIR/EMMA.log	# main log file
+LOCKFILE=$LOCKDIR/emma-discover	# discovery lock file
+ROOT=/opt/emma			# Emma Network Image - root directory
+
+# Network Name
+NetName=emma-devel
+
+# user, group and rights
+EMMAUSER=emma
+EMMAGROUP=www-data
+DIRRIGHTS=775
+FILERIGHTS=664
+
+# Discovery arguments
+MAXPING=5		# Max number of ping
+PING_ITV=10		# Ping interval
+MAXRETRY=5		# max curl attempt
+IDLETIME=60		# max node idle time, in minutes
+
+# Logs
+MAXKB=128		# Max log file size (in K)
+MAXLOG=6		# Max archived logs
+CPRLOG=cjf		# Log compression args (as used by tar, default is cjf)
+EXTLOG=tbz		# Archived log file extension
+LISTLOG="$LOGFILE"	# List of log files to monitor/rotate
+
+# Notify arguments
+NOTIFYMETHOD=GET
+NOTIFYURI=notify.php
+NOTIFYPORT=80
+NOTIFYCOND=1
+MAXREPORT=4
+
+# stupid user !
+# don't touch below this line
+
+# RADV Daemon scripts and config
+#ubuntu:
+RADVCNF=/etc/radvd.conf
+RADVRCS=/etc/init.d/radvd
+#archlinux:
+#RADVCNF=/etc/radvd/radvd.conf
+#RADVRCS=/etc/rc.d/radvd
+
+# Defaut config
+DEV=usb0
+DEVIP=
+#blank for radv.conf
+PREFIX=bbbb
+#key dev
+KEYDEV=/dev/ttyACM0
+
+# Node states
+STAT_CONN=0	# connected
+STAT_RETR=1	# will retry
+STAT_ZOMB=2	# zombie
+STAT_IGNR=42	# ignored (Not a Node)
+
+# Exit status
+USAGE=99
+NODEV=100
+NORADV=101
+NOIPV6=102
+NOIPV6RT=103
+NOCURLV6=104
+NODAEMON=105
+SCANNING=106
+DLGERROR=107
+
+# curl errors
+EMPTYRSP=52	# empty answer from server
+CONTCONNECT=7	# couldn't connect to host

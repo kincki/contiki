@@ -1,0 +1,6 @@
+
+
+CONTIKIDIRS += $(MIGMEMROOT)/src 
+CONTIKIFILES += migmem.c
+
+	

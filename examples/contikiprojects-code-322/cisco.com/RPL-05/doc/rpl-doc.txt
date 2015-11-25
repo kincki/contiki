@@ -1,0 +1,124 @@
+/**
+ * \addtogroup uip6
+ * @{
+ */
+
+/**
+ * \defgroup rpl RPL - The IPv6 Routing Protocol for Low power and Lossy Networks
+ * @{
+
+The RPL protocol provides IPv6 routing capabilities to Contiki's IPv6
+stack. This implementation follows the specification in draft-ietf-roll-rpl-05.
+
+<HR>
+
+\section asump Asumptions
+The RPL code makes the following assumptions:
+\li We assume a single DODAG and instance ID
+\li We assume the node supports a single OCP
+\li We do not implement sub-options for DIO (except for OCP and Metric)
+\li We assume that all nodes store routes learned via DAOs (No RRStack)
+\li We do not process multicast DAO
+\li We do not implement multicast support
+\li We do not do collision detection
+\li We assume that there is one OCP per instanceID (no OCP change for now)
+\li We do not implement the leaf node behavior, but we can force for a
+   node to be a leaf (RPL_CONF_LEAF_ONLY)
+\li We select a preferred parent and maintain a pool of ordered (by OCP)
+   candidates 
+\li Local confidence is assimilated to ND neighbor relationship. As a
+   ND entry is suppressed only if we have traffic for the neighbor and
+   the ns/na show that the neighbor is not responding we believe it is
+   a good enough approximation.
+\li Configuration flag for DIS, ROOT_ENABLE, LEAF_ONLY
+\li RPL cannot start without preferred link-local address
+\li RPL with ROOT_ENABLE cannot start without preferred global address
+   as it is used for the DAGID
+\li During DIS window (or local repair) we collect DIOs received
+   ordering them with the OCP. At the end of the window the neighbor
+   corresponding to the best DIO becomes the preferred parent.
+\li We process DIOs from all ND neighbors. If we receive a DIO from a 
+   non-neighbor we add it in the incomplete state.
+\li We assume that the set of parents receiving DAOs (DA parents) is the
+   most preferred parent
+\li We assume the ocp has no TLV 
+\li We do not use the reported flag (useless in our opinion)
+\li We do not use the RemoveTimer, it is redundant with respect to the
+   retry count
+\li We do not keep unreachable prefixes, hence we do not need a state
+   for the DAO routes
+\li We do not process unicast DIS, we reply directly to multicast ones
+\li We do not associate an instance ID to a route, nor do we do loop
+   detection
+
+
+\section run Running RPL
+\li In the contiki-conf.h file of your target platform set the
+following flags:
+\code
+#define UIP_CONF_IPV6         1
+#define UIP_CONF_ROUTER       1
+#define UIP_CONF_ROUTER_RPL   1
+#define RPL_CONF_ROOT_ENABLE  0  //Can my node form its own DODAG
+#define RPL_CONF_LEAF_ONLY    0  //Is my node only a leaf
+#define RPL_CONF_SEND_DIS     1  //Does my node send DIS
+#define RPL_CONF_DAOROUTE_NB  10
+#define RPL_CONF_PARENT_NBU   6
+#define RPL_CONF_INSTANCE_ID  0
+#define RPL_CONF_DAG_CONTROL  0x60 //0x60 D+A, 0x20 A, 0xa0 G+A, 0xe0 G+A+D 
+\endcode
+\li In the main file of your target platform start the RPL process
+\code
+process_start(&rpl_process, NULL);
+\endcode
+\li In addition, you might want to add manually a global IPv6
+#address to your node (e.g. in the .c file of the "example" you are
+#using). This address should use the EUI-64 (802.15.4 MAC) address set in the
+main file of your target platform. For example if the MAC is
+11:11:ff:fe:11:11:11 then use
+\code
+uip_ip6addr(&ipaddr1, 0xaaaa,0,0,0,0x0011,0x11ff,0xfe11,0x1111);
+uip_ds6_addr_add(&ipaddr1, 0,  ADDR_MANUAL);
+\endcode
+\li If you want to communicate with your sensor network using a PC
+(e.g. a PC with the RZ USB stick), you should add a default route to
+it: 
+\code
+uip_ip6addr(&ipaddr1, 0xaaaa,0,0,0,0,0,0,0x0001);
+uip_ip6addr(&ipaddr2, 0xfe80,0,0,0,0x0012,0x13ff,0xfe14,0x1516);
+uip_ds6_route_add(&ipaddr1, 128,  &ipaddr2, 0, 0, 0);
+\endcode
+This assumes your PC interface is configured with link-local IPv6
+address "ipaddr2" and global IPv6 address "ipaddr1". Your PC should
+also have a static route configured. For example on Ubuntu:
+\code
+ip -6 add add aaaa::1/128 dev usb0
+ip -6 route add aaaa::/64 dev usb0 via fe80::aa:aaff:feaa:aaaa
+\endcode
+where fe80::aa:aaff:feaa:aaaa is the link local address of the root of
+your RPL DAG.
+
+To start testing this code we recommand you program a node (with the
+ config flags above) together with a DAG root node with flags
+\code
+#define RPL_CONF_ROOT_ENABLE  1
+#define RPL_CONF_SEND_DIS     0
+#define RPL_CONF_DAG_CONTROL  0xe0
+\endcode
+The DAG root should have a default route to a PC as described above.
+
+\section ocp Implemented Objective functions
+We implement the basic objective function (OCP0) as defined in
+draft-ietf-roll-of0-01. We also implement a second ojective function
+(OCP1) which uses the ETX metric as the main criteria for parent
+selection. In addition, it avoids baterry operated nodes (node energy
+constraint).
+By default OCP0 is used. To enable OCP1 you need to set the following
+flags in the contiki-conf.h file of your target platform.
+\code
+#define UIP_CONF_ETX          1
+#define RPL_CONF_DAG_OCP      1
+\endcode
+*/
+/** @} */
+/** @} */

@@ -1,0 +1,50 @@
+Name: RESTful Contiki
+Contact: Dogan Yazar doganyazar@yahoo.com
+URL:
+License: 
+Screenshot: 
+Contiki version: CVS 2009-12-09
+Intended platforms: Tmote Sky
+Tested platforms: Tmote Sky
+Description:
+
+This project provides a lightweight REST framework over Contiki. The project package includes lightweight HTTP Server, REST Engine and Logger modules on Contiki as well as modified/ported version of Simple XML parser to Contiki. 
+
+RESTExample directory has an example program showing how to create a RESTful Web Application. Look at the source code and README file in the same directory.
+
+Details of the modules are given below:
+
+HTTP server:
+HTTP server is a small footprinted server to handle the incoming and outgoing HTTP traffic. It provides interface to perform certain HTTP related stuff such as accessing request details (headers, entity body, URL path), constructing an HTTP response etc. Not only REST Engine but also SOAP Engine works on top of it. A basic SOAP Engine has been developed to see its feasibility and compare it with RESTful architecture. 
+
+XML Parser:
+Due to data and code memory limitations, a small and memory efficient parser is needed. Simple XML parser is found to be best candidate so it is ported to Contiki. It is very small in code size and being a non-validating SAX based parser makes it memory efficient. Some new functionalities such as XML generation and a basic namespace support are added. The parser is used by SOAP engine as well as user applications (both SOAP-based and RESTful Web services). SOAP engine needs it to parse incoming SOAP messages and extract related data. 
+
+Logger:
+Visibility of wireless sensor network applications are lower than traditional applications due to the inherent properties of WSNs. Due to that reason, I see logging has an increased importance to monitor the events taking place. That is why I also designed a logging module in my framework. It offers three severity levels; Error, Info and Debug. Any level include levels preceding it , i.e. when Info level is defined, Error messages are printed as well. Basic mode just prints the strings whereas there is also a persistent mode which saves the log messages in flash memory (using Coffee File System) periodically. So one can execute certain operations for a long time and then gather the results from the flash memory later.
+
+SOAP Engine:
+A minimal and very limited SOAP processing engine for fulfilling SOAP-based Web service calls is also provided. It reuses the HTTP server and XML parser components. Engine parses the SOAP message using the XML parser, extract the method information and execute it. Then the response SOAP message is built using the XML parser
+
+Set ContikiHome in Makefile in example
+Put folders in /apps folder into <ContikiHome>/apps.
+
+Some limitations or problems exist now
+Examples:
+-The HTTP handling parts are not case insensitive now.
+-Urls should be max of 100 chars now
+-due to memory shortage, some static information is omitted. For example, only certain HTTP status codes and media types exist as hard coded now. But some others can easily added if needed.
+-some of the controls are missing, for example xml generator does not control the buffer size
+-not all the http headers saved (only the ones that are requested to be saved)
+
+Main code is in /apps/webservices, /apps/simplexml and /apps/logger directories. 
+
+There are some configurable parameters (in http-common.h)
+#define PORT 8080
+#define RESPONSE_BUFFER_SIZE 600
+#define MAX_REQUEST_HEADERS 6
+#define MAX_RESPONSE_HEADERS 6
+#define REQUEST_BUFFER_SIZE 1000
+#define MAX_URL_MATCHED_ATTRS 4
+#define INCOMING_DATA_BUFF_SIZE 102
+

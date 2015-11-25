@@ -1,0 +1,27 @@
+Name: COOJA Sky-Mote Light Slider
+Contact: Moritz "Morty" Strübe <morty@cs.fau.de>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: CVS 2010-09-29
+Intended platforms: Tmote Sky
+Tested platforms: Tmote Sky
+Description:
+This adds two sliders to the interface-viewer of the Sky-mote. 
+Using these sliders it is possible the chenge the values read by the ADC.
+This is in an early stage. While it's working fine, the gui might need some work.
+Feel free to contract me.
+
+Info: By default the ADCs generate random numbers. This is still the case until the 
+interface is initialized.
+
+Todo:
+	* Cleanup Interface
+	* Make more Robust: E.g. I have no idea what happens, if the interface is opend 
+		multiple times. Patches are wellcome.
+
+Install:
+Copy SkyLight.java to <CONTIKI>/tools/cooja/apps/mspsim/src/se/sics/cooja/interfaces
+Add "SkyLight.class," to the list of interfaces in getAllMoteInterfaceClasses in 
+<CONTIKI>/tools/cooja/apps/mspsim/src/se/sics/cooja/mspmote/SkyMoteType.java
+

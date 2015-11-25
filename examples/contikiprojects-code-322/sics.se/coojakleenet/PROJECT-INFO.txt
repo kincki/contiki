@@ -1,0 +1,11 @@
+Name: Kleenet COOJA project
+Contact:
+Fredrik Osterlind, SICS, fros@sics.se
+License: BSD
+Contiki: Contiki 2.5rc1 (git 2011-03-01)
+Intended platforms: cooja
+Tested platforms: cooja
+URL:
+Screenshot: doc/screenshot.png
+Description:
+See the doc folder for project details.

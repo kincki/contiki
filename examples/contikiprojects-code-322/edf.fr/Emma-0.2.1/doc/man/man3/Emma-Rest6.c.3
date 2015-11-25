@@ -1,0 +1,218 @@
+.TH "apps/Emma-Rest6/Emma-Rest6.c" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+apps/Emma-Rest6/Emma-Rest6.c \- 
+.PP
+EMMA-Rest6 Engine is the acronyme of Energy Monitoring & Management Agent for IPV6 RestFull HTTP Protocole.
+.br
+ This engine allows publication of ressource data on the standard HTTP protocole with JSON representation.
+.br
+ 
+.br
+ \fBReport\fP :
+.br
+ 
+.br
+ This engine implements notification over HTTP by using report mechanism.
+.br
+ This reports are inserted and stored in EEPROM memory and are periodically called to notify the subscriber.
+.br
+ 
+.br
+ A log mechanism periodically store the current data of the ressource in eeprom slot log memory by using circle memory mapping.
+.br
+ 
+.br
+ URI available :
+.br
+.IP "\(bu" 2
+GET /
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/report/{*|ReportId}
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/log/{*|LogId}/
+.br
+
+.IP "\(bu" 2
+POST /data/{*|RessourceName}\\/report/
+.br
+
+.IP "\(bu" 2
+DELETE /data/{*|RessourceName}\\/report/{*|IdReport}/
+.br
+
+.IP "\(bu" 2
+PUT /data/{*|RessourceName}\\/
+.br
+
+.IP "\(bu" 2
+PUT /data/{*|RessourceName}\\/report/{IdReport}/
+.br
+. 
+.PP
+ 
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Emma-Rest6.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRESSOURCE_LIST\fP (ressources_list)"
+.br
+.ti -1c
+.RI "\fBMEMB\fP (conns, struct \fBRestConnection\fP, INCOMMING_CONNECTION_MAX)"
+.br
+.ti -1c
+.RI "\fBMEMB\fP (noti, struct \fBRestNotify\fP, OUTCOMMING_CONNECTION_MAX)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_header\fP (char *buff, unsigned short int status_code)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_log\fP (char *buff, int id, char *name, int value, int time)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_data\fP (char *buff, char *name, char *unit, char *timestamp, char *value)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_report_1\fP (char *buff, char *uri, int id)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_report_2\fP (char *buff, int port, char *method, char *body)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_report_3\fP (char *buff, char *name, int period, int min, int max, char *condition)"
+.br
+.ti -1c
+.RI "void \fBnextUrlFoled\fP (char *url, char *buff)"
+.br
+.ti -1c
+.RI "char * \fBextractBodyValue\fP (char *str1, const char *str2, char *dst)"
+.br
+.ti -1c
+.RI "void \fBSubscriberFactory\fP (struct \fBReport\fP *dst, char *str, char *buf)"
+.br
+.ti -1c
+.RI "void \fBlookup_method\fP (struct \fBRestConnection\fP *conn)"
+.br
+.ti -1c
+.RI "static \fBPT_THREAD\fP (handle_connection(struct \fBRestConnection\fP *conn))"
+.br
+.ti -1c
+.RI "static \fBPT_THREAD\fP (notify_connection(struct \fBRestNotify\fP *conn))"
+.br
+.ti -1c
+.RI "void \fBapp_rest\fP (void *data)"
+.br
+.ti -1c
+.RI "static void \fBthread_publish_func\fP (void)"
+.br
+.ti -1c
+.RI "void \fBEmma_init\fP ()"
+.br
+.ti -1c
+.RI "\fBPROCESS\fP (rest6_server_process,'Rest IPV6 HTTP process')"
+.br
+.ti -1c
+.RI "\fBPROCESS_THREAD\fP (rest6_server_process, ev, data)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "static struct etimer \fBet\fP"
+.br
+.ti -1c
+.RI "const char header_http[] \fBPROGMEM\fP = {'HTTP/1.0 %d %s\\r\\nContent-type: text/plain\\r\\n\\r\\n\\0'}"
+.br
+.ti -1c
+.RI "AUTOSTART_PROCESSES & \fBrest6_server_process\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+EMMA-Rest6 Engine is the acronyme of Energy Monitoring & Management Agent for IPV6 RestFull HTTP Protocole.
+.br
+ This engine allows publication of ressource data on the standard HTTP protocole with JSON representation.
+.br
+ 
+.br
+ \fBReport\fP :
+.br
+ 
+.br
+ This engine implements notification over HTTP by using report mechanism.
+.br
+ This reports are inserted and stored in EEPROM memory and are periodically called to notify the subscriber.
+.br
+ 
+.br
+ A log mechanism periodically store the current data of the ressource in eeprom slot log memory by using circle memory mapping.
+.br
+ 
+.br
+ URI available :
+.br
+.IP "\(bu" 2
+GET /
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/report/{*|ReportId}
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/log/{*|LogId}/
+.br
+
+.IP "\(bu" 2
+POST /data/{*|RessourceName}\\/report/
+.br
+
+.IP "\(bu" 2
+DELETE /data/{*|RessourceName}\\/report/{*|IdReport}/
+.br
+
+.IP "\(bu" 2
+PUT /data/{*|RessourceName}\\/
+.br
+
+.IP "\(bu" 2
+PUT /data/{*|RessourceName}\\/report/{IdReport}/
+.br
+. 
+.PP
+
+
+EMMA-Rest6 Engine 
+.PP
+\fBAuthor:\fP
+.RS 4
+Clement DUHART <duhart.clement@gmail.com>
+.RE
+.PP
+\fBhttp://www.ece.fr/~duhart/pages/fr/1projets/aEMMA/EMMA-Node.pdf\fP
+.PP
+Definition in file \fBEmma-Rest6.c\fP.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

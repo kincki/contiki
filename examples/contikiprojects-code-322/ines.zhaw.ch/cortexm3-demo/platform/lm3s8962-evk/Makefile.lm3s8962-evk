@@ -1,0 +1,25 @@
+ifndef CONTIKI
+  $(error CONTIKI not defined! You must specify where CONTIKI resides!)
+endif
+
+CONTIKI_TARGET_DIRS += 	.	drivers
+		
+
+ETHERNET_FILES =					ethernet.c					\
+													ethernet_drv.c	
+
+PLATFORM_DRIVER =					$(ETHERNET_FILES)
+
+CONTIKI_TARGET_SOURCEFILES += contiki-main.c clock.c display.c\
+							  							$(PLATFORM_DRIVER)
+							  
+CONTIKI_SOURCEFILES 			 += $(CONTIKI_TARGET_SOURCEFILES)
+
+.SUFFIXES:
+
+### Define the CPU directory
+CONTIKI_CPU=$(CONTIKI)/cpu/lm3s8962
+include $(CONTIKI)/cpu/lm3s8962/Makefile.lm3s8962
+
+contiki-$(TARGET).a: ${addprefix $(OBJECTDIR)/,symbols.o}
+

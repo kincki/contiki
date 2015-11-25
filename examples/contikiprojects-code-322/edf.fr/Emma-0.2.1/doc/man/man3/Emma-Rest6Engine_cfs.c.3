@@ -1,0 +1,54 @@
+.TH "apps/Emma-Rest6/Emma-Rest6Engine_cfs.c" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+apps/Emma-Rest6/Emma-Rest6Engine_cfs.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cfs/cfs.h'\fP
+.br
+\fC#include 'dev/eeprom.h'\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include 'Emma-Rest6.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char \fBfile_update\fP (void *data, char *Buff, struct \fBFile\fP *root, int size, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for updating a data slot in EEPROM memory. \fP"
+.ti -1c
+.RI "char \fBfile_new\fP (void *data, char *Buff, struct \fBFile\fP *root, int size, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for saving a new data slot in EEPROM memory. \fP"
+.ti -1c
+.RI "char \fBfile_delete\fP (void *buf, char *Buff, struct \fBFile\fP *root, int id, int size, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for deleting in EEPROM memory. \fP"
+.ti -1c
+.RI "char \fBfile_read\fP (void *data, char type, struct \fBFile\fP *root, int size, int id, int cfs_offset, int cfs_offset_end)"
+.br
+.RI "\fIDriver function for reading in EEPROM memory. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+EMMA-Rest6 CFS Engine 
+.PP
+\fBAuthor:\fP
+.RS 4
+Clement DUHART <duhart.clement@gmail.com>
+.RE
+.PP
+The file contains an API for saving data inside static slot.
+.br
+ This API is used by the report and log mechanism to make a persistant abstract layer. 
+.PP
+Definition in file \fBEmma-Rest6Engine_cfs.c\fP.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

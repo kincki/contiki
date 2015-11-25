@@ -1,0 +1,13 @@
+Name: Safe-Contiki
+Contact: Tomsy Paul <tomsypaul@hotmail.com>
+URL:
+License: 
+Screenshot: 
+Contiki version: 
+Intended platforms: 
+Tested platforms: 
+Description:
+An attempt to make Contiki free of all Memory safety and Type 
+safety violations.'Deputy' (http://deputy.cs.berkeley.edu/) 
+is used to achieve this. This project was inspired by a similar 
+work done for Tiny OS.Please go through README for more details.

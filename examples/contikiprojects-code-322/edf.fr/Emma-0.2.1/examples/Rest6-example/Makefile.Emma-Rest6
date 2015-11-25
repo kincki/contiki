@@ -1,0 +1,12 @@
+all: Emma-Rest6
+
+UIP_CONF_IPV6=1
+APPS=Emma-Rest6
+#RF230BB=1             //Use radio driver that communicates with the core MAC layer. Still Experimental!
+
+CONTIKI = ../..
+
+
+include $(CONTIKI)/Makefile.include
+
+

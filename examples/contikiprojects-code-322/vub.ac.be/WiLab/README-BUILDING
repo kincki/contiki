@@ -1,0 +1,18 @@
+
+*) To build the files TestWilabContiki.[java/class] a TinyOS-2.x distribution must be installed. 
+   The java file can be created with the nescc-mig tool, the class file can be compiled from 
+   the java file from the tinyos-2.x/support/sdk/java folder, or if the TinyOS-2.x/support/sdk/java/tinyos.jar 
+   file is in the classpath when compiling.
+   
+*) Only the additional #ifdef WILAB ... #endif header is important in the included contiki-conf file.
+   If you have your own version of the contiki-conf file, simply/paste copy this section.
+   
+*) The serial frames can be activated by compiling with a WILAB flag, e.g.
+   > make hello-world.upload DEFINES=WILAB
+   Obviously, it is required to reprogram nodes after recompiling.
+
+*) Note that frames can be still read by serialdump (or "make login", which uses serialdump), but they will 
+   look like your output surrounded by gibberish (the frame header and footer). 
+   Alternatively, you can use the TinyOS serial listening tools (serial forwarder, prettylisten, ...) in 
+   tinyos-2.x/support/sdk/c/sf to view your messages or to simply check that they are coming through
+   correctly.

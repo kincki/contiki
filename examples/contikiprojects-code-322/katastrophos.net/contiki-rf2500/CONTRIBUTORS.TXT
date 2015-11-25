@@ -1,0 +1,4 @@
+List of contributors
+
+Wincent Balin <wincent.balinDONOTSPAM@gmail.com>
+

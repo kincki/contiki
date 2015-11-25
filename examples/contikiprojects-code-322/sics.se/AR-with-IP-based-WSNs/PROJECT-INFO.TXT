@@ -1,0 +1,16 @@
+Name: Augmenting Reality with IP-based Sensor Networks
+Contact: Dogan Yazar doganyazar@yahoo.com
+URL:
+License: 
+Screenshot: 
+Contiki version:
+Intended platforms: Android
+Tested platforms: HTC Legend - Android 2.0
+Description:
+
+This project provides an Augmented Reality application working on Android platform. The application is developed for the IPSN'10 demo named Augmenting Reality with IP-based Sensor Networks (ttp://www.sics.se/~adam/yazar10augmenting.pdf). 
+Application calls RESTful web services to access Light, Temperature sensor readings and Energy usage, and overlays this data over ARToolkit patterns. Each pattern represents a pre-defined IP address. 
+
+For the Augmented Reality part, AndAR - Android Augmented Reality (http://code.google.com/p/andar/), a port of ARToolkit on Android, is used. 
+
+Source code is in <andar-read-only> and ARToolkit patterns are in <andar> directory. <andar> pattern directory should be copied on to the SD card of the Android phone.

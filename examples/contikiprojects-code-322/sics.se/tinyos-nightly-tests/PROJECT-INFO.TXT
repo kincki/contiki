@@ -1,0 +1,10 @@
+Name: tinyos-nightly-tests
+Contact: Fredrik Osterlind <fros@sics.se>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: Checked out every night, runs in Cooja
+Intended platforms: Tmote Sky
+Tested platforms: Tmote Sky
+Description:
+Precompiled TinyOS binaries used to verify that TinyOS runs Cooja.

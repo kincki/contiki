@@ -1,0 +1,194 @@
+README FILE
+Contiki Rest6 project
+TARGET : ZigBit Atmel (Atmega1281 + AT86RF)
+DUHART Clément @Slash
+10/05/2010
+
+
+ Fonctions :
+ - Publication RestFull sur un serveur HTTP (light) en JSON/XML (à spécifier Formatage JSON/XML | Code d'erreur | Structure sémantique ?? SMAP ??)
+ - Couche persistante pour la sauvegarde des souscripteurs aux notifications (EEPROM)
+ - Driver capteurs température et luminosité (I2C)
+
+ RestFull API : (Futur implementation SMAP (JSON - Berkley definition))
+ - Method :
+ GET /
+	@Return : 
+		<sensor>
+			<param name="ip" type="address" value="aaaa:0000:0000:0000:cf00:7469:6161:6161 ">
+		</sensor>
+
+
+ GET /data/*
+	@Return : 
+		<data>
+			<param name="Temperature" type="int" value="24">
+			<param name="Luminosite" type="int" value="102">
+		</data>
+
+ GET /data/temperature
+	@Return : 
+		<data>
+			<param name="Temperature" type="int" value="24">
+		</data>
+
+ GET /data/luminosite
+	@Return : 
+		<data>
+			<param name="Luminosite" type="int" value="102">
+		</data>
+ 
+ GET /subscribe
+	@Return : 
+		<subscribe>
+			<param name="subscriber" type="address" value="aaaa::2b00:7469:6161:6161 ">
+			<param name="subscriber" type="address" value="aaaa:bbbb:cccc:dddd:2b00:7469">
+		</subscribe>
+
+ POST /subscribe/[aaaa::xxxx:xxxx:xxxx:xxxx]
+ DELETE /subscribe/[aaaa::xxxx:xxxx:xxxx:xxxx]
+ DELETE /subscribe/* 
+
+ PUT /data/{data}/{value}  (Si inscriptible)
+
+ - Header return : 
+		* 200 OK [SUCCESS]
+		* 500 METHOD_INVALID [FAILED]
+
+ Sensor Driver :
+ - Common function : 
+ int sleepMode(void);
+ int WakeUpMode(void);
+
+ - TSL2550 AMBIENT LIGHT SENSOR WITH SMBus INTERFACE
+		short int getLight(void);
+
+ - LM37 TEMPERATURE SENSOR WITH SMBus INTERFACE
+		int configureTemperature(void);
+		short int getTemperature(void);
+
+ EEPROM Driver : Patch : /core/cfs/cfs-eeprom.c
+ 
+ Pagination grâce à une structure, celle-ci contient actuellement une string de #define SUBSCRIBER_ADRESS_SIZE 41.
+ Possibiliter d'insérer ce que l'on souhaite, périodicité des notifications, priorités, multicast, seuil de déclenchement ... 
+ Mémoire disponible et paginée en structure de donnée
+
+ Trois fonctions ont été patchées pour permettre la mise en place de la couche persistante sans le systeme de fichier COFFEE de contiki.
+ - fonction cfs_open : Pour récupérer la taille de la collection qui est stockée sur le premier segment de la mémoire.
+ - fonction cfs_read : Pour détecter la fin de la collection et fermer le fichier
+ - fonction cfs_write : Permet de sauvegarder la taille de la collection dans le premier segment de la mémoire
+ 
+ Fonction ajoutée :
+ - cfs_delete : Permet la suppression d'une donnée spécifique à la collection de données. Cette fonction supprime les espaces vides.
+ - cfs_format : Formatte l'ensemble de la collection
+
+//contiki-2.4/core/cfs/cfs-eeprom.c
+int
+cfs_open(const char *n, int f)
+{
+	// / : 10/05/ : Save the size of the data collection on the first memory segment
+	eeprom_addr_t filesize;
+	eeprom_read(0, &filesize, sizeof(eeprom_addr_t));
+
+	if(filesize == -1)
+		file.filesize = 0;
+	else
+		file.filesize = filesize;
+
+	eeprom_write(0, (unsigned char *) &file.filesize, sizeof(eeprom_addr_t));
+	// / : 10/05/ : 
+
+  if(file.flag == FLAG_FILE_CLOSED) {
+    file.flag = FLAG_FILE_OPEN;
+    if(f & CFS_READ) {
+      file.fileptr = 0;
+    }
+    if(f & CFS_WRITE){
+      if(f & CFS_APPEND) {
+	file.fileptr = file.filesize;
+      } else {
+	file.fileptr = 0;
+	file.filesize = 0;
+      }
+    }
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+int
+cfs_read(int f, void *buf, unsigned int len)
+{
+  if(f == 1) {
+
+	// / : 10/05/ : End of file
+	if(file.filesize < file.fileptr + len){
+		len = file.filesize - file.fileptr;
+	}
+	// / : 10/05/ : End of file
+    
+	eeprom_read(CFS_EEPROM_OFFSET + file.fileptr, buf, len);
+    file.fileptr += len;
+    return len;
+  } else {
+    return -1;
+  }
+}
+
+int
+cfs_write(int f, const void *buf, unsigned int len)
+{
+  if(f == 1) {
+    eeprom_write(CFS_EEPROM_OFFSET + file.fileptr, (unsigned char *)buf, len);
+    file.fileptr += len;
+
+	// / : 10/05/ : Incrément de la taille du nouveau comptenu
+	if(file.filesize < file.fileptr){
+		file.filesize += len;
+		eeprom_write(0, (unsigned char *) &file.filesize, sizeof(eeprom_addr_t));
+	}
+	// / : 10/05/ :
+	
+    return len;
+  } else {
+    return -1;
+  }
+}
+
+// / : 10/05/ : Remove a specify data among the list of data and remove the empty space
+int
+cfs_delete(int f, const void *buf, unsigned int len)
+{
+	char temp[len];
+	file.fileptr = 0;
+
+	do {
+		if(cfs_read(f,&temp,len) == 0){
+		break;
+		}
+
+		if(strcmp(temp, buf) == 0){
+			while(cfs_read(f,&temp,len) != 0)
+				{
+				file.fileptr -= 2*len;
+				cfs_write(f,temp,len);
+				file.fileptr += len;
+				}
+		file.filesize -= len;
+		eeprom_write(0, (unsigned char *) &file.filesize, sizeof(eeprom_addr_t));
+		return 0;
+		}		
+	}
+	while(1);
+	
+	return -1;
+}
+// / : 10/05/ 
+int
+cfs_format(int f)
+{
+file.fileptr = 0;
+file.filesize = 0;
+eeprom_write(0, (unsigned char *) &file.filesize, sizeof(eeprom_addr_t));
+}

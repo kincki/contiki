@@ -1,0 +1,1 @@
+webservices_src = rest.c soap.c http-server.c http-common.c

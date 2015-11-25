@@ -1,0 +1,13 @@
+ifndef CONTIKI
+CONTIKI = ../../../contiki-2.x/
+endif
+
+ifndef NO_MAKEFILE_INCLUDE
+# Check if the target makefile exists
+contiki_toplevel_makefile := $(wildcard $(CONTIKI)/Makefile.include)
+ifeq ($(strip $(contiki_toplevel_makefile)),)
+  ${error The top-level Contiki directory could not be found, make sure that it is in the same directory as the contikiprojects directory}
+else
+  include $(CONTIKI)/Makefile.include
+endif
+endif

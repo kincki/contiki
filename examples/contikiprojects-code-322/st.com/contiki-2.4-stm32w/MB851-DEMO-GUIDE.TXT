@@ -1,0 +1,62 @@
+
+*************************** MB851 Demo application ***************************
+
+With this example we show a way that allow you to directly communicate with
+the node of the LoWPAN from a PC.
+Make sure you have the prerequisites (see PROJECT-README.TXT).
+
+Open contiki-conf.h file in mb851 folder under platform/. You can edit the file to
+enable or disable some features or change some parameters. Set
+FIXED_NET_ADDRESS to 1 and the prefix of your LoWPAN.The values that are
+already present are test addresses and must not be used outside your LAN.
+
+Choose the application you want the nodes to run. Let's choose, for example,
+the webserver-ajax application located in the examples folder (you also have to
+enable the energy estimation and Rime to test all the features provided with this
+app, setting ENERGEST_CONF_ON and WITH_RIME in contiki-conf.h). So, if you
+are using Cygwin, type:
+	cd contiki-2.4-stm32w/examples/webserver-ajax
+	make
+Power up the board and, assuming you have your board connected with a USB
+cable and the port assigned to your device virtual com is COM4, type in your
+command shell:
+	make mb851-webserver.flash PORT=COM4
+(if you get a message saying "Unable to open port", close all the applications
+that use the port).
+
+To build and upload the uip6-bridge application go to tools/stm32w/uip6_bridge,
+connect another board to the PC and type:
+	make  uip6-bridge-tap.flash PORT=COM5
+if, e.g., COM5 is the port assigned to the device.
+
+If you are using a Linux machine build tapslip6 application from tapslip6.c file
+located in 'tools' folder ('make tapslip6').
+For windows you have to build wpcapslip6 (in tools/stm32w/wpcapslip6 folder).
+
+Open a shell window and type:
+	sudo ./tapslip6 -p 2001:db8:bbbb:abcd::/64    
+						     (in Linux)
+or
+	wpcapslip6 -s COM5 -p 2001:db8:bbbb:abcd::/64 <Ethernet card mac address>
+						     (in Windows)
+
+if 2001:db8:bbbb:abcd:: is your WPAN subnet prefix (but you don't need to specify
+a net address if you use only link-local addresses).
+The bridge will answer giving you some informations like MAC address and IPv6
+address of the interface.
+To simply test reachability of the node, you can do a ping, for example:
+	ping6 -c 3 2001:db8:bbbb:abcd:280:e102::6c   (Linux)
+or
+	ping 2001:db8:bbbb:abcd:280:e102::6c	     (Windows)
+
+To enter the web server page, open the browser and put the address of the
+node in the address bar:
+	http://[2001:db8:bbbb:abcd:280:e102::6c]
+If you have correctly set-up the network you should see a web page! You can
+browse to see the estimated cosumption (if you have set ENERGEST_CONF_ON).
+You can also put other nodes in the net with the same application and see the
+neighbors in the neighbor page  (if you have set WITH_RIME). 
+
+
+
+

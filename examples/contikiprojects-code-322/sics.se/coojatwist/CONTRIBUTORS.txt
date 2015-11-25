@@ -1,0 +1,5 @@
+Cooja-Twist plugin
+
+Contributors:
+Fredrik Osterlind, SICS, fros@sics.se
+Simon Duquennoy, SICS, simonduq@sics.se

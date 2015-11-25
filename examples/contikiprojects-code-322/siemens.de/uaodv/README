@@ -1,0 +1,30 @@
+uAODV Routing
+-------------
+
+Adaption of the uAODV implementation to IPv6 and uIP.
+In our experiments over a small number of hops, this routing mechanism appeared
+to provide faster and more responsive routing than Rime's routing module.
+
+NOTE: The default rebroadcast timeout from Rime's netflood module is lower than
+the interval for sending route requests. This leads to malfunction of Rime,
+because the pending request (which is waiting for a rebroadcast) is overwritten
+by subsequent ones.
+
+- proper address configuration with IPv6
+- provides uip_router with an additional unreachability mechanism
+- integration into neighbor discovery for reachability information
+
+NOTE: this code depends on util.{c,h} from the TFTP Server, if compiled with
+DEBUG=1.
+
+Files
+-----
+
+This contribution consists primarily of a set of patches.
+
+uaodv.diff: 		    patch for core/net/uaodv.c
+uaodv-routing.diff	    patch for other files
+contiki-sky-main.diff	replaces rimerouting with uaodvroute when
+                        UIP_CONF_ROUTER is set on the sky platform
+net/routing/uaodvroute.{c,h}
+                        uip_router implementation for uaodv

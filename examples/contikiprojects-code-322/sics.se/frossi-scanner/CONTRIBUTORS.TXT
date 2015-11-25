@@ -1,0 +1,4 @@
+Adam Dunkels <adam@sics.se>
+Fredrik Österlind <fros@sics.se>
+Joakim Eriksson <joakime@sics.se>
+Carlo Alberto Boano <cboano@iti.uni-luebeck.de>

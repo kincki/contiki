@@ -1,0 +1,303 @@
+.TH "EMMA_Rest6" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+EMMA_Rest6 \- 
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBReport\fP"
+.br
+.ti -1c
+.RI "struct \fBRessource\fP"
+.br
+.ti -1c
+.RI "struct \fBRestConnection\fP"
+.br
+.ti -1c
+.RI "struct \fBRestNotify\fP"
+.br
+.ti -1c
+.RI "struct \fBSystem\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBEmma-conf.h\fP"
+.br
+.ti -1c
+.RI "file \fBEmma-interpreteur.c\fP"
+.br
+.ti -1c
+.RI "file \fBEmma-Rest6.c\fP"
+.br
+.PP
+
+.RI "\fIEMMA-Rest6 Engine is the acronyme of Energy Monitoring & Management Agent for IPV6 RestFull HTTP Protocole.
+.br
+ This engine allows publication of ressource data on the standard HTTP protocole with JSON representation.
+.br
+ 
+.br
+ \fBReport\fP :
+.br
+ 
+.br
+ This engine implements notification over HTTP by using report mechanism.
+.br
+ This reports are inserted and stored in EEPROM memory and are periodically called to notify the subscriber.
+.br
+ 
+.br
+ A log mechanism periodically store the current data of the ressource in eeprom slot log memory by using circle memory mapping.
+.br
+ 
+.br
+ URI available :
+.br
+.IP "\(bu" 2
+GET /
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/report/{*|ReportId}
+.br
+
+.IP "\(bu" 2
+GET /data/{*|RessourceName}\\/log/{*|LogId}/
+.br
+
+.IP "\(bu" 2
+POST /data/{*|RessourceName}\\/report/
+.br
+
+.IP "\(bu" 2
+DELETE /data/{*|RessourceName}\\/report/{*|IdReport}/
+.br
+
+.IP "\(bu" 2
+PUT /data/{*|RessourceName}\\/
+.br
+
+.IP "\(bu" 2
+PUT /data/{*|RessourceName}\\/report/{IdReport}/
+.br
+. 
+.PP
+\fP"
+.ti -1c
+.RI "file \fBEmma-Rest6.h\fP"
+.br
+.ti -1c
+.RI "file \fBRest6-Agent.c\fP"
+.br
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDEBUG\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSEND_NOTIFY\fP   1"
+.br
+.ti -1c
+.RI "#define \fBPORT\fP   80"
+.br
+.ti -1c
+.RI "#define \fBPROCESS_TIME\fP   3"
+.br
+.ti -1c
+.RI "#define \fBPROCESS_TIME_LOG\fP   5"
+.br
+.ti -1c
+.RI "#define \fBPROCESS_TIME_REPORT\fP   5"
+.br
+.ti -1c
+.RI "#define \fBRESSOURCE_NAME_SIZE\fP   12"
+.br
+.ti -1c
+.RI "#define \fBRESSOURCE_ID_MAX_DIGIT\fP   3"
+.br
+.ti -1c
+.RI "#define \fBBODY_NOTIFY\fP   18"
+.br
+.ti -1c
+.RI "#define \fBURI_OUTCOMMING_MAX_SIZE\fP   (15 + RESSOURCE_NAME_SIZE + RESSOURCE_ID_MAX_DIGIT)"
+.br
+.ti -1c
+.RI "#define \fBURI_INCOMMING_MAX_SIZE\fP   (15 + RESSOURCE_NAME_SIZE + RESSOURCE_ID_MAX_DIGIT)"
+.br
+.ti -1c
+.RI "#define \fBBUFFER_SIZE\fP   70"
+.br
+.ti -1c
+.RI "#define \fBBUFFER_SOCKET_SIZE\fP   70"
+.br
+.ti -1c
+.RI "#define \fBBUFFERMINI_SIZE\fP   6"
+.br
+.ti -1c
+.RI "#define \fBINCOMMING_CONNECTION_MAX\fP   1"
+.br
+.ti -1c
+.RI "#define \fBOUTCOMMING_CONNECTION_MAX\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTIMEOUT\fP   20"
+.br
+.ti -1c
+.RI "#define \fBREPORT_CMD_SIZE\fP   20"
+.br
+.ti -1c
+.RI "#define \fBSEND_STRING\fP(s, str)   PSOCK_SEND(s, (uint8_t *)str, (unsigned int)strlen(str))"
+.br
+.ti -1c
+.RI "#define \fB_PRINTF\fP(...)   printf_P(PSTR(__VA_ARGS__))"
+.br
+.ti -1c
+.RI "#define \fBPRINT6ADDR\fP(addr)   _PRINTF(' %02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x ', ((u8_t *)addr)[0], ((u8_t *)addr)[1], ((u8_t *)addr)[2], ((u8_t *)addr)[3], ((u8_t *)addr)[4], ((u8_t *)addr)[5], ((u8_t *)addr)[6], ((u8_t *)addr)[7], ((u8_t *)addr)[8], ((u8_t *)addr)[9], ((u8_t *)addr)[10], ((u8_t *)addr)[11], ((u8_t *)addr)[12], ((u8_t *)addr)[13], ((u8_t *)addr)[14], ((u8_t *)addr)[15])"
+.br
+.ti -1c
+.RI "#define \fBMIN\fP(a, b)   a < b ? a : b"
+.br
+.ti -1c
+.RI "#define \fBMAX\fP(a, b)   a > b ? a : b"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBAND\fP, \fBOR\fP, \fBINF\fP, \fBSUP\fP }"
+.br
+.ti -1c
+.RI "enum { \fBNO_SPECIFY\fP, \fBGET\fP, \fBPUT\fP, \fBPOST\fP, \fBDELETE\fP, \fBNOTIFY\fP }"
+.br
+.ti -1c
+.RI "enum { \fBREADY\fP, \fBSENDING\fP }"
+.br
+.ti -1c
+.RI "enum { \fBNONE\fP, \fBGET_DATA\fP, \fBGET_ALL_DATA\fP, \fBGET_REPORT\fP, \fBGET_ALL_REPORT\fP, \fBGET_LOG\fP, \fBGET_ALL_LOG\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBgetOperande\fP (char *str, char *op, char *opd1, char *opd2, int size)"
+.br
+.ti -1c
+.RI "int \fBEmmal_evaluate\fP (char *str)"
+.br
+.ti -1c
+.RI "\fBRESSOURCE_LIST\fP (ressources_list)"
+.br
+.ti -1c
+.RI "\fBMEMB\fP (conns, struct \fBRestConnection\fP, INCOMMING_CONNECTION_MAX)"
+.br
+.ti -1c
+.RI "\fBMEMB\fP (noti, struct \fBRestNotify\fP, OUTCOMMING_CONNECTION_MAX)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_header\fP (char *buff, unsigned short int status_code)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_log\fP (char *buff, int id, char *name, int value, int time)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_data\fP (char *buff, char *name, char *unit, char *timestamp, char *value)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_report_1\fP (char *buff, char *uri, int id)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_report_2\fP (char *buff, int port, char *method, char *body)"
+.br
+.ti -1c
+.RI "char * \fBFactory_http_balise_report_3\fP (char *buff, char *name, int period, int min, int max, char *condition)"
+.br
+.ti -1c
+.RI "void \fBnextUrlFoled\fP (char *url, char *buff)"
+.br
+.ti -1c
+.RI "char * \fBextractBodyValue\fP (char *str1, const char *str2, char *dst)"
+.br
+.ti -1c
+.RI "void \fBSubscriberFactory\fP (struct \fBReport\fP *dst, char *str, char *buf)"
+.br
+.ti -1c
+.RI "void \fBlookup_method\fP (struct \fBRestConnection\fP *conn)"
+.br
+.ti -1c
+.RI "static \fBPT_THREAD\fP (handle_connection(struct \fBRestConnection\fP *conn))"
+.br
+.ti -1c
+.RI "static \fBPT_THREAD\fP (notify_connection(struct \fBRestNotify\fP *conn))"
+.br
+.ti -1c
+.RI "void \fBapp_rest\fP (void *data)"
+.br
+.ti -1c
+.RI "static void \fBthread_publish_func\fP (void)"
+.br
+.ti -1c
+.RI "void \fBEmma_init\fP ()"
+.br
+.ti -1c
+.RI "\fBPROCESS\fP (rest6_server_process,'Rest IPV6 HTTP process')"
+.br
+.ti -1c
+.RI "\fBPROCESS_THREAD\fP (rest6_server_process, ev, data)"
+.br
+.ti -1c
+.RI "\fBRESSOURCE_LIST_LOAD\fP (ressources_list)"
+.br
+.ti -1c
+.RI "\fBRESSOURCES_INIT\fP ()"
+.br
+.ti -1c
+.RI "\fBRESSOURCES_LOADER\fP ()"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "static struct etimer \fBet\fP"
+.br
+.ti -1c
+.RI "const char header_http[] \fBPROGMEM\fP = {'HTTP/1.0 %d %s\\r\\nContent-type: text/plain\\r\\n\\r\\n\\0'}"
+.br
+.ti -1c
+.RI "AUTOSTART_PROCESSES & \fBrest6_server_process\fP"
+.br
+.ti -1c
+.RI "static struct \fBRessource\fP \fBRessourceTemp\fP"
+.br
+.ti -1c
+.RI "static struct \fBReport\fP \fBSubscribeTemp\fP"
+.br
+.ti -1c
+.RI "static struct \fBSystem\fP \fBslash\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Energy Monitoring & Management Agent for IPV6 RestFull HTTP Copyright (C) 2010 DUHART Clément <duhart.clement@gmail.com>
+.PP
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+.PP
+All rights reserved. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

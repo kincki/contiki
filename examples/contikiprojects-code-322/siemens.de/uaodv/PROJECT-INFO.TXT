@@ -1,0 +1,12 @@
+Name: uAODV uip_router integration with support for IPv6
+Contact: Gidon Ernst <gidon.ernst@googlemail.com>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot:
+Contiki version:
+Intended platforms: All
+Tested platforms: Tmote Sky
+Description:
+uAODV adaption for IPv6 and uip_router integration.
+Supports neighbor unreachability detection via IPv6
+neighbor solicitation timeouts.

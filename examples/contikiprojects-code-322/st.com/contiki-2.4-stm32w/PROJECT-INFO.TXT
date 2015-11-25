@@ -1,0 +1,17 @@
+Name: contiki-MB851/STM32W
+Contact: Salvatore Pitrulli <salvopitru@users.sourceforge.net>
+URL:
+License: BSD http://www.opensource.org/license/bsd-license.php
+Screenshot:
+Contiki version: 2.4
+Intended platforms: MB851 and and STM32W108 based board.
+Tested platform: MB851
+Description:
+Port of the contiki operating system to the MB851 board with
+STM32W108 microcontroller. It is based on the 2.4 version
+with some modifications (essentially to the rimeroute
+module); see PROJECT-README.TXT for details. There is also an
+uip6_bridge application derived from the sky tool.
+The project compiles with the GNU toolchain and also with IAR
+(it was tested with IAR Embedded Workbench 5.41 for ARM) and
+with IPv6 support, for the moment.

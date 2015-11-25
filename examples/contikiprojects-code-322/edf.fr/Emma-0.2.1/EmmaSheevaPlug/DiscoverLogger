@@ -1,0 +1,68 @@
+#!/bin/sh
+# EMMA Gateway - Network Discovery Utilities Suite
+#   Copyright (C) 2010  Clement Duhart - Samuel Martin Moro
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Clement Duhart: <duhart.clement@gmail.com>
+#   Samuel Martin Moro: <faust64@gmail.com>
+#
+
+. /opt/emma/core/emma_vars
+
+NOTIFU="[DiscoverLogger]"
+Truncate()
+{
+    local cpt nxt dir file
+
+    test -z "$1" && return 0
+    test -e "$1" || return 0
+    if test `stat -c %s $1` -gt `expr $MAXKB '*' 1024`; then
+	cpt=$MAXLOG
+	name=`echo $1 | sed 's,.*/,,'`
+	dir=`echo $1 | sed "s,/*$name,,"`
+	cd $dir
+	test -f $name.$cpt.$EXTLOG && rm -f $name.$cpt.$EXTLOG
+	while :
+	do
+	    nxt=$cpt
+	    cpt=`expr $cpt - 1`
+	    if [ -f $name.$cpt.$EXTLOG ]; then
+		mv $name.$cpt.$EXTLOG $name.$nxt.$EXTLOG
+	    fi
+	    test $cpt -eq 0 && break
+	done
+	test -z "$CPRLOG" && CPRLOG=cjf
+	tar $CPRLOG $name.$cpt.$EXTLOG $name
+	>$1
+
+	return 1
+    fi
+
+    return 0
+}
+
+echo "$NOTIFY starting" >>$LOGFILE
+ret=0
+for i in $LISTLOG
+do
+    if ! Truncate $i; then
+	ret=`expr $ret + 1`
+    else
+	echo "$NOTIFY truncated file $i in `date`" >>$LOGFILE
+    fi
+done
+echo "$NOTIFY done" >>$LOGFILE
+
+exit $ret

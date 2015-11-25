@@ -1,0 +1,10 @@
+ /**
+ * \addtogroup EMMA
+
+ \section datalogger E.M.M.A DataLogger
+ * E.M.M.A DataLogger saves periodically ressource data values in the LOG CFS section of the EEPROM memory. The DataLogger don't call the getter function of the ressources but saves the last updated value.\n
+ * \n
+ * The DataLogger uses a circular writting in LOG CFS section, a pointer allows us to know which is the last written value. A log is composed of a ressource name, a ressource value and a time.\n
+ * Actually the log time is the number of second since the last formatting of Log CFS section. \n
+ * \todo : Use an external real time clock for get current time and save it for Log system.
+*/

@@ -1,0 +1,210 @@
+ /**
+  \defgroup tutorials Tutorial
+
+  \brief E.M.M.A Network example tutorial shows a network example with a proxy system on a simple web page PHP, two nodes and a website for data reading using javascript High Charts Framework.
+ 
+\section overview EmmaNetwork Overview
+
+ The network is separated in two main space, the speed Internet and the slow (6loWPAN) network. To avoid network congestion on a node of the 6lowPAN like the gateway, the proxy is localised directly on the Internet. Indeed, the maximum of connexions from the 6lowPAN network can be computed and controlled if we know the topologie of the network. Whereas, the internet client requests cannot be precisely evaluated, and if the proxy is shutting down, we can imagine an other website proxy which takes its place from an other site, this is some reason which explains the choice to externalize the proxy on a simple internet webpage. We can addition the reason that this is a very easy way to developp a proxy with PHP language but can be realized with an OSGI plateforme for complex mechanism.\n
+\n
+The network is composed by :\n
+ \image html EmmaNetwork.png
+ \ref emmanode publishes, notifies and logs the different ressources that it contains.\n
+ \ref gateway transmits packets from 6lowPAN format from/to IPV6 standard packets and assume 802.15.4 network coordination.\n
+ \ref emmaproxy monitors all the registered node (All nodes which have a report to send to the proxy).\n
+ \ref emmaviewer gets and draws datas extracted from emmaproxy. (E.M.M.A Viewer can directly access on the Emma Network if necessary)\n
+
+\section install How to install it
+
+ \subsection emmanode E.M.M.A Node
+
+ E.M.M.A Node is a physical entity which must contains the appropriate program memory of the plateform and have the good network configurations. E.M.M.A API is an easy way to developp a full E.M.M.A Application. Thenetwork configuration is realized throw the network itself.\n
+
+ \li E.M.M.A Node building : \n
+ Only one file should be created for each plateforms which are already ported on Contiki-2.x. In the directory /contiki-2.x/plateform/{MyPlateform}/Rest6-Agent.c, we should declare the different ressources and their drivers to use.\n
+ Example :
+ \image html EmmaAPI.png
+ In this example, there are three different ressources, two are read-only and one is read-writable. To start the application developpement, we must declare the sensors_list to be able to insert new ressources. After, the ressources must be declared and their driver implementations can be process. To activate the new ressource, we must associat a unit, a getter function and, if this is a writable ressource, a setter function.\n
+\n
+ To compile it : \n
+ go to /contiki-2.x/example/Emma-Rest6/, edit the Makefile and modify the plateform argument for your plateform :
+ \code
+ make -f Makefile.$(FORMAT) TARGET={Your Plateform} $(FORMAT).elf
+ \endcode
+ And them, we compile it :
+ \code
+ make clean && make all
+ \endcode
+ To load on a ZigBit chips : \n
+ \code
+ meshprog -f Emma-Rest6.srec -t /dev/ttyUSB0 
+ \endcode
+ Start wireshark to check network packets and try to ping E.M.M.A Node. If you can ping it, you should be able to acces at the node with your favorite web browser. (http://[IPV6 address of the node]/)
+
+ \li E.M.M.A Node network configuration :\n
+ The network communication are based on the delegate task. To delegate a task to an other node, a mechanism of report by notification is periodically called and send request to other node or to a standard web server. Like our proxy is a standard web server, we can send a periodical request to the proxy. The proxy feedback reads an instantaneous data, a log or all the log of the E.M.M.A node.\n
+\n
+A report can be attached on a specific ressource or on all the ressources, different conditions of sending can be placed, like min or max value, time period or algebric condition (experimental).\n
+\n
+First, we must clear the report database by using Firefox's plugin POSTER or Linux's command curl, with the request: 
+ \code
+ DELETE /data/*/report/*
+ \endcode
+ To check that the formating has successed :
+ \code
+ GET /data/*/report/
+ \endcode
+ must return :
+ \code
+ []
+ \endcode
+Now, we can send our report request :
+ \code
+ POST /data/ { * | Ressource Name } /report/
+ Body :
+{
+"host":"[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]",
+"uri":"EMMA/proxy.php?get=notify",
+"port":"80",
+"method":"GET",
+"body":"",
+"condition":"this.temperature>4 && !this.time"
+}
+ \endcode
+ To check that the posting has successed :
+ \code
+ GET /data/*/report/
+ \endcode
+ must return :
+ \code
+[{
+"host":"[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]",
+"uri":"EMMA/proxy.php?get=notify",
+"id":"36",
+"port":"80",
+"method":"GET",
+"body":"",
+"name":"*",
+"condition":"this.temperature>4 && !this.time"
+}
+]
+ \endcode
+ The E.M.M.A node is ready and must try to send request on : http://[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]/EMMA/proxy.php?get=notify
+
+ \subsection gateway R4ven Gateway
+
+ The R4ven Gateway allows the conversion between 6lowPAN packets and IPV6 standard packets and assume the coordination of the 802.15.4 network.
+ To start and configure it, you can use the script Edge Router in tools directory.
+ \code
+ sudo -s
+ chmod 755 "Edge Router"
+ ./Edge\ Router
+ \endcode
+ The output result must be : 
+ \code
+ Configuration of the IP adress of the gateway
+ Add route throw the gateway USB0
+ Activating IPV6 forwarding
+ Starting Radvd forwarding IPV6 by sending global address by routing advertisement (RA)
+ \endcode
+ Note: You must install radvd packet : apt-get install radvd
+ \n
+ To check, network configuration :
+ \code
+ ifconfig
+ usb0      Link encap:Ethernet  HWaddr 02:12:13:00:10:00  
+          adr inet6: fe80::12:13ff:fe00:1000/64 Scope:Lien
+          adr inet6: 3ffe:501:ffff:100:206:98ff:fe00:231/128 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1280  Metric:1
+          Packets reçus:127 erreurs:127 :0 overruns:0 frame:127
+          TX packets:56 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 lg file transmission:1000 
+          Octets reçus:10994 (10.9 KB) Octets transmis:9158 (9.1 KB)
+ \endcode
+
+ \subsection emmaproxy E.M.M.A Proxy
+
+ E.M.M.A Proxy is composed of a PHP script and a SQL database.
+ \li The SQL database is composed of two tables : log and network.
+     The datatable log contains all connexions and available datas of the client : traditionnal web client and E.M.M.A Node client.\n
+     The contain of the table network are automatically inserted and deleted by the proxy. This datatable contains the node actually connected with the proxy.
+     We must create the database :
+     \code
+	SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+	--
+	-- Structure de la table `log`
+	--
+
+	CREATE TABLE IF NOT EXISTS `log` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `address` text NOT NULL,
+	  `ressource` text NOT NULL,
+	  `unit` text NOT NULL,
+	  `time` bigint(20) NOT NULL,
+	  `value` int(11) NOT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=908 ;
+
+	-- --------------------------------------------------------
+
+	--
+	-- Structure de la table `network`
+	--
+
+	CREATE TABLE IF NOT EXISTS `network` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `address` text NOT NULL,
+	  `type` text NOT NULL,
+	  `state` text NOT NULL,
+	  `groupe` int(11) NOT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+     \endcode
+     The sql connexion parameters must be edited in proxy.php :
+\code
+function Emma_connection(){
+$serv = mysql_connect("localhost","root","root");
+mysql_select_db("Emma-site",$serv);
+}
+\endcode
+     The file proxy.php must be placed at the URI define during E.M.M.A Node configuration step (/EMMA/proxy.php).\n
+     To check, if an E.M.M.A Node is already connected for updating datatable, the proxy must send periodically ping request.\n
+     There are different way to do that, the most easy way is to use Cron linux daemon.\n
+     We will use cron for sending ping request on E.M.M.A Node registered and updating their state on the database.\n
+     \n
+     You must install php5-cli package : apt-get install php5-cli
+     Note : there is a bug in Lucid Ubuntu 10.04, you must replace # by ; in the file /etc/php5/cli/conf.d/mcrypt.ini
+\code
+crontab -e
+* * * * * php -f /var/www/EMMA-view/proxy.php get=ping > /var/www/EMMA-view/Network.log
+\endcode
+     Now, the proxy is installed, we can test it with the uri :
+\code
+// Get all logs
+GET http://127.0.0.1/EMMA/proxy.php?get=log
+
+// Get log from a specific node
+GET http://127.0.0.1/EMMA/proxy.php?get=log&&address=XXXX::XXXX:XXXX:XXXX:XXXX
+
+// Get log of a ressource from a specific node
+GET http://127.0.0.1/EMMA/proxy.php?get=log&&address=XXXX::XXXX:XXXX:XXXX:XXXX&&ressource=MyRessource
+\endcode
+     
+     
+
+ \subsection emmaviewer E.M.M.A Viewer
+
+ The E.M.M.A Viewer is a simple javascript client to browse and print chart of network data.\n
+ On the left of the screen, there are two section, the first contains all registered E.M.M.A Node if there are actually connected, there are appeared in green otherwise in red. By clicking on a specific node, the chart prints all ressources contained.\n
+ The second section allows us to print a specific ressource of the selected node on the chart.\n
+ \n
+ To configure the client, you must specify the uri of the proxy
+\code
+var uri_proxy = 'proxy.php';
+\endcode
+ \image html EmmaViewer.png
+\n
+Enjoy your E.M.M.A network ;-)\n
+/
+
+*/

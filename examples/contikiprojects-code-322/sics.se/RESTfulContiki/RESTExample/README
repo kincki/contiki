@@ -1,0 +1,31 @@
+COMPILE and RUN:
+cd RestExample
+make clean
+make rest-example.upload #will compile and upload the example to all the tmote skys connected
+sudo make linslip #in linux - need slip protocol to connect
+(If does not make sense, first check IP networking example : http://www.sics.se/contiki/tutorials/tutorial-ip-networking-and-web-server-for-the-tmote-sky.html 
+For example it shows how to learn the IP address of the gateway) 
+
+NOTE: can try it in minimal-net configuration too (locally on linux), then you need to
+make rest-example TARGET=minimal-net
+sudo ./rest-example.minimal-net #run the program locally
+(Then the IP address will be 192.168.1.2 rather than 172.16.bla.bla)
+
+
+Configuration:
+I assume that we have 2-mote IP network now having IPs 172.16.79.0 (gateway) and 172.16.77.0
+
+TEST:
+Will use curl as a client since it is very easy, if you can manage to make it work then you can use restlet, ruby on rails etc to try it further of course if you want :)
+
+Please check the RestExample/rest-example.c source code to see which resources are available. (check the RESOURCE macros in the code).
+
+curl -s -X GET 172.16.77.0:8080/helloworld -i #get helloworld plain text
+curl -s -X POST 172.16.77.0:8080/helloworld -i # method not allowed
+
+curl -s -X POST 172.16.77.0:8080/led/blue -i -d mode=on  #turn on the blue led
+curl -s -X POST 172.16.77.0:8080/led/blablabla -i -d mode=on #404 - Not found
+
+curl -s -X GET 172.16.79.0:8080/service?which=temperature -i #temp value in an xml
+curl -s -X POST 172.16.77.0:8080/conf -i -d @conf.xml  #configure the sensor leds via an xml file posted.
+

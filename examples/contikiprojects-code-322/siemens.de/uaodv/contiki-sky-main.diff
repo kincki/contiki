@@ -1,0 +1,27 @@
+Index: contiki-sky-main.c
+===================================================================
+RCS file: /cvsroot/contiki/contiki-2.x/platform/sky/contiki-sky-main.c,v
+retrieving revision 1.56
+diff -u -r1.56 contiki-sky-main.c
+--- contiki-sky-main.c	22 Jun 2009 11:14:11 -0000	1.56
++++ contiki-sky-main.c	25 Nov 2009 13:50:23 -0000
+@@ -59,8 +59,7 @@
+ #include "net/uip-netif.h"
+ #include "net/mac/sicslowmac.h"
+ #if UIP_CONF_ROUTER
+-#include "net/routing/rimeroute.h"
+-#include "net/rime/rime-udp.h"
++#include "net/routing/uaodvroute.h"
+ #endif /* UIP_CONF_ROUTER*/
+ #endif /* WITH_UIP6 */
+ 
+@@ -278,8 +277,7 @@
+   process_start(&tcpip_process, NULL);
+   printf(" %s channel %u\n", sicslowmac_driver.name, RF_CHANNEL);
+ #if UIP_CONF_ROUTER
+-  rime_init(rime_udp_init(NULL));
+-  uip_router_register(&rimeroute);
++  uip_router_register(&uaodvroute);
+ #endif /* UIP_CONF_ROUTER */
+ #else /* WITH_UIP6 */
+   rime_init(MAC_DRIVER.init(&cc2420_driver));

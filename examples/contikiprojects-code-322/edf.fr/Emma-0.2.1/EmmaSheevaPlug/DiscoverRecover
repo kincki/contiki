@@ -1,0 +1,52 @@
+#!/bin/sh
+# EMMA Gateway - Network Discovery Utilities Suite
+#   Copyright (C) 2010  Clement Duhart - Samuel Martin Moro
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Clement Duhart: <duhart.clement@gmail.com>
+#   Samuel Martin Moro: <faust64@gmail.com>
+#
+
+. /opt/emma/core/emma_vars
+
+NOTIFY="[DiscoverRecover]"
+if ! test -e $LOCKFILE; then
+    echo "[DiscoverRecover] can't start: DiscoverNetwork is not running" >>$LOGFILE
+    exit $NODAEMON
+fi
+echo "$NOTIFY starting" >>$LOGFILE
+
+find $ROOT/$NetName -name status >$TMPLIST
+for i in `cat $TMPLIST`
+do
+    addr=`echo $i | sed "s,.*$NetName/{,," | sed "s,}.*,,"`
+    lock=`echo $i | sed 's,status$,lock,'`
+    if grep "^$STAT_CONN$" $i >/dev/null; then
+	echo "$NOTIFY skipping $addr [connected]" >>$LOGFILE
+    elif grep "^$STAT_ZOMB$" $i >/dev/null; then
+	echo "$NOTIFY skipping $addr [zombie]" >>$LOGFILE
+    elif grep "^$STAT_IGNR$" $i >/dev/null; then
+	echo "$NOTIFY skipping $addr [ignore]" >>$LOGFILE
+    elif test -e $lock; then
+	echo "$NOTIFY skipping $addr [locked]" >>$LOGFILE
+    else
+	echo "$NOTIFY recovering $addr" >>$LOGFILE
+	$BINDIR/DiscoverRessource $addr $STAT_ZOMB &
+    fi
+done
+rm -f $TMPLIST
+echo "$NOTIFY done" >>$LOGFILE
+
+exit 0

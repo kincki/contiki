@@ -1,0 +1,45 @@
+This is the top-level directory of the Contiki projects
+repository. This directory contains a number of directories, which in
+turn contain sub directories in which project files are kept. The
+directory names in the top-level directory are formed from the DNS
+domain name from where the project developers come from.
+
+The Contiki projects repository builds on individual contributions,
+and not institutional contributions, so the directory names should not
+be taken as to indicate that the organizations that hold the domain
+names are responsible for its contents. The use of domain names as
+directory names are only to have a meaningful way to ensure uniqueness
+of the directory names.
+
+Each project sub directory contains a file called
+PROJECT-INFO.TXT. This file has a defined structure that contains
+information about the purpose of the project, the contact point for
+the project, a URL to the project website (if any), the open source
+license used by the project, what version of Contiki and what
+platforms the project is known to work with, as well as a description
+of the project. The PROJECT-INFO.TXT file is mandatory in all project
+sub directories.
+
+Note that the PROJECT-INFO.TXT file is not intended to hold the names
+of the people that have contributed to the project, but only a single
+name of the person who acts as the contact point for the project. To
+give credit to project contributors, project sub directories may
+contain a file called CONTRIBUTORS.TXT. This file is a free-form
+structured file that may contain only the names of the people that
+contributed to the projects, the names and their roles, a narrative
+that tells the story of who wrote what, or just about anything that
+suits the particular project.
+
+For more information, go to the Contiki projects repository website:
+https://sourceforge.net/projects/contikiprojects/
+
+Specifically, visit the Contiki projects mailing lists:
+
+For discussions:
+https://lists.sourceforge.net/lists/listinfo/contikiprojects-discuss
+
+For announcements:
+https://lists.sourceforge.net/lists/listinfo/contikiprojects-announce
+
+For automatic posts of code updates (high volume):
+https://lists.sourceforge.net/lists/listinfo/contikiprojects-commits

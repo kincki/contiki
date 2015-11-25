@@ -1,0 +1,11 @@
+Name: Contiki-RF2500
+Contact: Wincent Balin <wincent.balin@gmail.com>
+URL: http://katastrophos.net/wincent/blog/software/contiki-for-rf2500/
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: 2.3
+Intended platforms: ez430-RF2500
+Tested platforms: ez430-RF2500
+Description:
+Port of Contiki OS to ez430-RF2500 board.
+

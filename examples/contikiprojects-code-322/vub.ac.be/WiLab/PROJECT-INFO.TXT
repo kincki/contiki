@@ -1,0 +1,14 @@
+Name: WiLab serial drivers
+Contact: Joris Borms <joris.borms@vub.ac.be>
+Contiki version: Contiki 2.x (CVS version august 2010)
+Intended platforms: TMote Sky (or variant) testbeds
+Description:
+UGent's Wilab is a 187 mote managed testbed. All serial output is
+captured and stored in a database. The management software was written
+with TinyOS deployments in mind, so it requires that all serial 
+output is framed in the TinyOS frame format.
+This project defines a serial driver for the MSP430 which frames all
+"printf" messages terminated by '\n'. As the driver was written with
+WiLab compatibility in mind some simplifications are made, but it 
+should be fairly simple to extend to more generic compatibility,
+should anyone be interested.

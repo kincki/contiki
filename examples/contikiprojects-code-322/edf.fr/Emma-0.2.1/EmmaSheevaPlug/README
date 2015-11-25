@@ -1,0 +1,32 @@
+DiscoverNetwork
+  Starting / stopping script
+  Configure interface, starts radvd, starts scanning
+  Adds DiscoverNode, DiscoverLogger and DiscoverRecover jobs to crontab
+
+DiscoverLogger
+  Purging logs
+
+DiscoverNode
+  Reading scan results and calling DiscoverRessource
+  Also, stopping discover network script when the device is not plugged in anymore
+	(doesn't udev provide delete or drop or something?!)
+
+DiscoverRecover
+  Recovering discovery from lost nodes
+
+DiscoverRessource
+  Discovering remote node tree, and creating its image locally
+
+emma_vars
+  Included arguments
+  You might want to configure them
+
+notify.php
+  Notification script, updating node data values
+
+DiscoverFunctions
+  Included functions
+
+80-EMMA-DISCOVERY.rules
+  Rule to add in /etc/udev/rules.d
+  Starting the discover network script when the R4ven key is plugged in

@@ -1,0 +1,15 @@
+Name: The Frossi Scanner
+Contact: Adam Dunkels <adam@sics.se>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: http://www.sics.se/~adam/frossi-screenshot.png
+Contiki version: 2.5
+Intended platforms: Tmote Sky (and others with CC2420).
+Tested platforms: Tmote Sky
+Description:
+Frossi is a system that makes the invisible visible: providing
+visibility to low-power radio transmissions that are otherwise
+invisible. Frossi consists of a Java program and Contiki shell program
+that rapidly reads the radio signal strength on a specified channel
+and shows it in a window. A very useful debugging tool in wireless
+low-power networks.

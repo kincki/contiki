@@ -1,0 +1,11 @@
+Name: Node Attribute Lib
+Contact: Joris Borms <joris.borms@vub.ac.be>
+Contiki version: CVS 2009-11-23
+Intended platforms: any (wireless) networked system
+Tested platforms: Sentilla JCreate
+Description:
+A library that allows you to define one or more attribute tables for nodes 
+in the network (indexed by their rime address). Attributes can be defined 
+seperately in various parts of the program, this way programs don't need to
+define their own neighbor table or routing table but instead add attributes 
+to a globally defined table.

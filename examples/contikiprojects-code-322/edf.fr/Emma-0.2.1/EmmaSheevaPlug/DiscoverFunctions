@@ -1,0 +1,189 @@
+#!/bin/sh
+# EMMA Gateway - Network Discovery Utilities Suite
+#   Copyright (C) 2010  Clement Duhart - Samuel Martin Moro
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Clement Duhart: <duhart.clement@gmail.com>
+#   Samuel Martin Moro: <faust64@gmail.com>
+#
+
+. /opt/emma/core/emma_vars
+
+alias mkdir='mkdir -p'
+IPV4=0000:0000
+LOCALNET=0000
+
+test -z "$PREFIX" && PREFIX=`grep prefix $RADVCNF | awk '{print $2}' | cut -d ':' -f 1`
+
+PIDof()
+{
+    local car cdr
+
+    car=`expr "$1" : '\(.\).*'`
+    cdr=`expr "$1" : '.\(.*\)'`
+    ps ax | awk "BEGIN{ n = 0 }/[$car]$cdr /{printf(n > 0 ? \" %s\" : \"%s\", \$1); n++}"
+}
+
+SetDev()
+{
+    local dev
+
+    dev=`awk '/^interface /{print $2}' $RADVCNF 2>/dev/null`
+    if test "$dev"; then
+	DEV=$dev
+    elif test -z "$DEV"; then
+	DEV=usb0
+    fi
+}
+
+SetIPv6Conf()
+{
+    ip -6 address add 3ffe:0501:ffff:0100:0206:98ff:fe00:0231 scope global dev $DEV
+    ip -6 route add $PREFIX:$IPV4:$LCALNET:0206:98ff:fe00:0232/64 dev $DEV
+}
+
+UnsetIPv6Conf()
+{
+    SetDev
+    ip -6 address delete 3ffe:0501:ffff:0100:0206:98ff:fe00:0231 dev $DEV
+    ip -6 route delete $PREFIX:$IPV4:$LCALNET:0206:98ff:fe00:0232/64 dev $DEV
+}
+
+IPv6Checks()
+{
+    if test -e $FRWD6; then
+	if ! test `cat $FRWD6` = 1; then
+	    echo "activating IPv6 forwading" >&2
+	    echo 1 >$FRWD6
+	fi
+	if ! test "`curl -V | awk '/^Features: /' | egrep "[Ii][Pp][Vv]6"`"; then
+	    echo "curl does not support IPv6" >&2
+	    exit $NOCURLV6
+	fi
+	return 0
+    else
+	echo "Can't check for IPv6 forwarding capabilities" >&2
+	echo "Edit FRWD6 variable [current value $FRWD6]" >&2
+    fi
+    exit $NOIPV6RT
+}
+
+AddCronJob()
+{
+    (
+	crontab -l
+	echo "* * * * * $BINDIR/DiscoverNode >/dev/null 2>&1"
+	echo "*/5 * * * * $BINDIR/DiscoverRecover >/dev/null 2>&1"
+	echo "0 * * * * $BINDIR/DiscoverLogger >/dev/null 2>&1"
+    ) | crontab -
+}
+
+DelCronJob()
+{
+    crontab -l | grep -Ev "(DiscoverNode|DiscoverLogger|DiscoverRecover)" | crontab -
+}
+
+GetDevice()
+{
+    local dev devip RADVbkp
+
+    SetDev
+    if ! test -e $RADVCNF; then
+	echo "generating $RADVCNF, using default interface $DEV" >&2
+	(
+	    echo "interface $DEV"
+	    echo "{"
+	    echo "    AdvSendAdvert on;"
+	    echo "    AdvLinkMTU 1280;"
+	    echo "    AdvCurHopLimit 128;"
+	    echo "    AdvReachableTime 360000;"
+	    echo "    MinRtrAdvInterval 100;"
+	    echo "    MaxRtrAdvInterval 150;"
+	    echo "    AdvDefaultLifetime 200;"
+	    echo "    prefix $PREFIX::/64"
+	    echo "    {"
+	    echo "        AdvOnLink on;"
+	    echo "        AdvAutonomous on;"
+	    echo "        AdvRouterAddr on;"
+#	    echo "        Base6to4Interface $UPLINK_ITF;"
+	    echo "        AdvPreferredLifetime 4294967295;"
+	    echo "        AdvValidLifetime 4294967295;"
+	    echo "    };"
+	    echo "};"
+	) >$RADVCNF
+    fi
+    if ! test "`ifconfig | grep "^$DEV[	 ]"`"; then
+	if ! test "`ifconfig -a | grep "^$DEV[ 	]"`"; then
+	    echo "Unable to use device $DEV" >&2
+	    exit $NODEV
+	fi
+	ifconfig $DEV up
+	if test $? -ne 0; then
+	    echo "Unable to sart device $DEV" >&2
+	    echo "  will try to continue anyway" >&2
+	fi
+    fi
+    devip=`ifconfig $DEV | awk '/^ *inet6 addr: /{print $3}' | head -1 | sed 's,/.*,,'`
+    if ! test "$devip"; then
+	echo "Unable to determine $DEV IPv6 addr" >&2
+	exit $NOIPV6
+    else
+	DEVIP=$devip
+    fi
+}
+
+CleanEmmasMess()
+{
+    find $ROOT/$NetName -name lock -exec rm -f {} \; >/dev/null 2>&1
+#   find $ROOT/$NetName -name status -exec rm -f {} \;  >/dev/null 2>&1
+    find $TMPDIR -name 'emma*' -exec rm -f {} \; >/dev/null 2>&1
+    rm -f $TMPID 2>/dev/null
+    test -d $LOGDIR || mkdir $LOGDIR
+}
+
+DiscoverItfs()
+{
+    (
+	$RADVRCS stop
+	$RADVRCS start
+    ) >/dev/null 2>&1
+
+    echo -n >$TMPSCAN
+    ping6 ff02::1 -I $DEV -i $PING_ITV 2>&1 >>$TMPSCAN &
+    ps axww | awk '/ [p]ing6 ff02::1 -I /{print $1}' >$LOCKFILE
+}
+
+HasOurReport()
+{
+    local i node
+
+    node="$ROOT/$NetName/{$1}"
+    for i in $node/report/*
+    do
+	if grep "\"[ 	]*host[ 	]*\"[ 	]*:[ 	]*\"[ 	]*\[`cat $TMPID`\][ 	]*\"" $i >/dev/null; then
+	    if grep "\"[ 	]*method[ 	]*\"[ 	]*:[ 	]*\"[ 	]*$NOTIFYMETHOD[ 	]*\"" $i >/dev/null; then
+		if grep "\"[ 	]*uri[ 	]*\"[ 	]*:[ 	]*\"[ 	]*$NOTIFYURI[ 	]*\"" $i >/dev/null; then
+		    if grep "\"[ 	]*port[ 	]*\"[ 	]*:[ 	]*\"[ 	]*$NOTIFYPORT[ 	]*\"" $i >/dev/null; then
+			if grep "\"[ 	]*condition[	]*\"[	]*:[	]*\"[	]*$NOTIFYCOND[	]*\"" $i >/dev/null; then
+			    return 0
+			fi
+		    fi
+		fi
+	    fi
+	fi
+    done
+
+    return 1
+}

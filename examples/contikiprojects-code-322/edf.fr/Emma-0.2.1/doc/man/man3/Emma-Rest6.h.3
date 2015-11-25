@@ -1,0 +1,117 @@
+.TH "apps/Emma-Rest6/Emma-Rest6.h" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+apps/Emma-Rest6/Emma-Rest6.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string.h>\fP
+.br
+\fC#include <stdio.h>\fP
+.br
+\fC#include <avr/pgmspace.h>\fP
+.br
+\fC#include 'contiki.h'\fP
+.br
+\fC#include 'contiki-net.h'\fP
+.br
+\fC#include 'uip-netif.h'\fP
+.br
+\fC#include 'cfs.h'\fP
+.br
+\fC#include 'dev/eeprom.h'\fP
+.br
+\fC#include 'Emma-CFS-API.h'\fP
+.br
+\fC#include 'Emma-conf.h'\fP
+.br
+\fC#include 'Emma-API.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBReport\fP"
+.br
+.ti -1c
+.RI "struct \fBRessource\fP"
+.br
+.ti -1c
+.RI "struct \fBRestConnection\fP"
+.br
+.ti -1c
+.RI "struct \fBRestNotify\fP"
+.br
+.ti -1c
+.RI "struct \fBSystem\fP"
+.br
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSEND_STRING\fP(s, str)   PSOCK_SEND(s, (uint8_t *)str, (unsigned int)strlen(str))"
+.br
+.ti -1c
+.RI "#define \fB_PRINTF\fP(...)   printf_P(PSTR(__VA_ARGS__))"
+.br
+.ti -1c
+.RI "#define \fBPRINT6ADDR\fP(addr)   _PRINTF(' %02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x ', ((u8_t *)addr)[0], ((u8_t *)addr)[1], ((u8_t *)addr)[2], ((u8_t *)addr)[3], ((u8_t *)addr)[4], ((u8_t *)addr)[5], ((u8_t *)addr)[6], ((u8_t *)addr)[7], ((u8_t *)addr)[8], ((u8_t *)addr)[9], ((u8_t *)addr)[10], ((u8_t *)addr)[11], ((u8_t *)addr)[12], ((u8_t *)addr)[13], ((u8_t *)addr)[14], ((u8_t *)addr)[15])"
+.br
+.ti -1c
+.RI "#define \fBMIN\fP(a, b)   a < b ? a : b"
+.br
+.ti -1c
+.RI "#define \fBMAX\fP(a, b)   a > b ? a : b"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBNO_SPECIFY\fP, \fBGET\fP, \fBPUT\fP, \fBPOST\fP, \fBDELETE\fP, \fBNOTIFY\fP }"
+.br
+.ti -1c
+.RI "enum { \fBREADY\fP, \fBSENDING\fP }"
+.br
+.ti -1c
+.RI "enum { \fBNONE\fP, \fBGET_DATA\fP, \fBGET_ALL_DATA\fP, \fBGET_REPORT\fP, \fBGET_ALL_REPORT\fP, \fBGET_LOG\fP, \fBGET_ALL_LOG\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBEmmal_evaluate\fP (char *str)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "static struct \fBRessource\fP \fBRessourceTemp\fP"
+.br
+.ti -1c
+.RI "static struct \fBReport\fP \fBSubscribeTemp\fP"
+.br
+.ti -1c
+.RI "static struct \fBSystem\fP \fBslash\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file of EMMA-Rest6 Engine 
+.PP
+\fBAuthor:\fP
+.RS 4
+Clement DUHART <duhart.clement@gmail.com> 
+.RE
+.PP
+
+.PP
+Definition in file \fBEmma-Rest6.h\fP.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

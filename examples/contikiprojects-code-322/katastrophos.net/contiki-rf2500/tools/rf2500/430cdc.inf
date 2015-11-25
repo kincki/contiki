@@ -1,0 +1,63 @@
+
+[Version] 
+Signature="$Windows NT$" 
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318} 
+Provider=%MS% 
+LayoutFile=layout.inf
+DriverVer=10/02/06
+
+[Manufacturer] 
+%TI%=DeviceList
+
+[DestinationDirs] 
+DefaultDestDir=12 
+
+[SourceDisksFiles]
+
+[SourceDisksNames]
+
+[DeviceList] 
+%DESCRIPTION%=TIUSB, USB\Vid_0451&Pid_F432&MI_00
+%DESCRIPTION%=TIUSB, USB\Vid_0451&Pid_F433
+  
+;------------------------------------------------------------------------------
+;  Windows 2000/XP Sections
+;------------------------------------------------------------------------------
+
+[TIUSB.nt] 
+include=mdmcpq.inf
+CopyFiles=DriverCopyFiles
+AddReg=TIUSB.nt.AddReg 
+
+[DriverCopyFiles]
+usbser.sys,,,0x20
+
+[TIUSB.nt.AddReg] 
+HKR,,DevLoader,,*ntkern 
+HKR,,NTMPDriver,,usbser.sys 
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider" 
+
+
+[TIUSB.nt.Services] 
+AddService=usbser, 0x00000002, DriverService
+
+
+[TIUSB.nt.HW]
+include=mdmcpq.inf
+
+[DriverService] 
+DisplayName=%DESCRIPTION% 
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\usbser.sys 
+
+;------------------------------------------------------------------------------
+;  String Definitions
+;------------------------------------------------------------------------------
+
+[Strings] 
+TI="Texas Instruments"
+DESCRIPTION="MSP430 Application UART" 
+MS="Microsoft"

@@ -1,0 +1,57 @@
+CONTIKI_CPU_DIRS            = . utils \
+                              drivers
+
+PROJECT_LIBRARIES          += $(CONTIKI_CPU)/driverlib/gcc/libdriver.a
+
+CONTIKI_TARGET_SOURCEFILES += rtimer-arch.c   \
+                              uip_arch.c       \
+                              syscalls.c       \
+                              ustdlib.c       \
+                              uartstdio.c     \
+                              rit128x96x4.c    \
+                              startup_gcc.c
+                              
+
+CONTIKI_SOURCEFILES        += $(CONTIKI_TARGET_SOURCEFILES)
+
+### Compiler definitions
+CC       = arm-none-eabi-gcc
+LD       = arm-none-eabi-ld
+AS       = arm-none-eabi-as
+OBJCOPY  = arm-none-eabi-objcopy
+STRIP    = arm-none-eabi-strip
+
+LINKERSCRIPT = $(CONTIKI_CPU)/linkerscript.ld
+       
+CFLAGS  =-mthumb             \
+         -mcpu=cortex-m3     \
+         -O2                 \
+         -Wall               \
+         -ffreestanding       \
+         -g
+         
+         
+
+LDFLAGS   = -T $(LINKERSCRIPT) --gc-sections -Wl,-e,ResetISR
+CDEPFLAGS = $(CFLAGS) -D __MAKING_DEPS__
+
+STARTUP=${addprefix $(OBJECTDIR)/,startup_gcc.o}
+
+### Compilation rules
+CUSTOM_RULE_LINK=yes
+
+%.$(TARGET): %.co $(PROJECT_OBJECTFILES) contiki-$(TARGET).a $(PROJECT_LIBRARIES) $(STARTUP)
+	$(CC) $(LDFLAGS) $(CFLAGS)  -o $@ $(filter-out %.a,$^) $(filter %.a,$^) -lc $(filter %.a,$^)
+
+%.ihex: %.$(TARGET)
+	$(OBJCOPY) $^ -O ihex $@
+
+%.bin: %.$(TARGET)
+	$(OBJCOPY) -O binary $< $@
+  
+#symbols.c:
+#  @${CONTIKI}/tools/make-empty-symbols
+
+
+###----------------------------------------------------------------------------
+

@@ -1,0 +1,155 @@
+ /**
+  \defgroup EMMA_HTTP E.M.M.A RestFull HTTP API
+  \brief E.M.M.A RestFull HTTP API is a network interface API for communication between different nodes on HTTP IPV6 Protocol.\n
+         The goal of this API is to make a network without gateway for coordination task but a network with distributed intelligence on the network. Each node is responsible of its ressources and have a decision table (Report mechanism) for transmit order.\n
+         The decision table must be created and updated by the network itself. A responsible node or human must set the node configurations, we talk about Network Manager Node which must check the network homogeneity and occured network error to reconfigure the node. \n
+\n
+	This N.M.N is not necessary to be always connected on the network and just can be installed on a smartphone which gets all logs and monitors occasionally the network reaction. This N.M.N can be directly a webserver on the internet and performs the operation throw an 6to4 tunnel.
+
+  \image html Network.png
+
+\section core   E.M.M.A RestFull HTTP core is composed by :
+  \li A litle \ref webserver.
+  \li A litle \ref client
+
+\section webserver RestFull HTTP webserver :
+The webserver allows the publication of all declared ressources in the application. The publication is automatic and standard by using JSON data representation on a paradigm RestFull. All ressource must be unique and accessible by a unique URI, the URI mechanism ensures that.\n
+The root's webserver contains an index of all ressources and their full access path. All ressources are loggued and the access of its are available by add log/{* | IdLog} after the full ressource URI.\n
+The ressources are periodically refreshed by a time interval specify during compilation process. When an incomming request is received, the response sends the last refreshed data value.\n 
+\n
+A ressource is represented by an integer and an associated unit, and have already an associated getter function, and a setter function if the ressource is writtable.\n\n
+Links : 
+\li \ref uri
+\li \ref error 
+\n
+\section client RestFull HTTP client :
+The client allows notification by report. Network administrator or the network itself can post report on the node to configure the sended request by the node. All HTTP request header and body can be specified with sending condition.\n 
+
+\li Report mechanism : An network agent (Human or Machine) send a POST request on a specific or on all the ressources with /report/ after full URI and set a condition to send. 
+
+\li Notify mechanism : A periodic thread browses all reports, checks their sending condition, and if it's necessary, schedules its. The scheduling depends of the outcomming simultaneous connection maximum define during compilation process.\n\n
+Note : Like all outcomming requests can be configured, their can be not necessary a RestFull JSON representation but a simple HTML request, Ajax request, etc...
+Each report needs a minimum of 92 bytes of EEPROM memory and 164 bytes are transmited during a request. 
+
+\section uri URI available : 
+\li GET /\n 
+Response :
+  \code
+   [
+    {
+     "name":"ressource",
+     "uri":"http://[host ::ipv6]/data/ { name } /"
+    }, [...]
+   ]
+  \endcode
+
+\li GET /data/ { * | RessourceName }/\n
+Response :
+  \code
+{
+"name":"brightness",
+"unit":"lux",
+"InstatenousRate":"2"
+}
+  \endcode
+
+\li GET /data/ { * | RessourceName } /meta/\n
+Response :
+  \code
+{
+"name":"brightness",
+"min":"0",
+"max":"100",
+"readonly":"1"
+}
+  \endcode
+
+\li GET /data/ { * | RessourceName } /report/ { * | ReportId } /\n
+Response :
+  \code
+{
+"host":"[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]",
+"uri":"notify.php",
+"port":"80",
+"method":"GET",
+"body":"",
+"condition":"!%this.time || this.brightness < 100"
+}
+  \endcode
+
+
+\li GET /data/ { * | RessourceName } /log/ { * | LogId } /\n
+Response :
+  \code
+[
+{
+"id":"192",
+"name":"temperature",
+"value":"30",
+"time":"165"
+},[...]
+]
+
+  \endcode
+
+\li POST /data/ { * | RessourceName } /report/\n
+Body 
+\code
+{
+"host":"[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]",
+"uri":"notify.php",
+"port":"80",
+"method":"GET",
+"name":"{ * | RessourceName }",
+"body":"{"value":"this.white1 + 100"}",
+"condition":"!%this.time || this.brightness < 100"
+}
+\endcode
+
+
+\li DELETE /data/ { * | RessourceName } /report/ { * | IdReport }/\n
+
+\li PUT /data/{*|RessourceName}\/\n
+Body :
+\code
+ {
+  "value":"XXX"
+ }
+\endcode
+
+\li PUT /data/ { * | RessourceName } /report/ { IdReport }/\n
+Body :
+\code
+{
+"host":"[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]",
+"uri":"notify.php",
+"port":"80",
+"method":"GET",
+"body":"",
+"condition":"!%this.time || this.brightness < 100"
+}
+\endcode
+
+\li GET /report/meta/\n 
+\code
+...
+\endcode
+
+\li GET /meta\n 
+\code
+...
+\endcode
+
+
+\section error Return Error Code
+\li 200 OK
+\li 400 Bad Request
+\li 403 Forbidden
+\li 404 Not Found
+\li 405 Method Not Allowed
+\li 408 Request Timeout
+\li 411 Length required
+\li 413 Entity too long
+\li 414 Uri too large
+\li 500 Internal Error		
+*/

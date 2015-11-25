@@ -1,0 +1,28 @@
+Name: E.M.M.A-Rest6
+Contact: Clement DUHART <duhart.clement@gmail.com>
+URL:
+License: GPL http://www.opensource.org/licenses/gpl-license.php
+Documentation: http://www.ece.fr/~duhart/emma/doc/html/index.html
+Screenshot: 
+Contiki version: CVS 2010-06-10
+Intended platforms: Avr Raven, Avr Meshnetics, TI MSP430
+Tested platforms: Avr Raven, Avr Meshnetics, TI MSP430
+
+Description:
+A HTTP RestFull Client-Server to publish ressource on the Internet with JSON representation.
+Energy Monitoring & Management Agent is able to continously log data value of all the ressource and
+it's able to notify different subscriber by HTTP notify report which are registered.
+URI available :\n
+- GET /
+
+- GET /data/{*|RessourceName}/
+- PUT /data/{*|RessourceName}/
+- GET /data/{*|RessourceName}/log/{*|LogId}/
+
+- POST   /data/{*|RessourceName}/report/
+- GET    /data/{*|RessourceName}/report/{*|ReportId}/
+- PUT /data/{*|RessourceName}/report/{IdReport}/
+- DELETE /data/{*|RessourceName}/report/{*|IdReport}/
+
+This application define EMMA-API which allows very quickly developing of sensor or actuator plateform to make an EMMA Network.
+This application allows the creation of Multi-agent system for network by auto-configuration and auto-controle of the network by its components.

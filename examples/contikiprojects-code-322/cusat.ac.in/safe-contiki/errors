@@ -1,0 +1,2393 @@
+
+
+
+1.4#1
+-------
+
+
+modified (CONTIKI)/cpu/native/Makefile.native Line# 6,7
+changed gcc to deputy
+
+Then did the following
+
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rimebuf.c -o obj_native/rimebuf.o
+
+Error: Error while processing file
+../../core/./net/rime/rimebuf.h:180: Warning: Type "void *" in formal "ptr" of rimebuf_reference needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:205: Warning: Type "void *" in the return value of rimebuf_reference_ptr needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:236: Warning: Type "void const   *" in formal "from" of rimebuf_copyfrom needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:256: Warning: Type "void *" in formal "to" of rimebuf_copyto needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:272: Warning: Type "unsigned char *" in formal "to" of rimebuf_copyto_hdr needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:315: Warning: Type "char const   *" in global "rimebuf_attr_strings" should be annotated NT.
+
+../../core/./net/rime/rimebuf.h:398: Warning: Type "struct rimebuf_addr *" in formal "addrs" of rimebuf_attr_copyto needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:398: Warning: Type "struct rimebuf_attr *" in formal "attrs" of rimebuf_attr_copyto needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:400: Warning: Type "struct rimebuf_addr *" in formal "addrs" of rimebuf_attr_copyfrom needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:400: Warning: Type "struct rimebuf_attr *" in formal "attrs" of rimebuf_attr_copyfrom needs a bound annotation.
+
+../../core/net/rime/rimebuf.c:88: Warning: Type "unsigned char *" in global "rimebufptr" needs a bound annotation.
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ADDR_ERECEIVER"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ADDR_ESENDER"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ADDR_RECEIVER"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ADDR_SENDER"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_CHANNEL"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_EPACKET_ID"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_EPACKET_TYPE"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_ERELIABLE"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_HOPS"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_LINK_QUALITY"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_MAX"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_MAX_REXMIT"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_NETWORK_ID"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_NONE"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_NUM_REXMIT"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_PACKET_ID"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_PACKET_TYPE"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_RELIABLE"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_REXMIT"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_RSSI"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_TIMESTAMP"
+
+../../core/net/rime/rimebuf.c:55: Error: Cast from nullterm to an ordinary pointer: "RIMEBUF_ATTR_TTL"
+
+../../core/net/rime/rimebuf.c:179: Error: Assertion will always fail in upper bound check:
+  (unsigned char * BND(cbound1__b, cbound1__e)  )to + 32 <= (unsigned char * COUNT(0) SNT  )((char * COUNT(0) SNT  )to + 1)
+
+../../core/net/rime/rimebuf.c:285: Error: Assertion will always fail in upper bound check:
+  (char *)attrs + 34U <= (char *)(attrs + 1)
+
+../../core/net/rime/rimebuf.c:286: Error: Assertion will always fail in upper bound check:
+  (char *)addrs + 8U <= (char *)(addrs + 1)
+
+../../core/net/rime/rimebuf.c:293: Error: Assertion will always fail in upper bound check:
+  (char *)attrs + 34U <= (char *)(attrs + 1)
+
+../../core/net/rime/rimebuf.c:294: Error: Assertion will always fail in upper bound check:
+  (char *)addrs + 8U <= (char *)(addrs + 1)
+
+make: *** [obj_native/rimebuf.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+1.4#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+
+Error: Error while processing file
+../../core/./net/rime/rimebuf.h:118: Warning: Type "void *" in the return value of rimebuf_hdrptr needs a bound annotation.
+
+../../core/net/rime/queuebuf.c:69: Warning: Type "unsigned char *" in field "ref" needs a bound annotation.
+
+../../core/net/rime/queuebuf.c:77: Error: Type mismatch in coercion:
+  from: struct queuebuf_ref * BND(...)  
+    to: void * BND(...)  
+   exp: refbufmem_memb_mem
+
+../../core/net/rime/queuebuf.c:110: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: memb_alloc(& refbufmem)
+
+../../core/net/rime/queuebuf.c:120: Error: Assertion will always fail in pointer access check:
+  (struct queuebuf_ref * BND(__this, rbuf__e)  )((void * SAFE  )rbuf) + 1 <= (struct queuebuf_ref * COUNT(0) SNT  )((char * COUNT(0) SNT  )((void * SAFE  )rbuf) + 1)
+
+../../core/net/rime/queuebuf.c:120: Error: Assertion will always fail in pointer access check:
+  (struct queuebuf_ref * BND(__this, rbuf__e)  )memb_alloc(& refbufmem) + 1 <= (struct queuebuf_ref * COUNT(0) SNT  )((char * COUNT(0) SNT  )memb_alloc(& refbufmem) + 1)
+
+../../core/net/rime/queuebuf.c:126: Error: Type mismatch in coercion:
+  from: struct queuebuf_ref * BND(...)  
+    to: struct queuebuf * BND(...)  
+   exp: rbuf
+
+../../core/net/rime/queuebuf.c:187: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+../../core/net/rime/queuebuf.c:203: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+make: *** [obj_native/queuebuf.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.5#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+
+Error: Error while processing file
+../../core/net/rime/queuebuf.c:69: Warning: Type "unsigned char *" in field "ref" needs a bound annotation.
+
+../../core/net/rime/queuebuf.c:77: Error: Type mismatch in coercion:
+  from: struct queuebuf_ref * BND(...)  
+    to: void * BND(...)  
+   exp: refbufmem_memb_mem
+
+../../core/net/rime/queuebuf.c:110: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: memb_alloc(& refbufmem)
+
+../../core/net/rime/queuebuf.c:120: Error: Assertion will always fail in pointer access check:
+  (struct queuebuf_ref * BND(__this, rbuf__e)  )((void * SAFE  )rbuf) + 1 <= (struct queuebuf_ref * COUNT(0) SNT  )((char * COUNT(0) SNT  )((void * SAFE  )rbuf) + 1)
+
+../../core/net/rime/queuebuf.c:120: Error: Assertion will always fail in pointer access check:
+  (struct queuebuf_ref * BND(__this, rbuf__e)  )memb_alloc(& refbufmem) + 1 <= (struct queuebuf_ref * COUNT(0) SNT  )((char * COUNT(0) SNT  )memb_alloc(& refbufmem) + 1)
+
+../../core/net/rime/queuebuf.c:126: Error: Type mismatch in coercion:
+  from: struct queuebuf_ref * BND(...)  
+    to: struct queuebuf * BND(...)  
+   exp: rbuf
+
+../../core/net/rime/queuebuf.c:187: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+../../core/net/rime/queuebuf.c:203: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+make: *** [obj_native/queuebuf.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.5#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+
+Error: Error while processing file
+../../core/net/rime/queuebuf.c:126: Error: Type mismatch in coercion:
+  from: struct queuebuf_ref * BND(...)  
+    to: struct queuebuf * BND(...)  
+   exp: rbuf
+
+../../core/net/rime/queuebuf.c:187: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+../../core/net/rime/queuebuf.c:203: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+make: *** [obj_native/queuebuf.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.7#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+Making dependencies for ../../core/net/rime/queuebuf.c
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+../../core/net/rime/queuebuf.c: In function ‘queuebuf_new_from_rimebuf’:
+../../core/net/rime/queuebuf.c:126: Warning: return from incompatible pointer type
+../../core/net/rime/queuebuf.c: In function ‘queuebuf_to_rimebuf’:
+../../core/net/rime/queuebuf.c:187: Warning: assignment from incompatible pointer type
+../../core/net/rime/queuebuf.c: In function ‘queuebuf_dataptr’:
+../../core/net/rime/queuebuf.c:203: Warning: assignment from incompatible pointer type
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/ctimer.c -o obj_native/ctimer.o
+
+Error: Error while processing file
+../../core/net/rime/ctimer.c:70: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ctimer * BND(...)  
+   exp: list_head(ctimer_list)
+
+../../core/net/rime/ctimer.c:77: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ctimer * BND(...)  
+   exp: list_head(ctimer_list)
+
+../../core/net/rime/ctimer.c:79: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/ctimer.c:116: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/ctimer.c:117: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/ctimer.c:129: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/ctimer.c:130: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/ctimer.c:142: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/ctimer.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+1.8#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rime.c -o obj_native/rime.o
+
+Error: Error while processing file
+../../core/net/rime/rime.c:62: Error: Type mismatch in coercion:
+  from: struct rime_sniffer * BND(...)  
+    to: void * BND(...)  
+   exp: s
+
+../../core/net/rime/rime.c:68: Error: Type mismatch in coercion:
+  from: struct rime_sniffer * BND(...)  
+    to: void * BND(...)  
+   exp: s
+
+../../core/net/rime/rime.c:78: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rime_sniffer * BND(...)  
+   exp: list_head(sniffers)
+
+../../core/net/rime/rime.c:109: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rime_sniffer * BND(...)  
+   exp: list_head(sniffers)
+
+make: *** [obj_native/rime.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.9#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/broadcast.c -o obj_native/broadcast.o
+
+Error: Error while processing file
+../../core/./net/rime/abc.h:72: Warning: Type "struct abc_conn *" in <function pointer formal ptr> needs a bound annotation.
+
+../../core/net/rime/broadcast.c:63: Warning: Type "struct abc_conn *" in formal "bc" of recv_from_abc needs a bound annotation.
+
+../../core/net/rime/broadcast.c:67: Error: Type mismatch in coercion:
+  from: struct abc_conn * BND(...)  
+    to: struct broadcast_conn * BND(...)  
+   exp: bc
+
+make: *** [obj_native/broadcast.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.9#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+Making dependencies for ../../core/net/uaodv-rt.c
+Making dependencies for ../../core/net/uaodv.c
+Making dependencies for ../../core/net/uip-over-mesh.c
+Making dependencies for ../../core/net/tcpdump.c
+Making dependencies for ../../core/net/psock.c
+Making dependencies for ../../core/net/tcpip.c
+Making dependencies for ../../core/lib/print-stats.c
+Making dependencies for ../../core/net/mac/lpp.c
+Making dependencies for ../../core/net/mac/xmac.c
+Making dependencies for ../../core/net/rime/chameleon-bitopt.c
+Making dependencies for ../../core/net/rime/chameleon-raw.c
+Making dependencies for ../../core/net/rime/channel.c
+Making dependencies for ../../core/net/rime/chameleon.c
+Making dependencies for ../../core/net/rime/rudolph2.c
+Making dependencies for ../../core/net/rime/rudolph1.c
+Making dependencies for ../../core/net/rime/rudolph0.c
+Making dependencies for ../../core/net/rime/neighbor-discovery.c
+Making dependencies for ../../core/net/rime/neighbor.c
+Making dependencies for ../../core/net/rime/collect.c
+Making dependencies for ../../core/net/rime/route-discovery.c
+Making dependencies for ../../core/net/rime/mesh.c
+Making dependencies for ../../core/net/rime/trickle.c
+Making dependencies for ../../core/net/rime/rmh.c
+Making dependencies for ../../core/net/rime/multihop.c
+Making dependencies for ../../core/net/rime/netflood.c
+Making dependencies for ../../core/net/rime/ipolite.c
+Making dependencies for ../../core/net/rime/polite.c
+Making dependencies for ../../core/net/rime/rucb.c
+Making dependencies for ../../core/net/rime/abc.c
+Making dependencies for ../../core/net/rime/runicast.c
+Making dependencies for ../../core/net/rime/stunicast.c
+Making dependencies for ../../core/net/rime/unicast.c
+Making dependencies for ../../core/net/rime/stbroadcast.c
+Making dependencies for ../../core/net/rime/broadcast.c
+Making dependencies for ../../core/net/rime/timesynch.c
+Making dependencies for ../../core/net/rime/rime.c
+Making dependencies for ../../core/net/rime/ctimer.c
+Making dependencies for ../../core/net/rime/queuebuf.c
+Making dependencies for ../../core/net/rime/rimebuf.c
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rimebuf.c -o obj_native/rimebuf.o
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+
+../../core/net/rime/queuebuf.c: In function ‘queuebuf_new_from_rimebuf’:
+../../core/net/rime/queuebuf.c:126: Warning: return from incompatible pointer type
+
+../../core/net/rime/queuebuf.c: In function ‘queuebuf_to_rimebuf’:
+../../core/net/rime/queuebuf.c:187: Warning: assignment from incompatible pointer type
+
+../../core/net/rime/queuebuf.c: In function ‘queuebuf_dataptr’:
+../../core/net/rime/queuebuf.c:203: Warning: assignment from incompatible pointer type
+
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/ctimer.c -o obj_native/ctimer.o
+
+../../core/net/rime/ctimer.c: In function ‘process_thread_ctimer_process’:
+../../core/net/rime/ctimer.c:84: Warning: ‘tmp_current’ is used uninitialized in this function
+
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rime.c -o obj_native/rime.o
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/timesynch.c -o obj_native/timesynch.o
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/broadcast.c -o obj_native/broadcast.o
+
+../../core/net/rime/broadcast.c: In function ‘recv_from_abc’:
+../../core/net/rime/broadcast.c:67: Warning: assignment from incompatible pointer type
+
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/stbroadcast.c -o obj_native/stbroadcast.o
+
+Error: Error while processing file
+../../core/./net/rime/broadcast.h:74: Warning: Type "struct broadcast_conn *" in <function pointer formal ptr> needs a bound annotation.
+
+../../core/net/rime/stbroadcast.c:52: Warning: Type "struct broadcast_conn *" in formal "broadcast" of recv_from_broadcast needs a bound annotation.
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:220: Warning: Mismatched types in patch:
+  original: void (void *ptr )
+     patch: ssize_t (int s , void const   * COUNT(__n) NONNULL  msg , size_t __n , int flags )
+
+
+../../core/net/rime/stbroadcast.c:55: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct stbroadcast_conn * BND(...)  
+   exp: broadcast
+
+../../core/net/rime/stbroadcast.c:82: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct stbroadcast_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/stbroadcast.c:96: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/stbroadcast.c:109: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/stbroadcast.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.10#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/unicast.c -o obj_native/unicast.o
+
+Error: Error while processing file
+../../core/net/rime/unicast.c:69: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct unicast_conn * BND(...)  
+   exp: broadcast
+
+make: *** [obj_native/unicast.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.10#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+make: Warning: File `obj_native/unicast.d' has modification time 1.9e+04 s in the future
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/stunicast.c -o obj_native/stunicast.o
+
+Error: Error while processing file
+../../core/./net/rime/unicast.h:68: Warning: Type "struct unicast_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/stunicast.c:59: Warning: Type "struct unicast_conn *" in formal "uc" of recv_from_uc needs a bound annotation.
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:220: Warning: Mismatched types in patch:
+  original: void (void *ptr )
+     patch: ssize_t (int s , void const   * COUNT(__n) NONNULL  msg , size_t __n , int flags )
+
+
+../../core/net/rime/stunicast.c:62: Error: Type mismatch in coercion:
+  from: struct unicast_conn * BND(...)  
+    to: struct stunicast_conn * BND(...)  
+   exp: uc
+
+../../core/net/rime/stunicast.c:100: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct stunicast_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/stunicast.c:116: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/stunicast.c:131: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/stunicast.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.10#3
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+make: Warning: File `obj_native/unicast.d' has modification time 1.5e+04 s in the future
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/runicast.c -o obj_native/runicast.o
+
+Error: Error while processing file
+../../core/./net/rime/stunicast.h:69: Warning: Type "struct stunicast_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/runicast.c:71: Warning: Type "struct stunicast_conn *" in formal "stunicast" of sent_by_stunicast needs a bound annotation.
+
+../../core/net/rime/runicast.c:101: Warning: Type "struct stunicast_conn *" in formal "stunicast" of recv_from_stunicast needs a bound annotation.
+
+../../core/net/rime/runicast.c:74: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: struct runicast_conn * BND(...)  
+   exp: stunicast
+
+../../core/net/rime/runicast.c:104: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: struct runicast_conn * BND(...)  
+   exp: stunicast
+
+make: *** [obj_native/runicast.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.13#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/abc.c -o obj_native/abc.o
+
+Error: Error while processing file
+../../core/./net/rime/abc.h:136: Warning: Type "struct channel *" in formal "channel" of abc_input needs a bound annotation.
+
+../../core/net/rime/abc.c:92: Error: Type mismatch in coercion:
+  from: struct channel * BND(...)  
+    to: struct abc_conn * BND(...)  
+   exp: channel
+
+make: *** [obj_native/abc.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.13#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rucb.c -o obj_native/rucb.o
+
+Error: Error while processing file
+../../core/./net/rime/runicast.h:68: Warning: Type "struct runicast_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/rucb.c:71: Warning: Type "struct runicast_conn *" in formal "ruc" of acked needs a bound annotation.
+
+../../core/net/rime/rucb.c:87: Warning: Type "struct runicast_conn *" in formal "ruc" of timedout needs a bound annotation.
+
+../../core/net/rime/rucb.c:98: Warning: Type "struct runicast_conn *" in formal "ruc" of recv needs a bound annotation.
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:217: Warning: Mismatched types in patch:
+  original: void (struct runicast_conn *ruc , rimeaddr_t *from , uint8_t seqno )
+     patch: ssize_t (int s , void * COUNT(__n) NONNULL  buf , size_t __n , int flags )
+
+
+../../core/net/rime/rucb.c:74: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rucb_conn * BND(...)  
+   exp: ruc
+
+../../core/net/rime/rucb.c:90: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rucb_conn * BND(...)  
+   exp: ruc
+
+../../core/net/rime/rucb.c:101: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rucb_conn * BND(...)  
+   exp: ruc
+
+make: *** [obj_native/rucb.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+1.13#3
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/polite.c -o obj_native/polite.o
+
+Error: Error while processing file
+../../core/./net/rime/queuebuf.h:67: Warning: Type "void *" in the return value of queuebuf_dataptr needs a bound annotation.
+
+../../core/./net/rime/rimebuf.h:106: Warning: Type "void *" in the return value of rimebuf_dataptr needs a bound annotation.
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:217: Warning: Mismatched types in patch:
+  original: void (struct abc_conn *abc )
+     patch: ssize_t (int s , void * COUNT(__n) NONNULL  buf , size_t __n , int flags )
+
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:220: Warning: Mismatched types in patch:
+  original: void (void *ptr )
+     patch: ssize_t (int s , void const   * COUNT(__n) NONNULL  msg , size_t __n , int flags )
+
+
+../../core/net/rime/polite.c:65: Error: Type mismatch in coercion:
+  from: struct abc_conn * BND(...)  
+    to: struct polite_conn * BND(...)  
+   exp: abc
+
+../../core/net/rime/polite.c:87: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct polite_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/polite.c:131: Error: Type mismatch in coercion:
+  from: struct polite_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/polite.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+1.13#4
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/ipolite.c -o obj_native/ipolite.o
+
+Error: Error while processing file
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:217: Warning: Mismatched types in patch:
+  original: void (struct broadcast_conn *broadcast , rimeaddr_t *from )
+     patch: ssize_t (int s , void * COUNT(__n) NONNULL  buf , size_t __n , int flags )
+
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:220: Warning: Mismatched types in patch:
+  original: void (void *ptr )
+     patch: ssize_t (int s , void const   * COUNT(__n) NONNULL  msg , size_t __n , int flags )
+
+
+../../core/net/rime/ipolite.c:72: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct ipolite_conn * BND(...)  
+   exp: broadcast
+
+../../core/net/rime/ipolite.c:94: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ipolite_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/ipolite.c:155: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/ipolite.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.13#5
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/netflood.c -o obj_native/netflood.o
+
+Error: Error while processing file
+../../core/./net/rime/ipolite.h:68: Warning: Type "struct ipolite_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/netflood.c:75: Warning: Type "struct ipolite_conn *" in formal "ipolite" of recv_from_ipolite needs a bound annotation.
+
+../../core/net/rime/netflood.c:125: Warning: Type "struct ipolite_conn *" in formal "ipolite" of sent needs a bound annotation.
+
+../../core/net/rime/netflood.c:134: Warning: Type "struct ipolite_conn *" in formal "ipolite" of dropped needs a bound annotation.
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:220: Warning: Mismatched types in patch:
+  original: int (struct netflood_conn *c )
+     patch: ssize_t (int s , void const   * COUNT(__n) NONNULL  msg , size_t __n , int flags )
+
+
+../../core/net/rime/netflood.c:78: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: struct netflood_conn * BND(...)  
+   exp: ipolite
+
+../../core/net/rime/netflood.c:128: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: struct netflood_conn * BND(...)  
+   exp: ipolite
+
+../../core/net/rime/netflood.c:137: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: struct netflood_conn * BND(...)  
+   exp: ipolite
+
+make: *** [obj_native/netflood.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+1.13#6
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+Making dependencies for ../../core/net/rime/ipolite.c
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/ipolite.c -o obj_native/ipolite.o
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:217: Warning: Mismatched types in patch:
+  original: void (struct broadcast_conn *broadcast , rimeaddr_t *from )
+     patch: ssize_t (int s , void * COUNT(__n) NONNULL  buf , size_t __n , int flags )
+
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:220: Warning: Mismatched types in patch:
+  original: void (void *ptr )
+     patch: ssize_t (int s , void const   * COUNT(__n) NONNULL  msg , size_t __n , int flags )
+
+
+../../core/net/rime/ipolite.c: In function ‘recv’:
+../../core/net/rime/ipolite.c:72: Warning: assignment from incompatible pointer type
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/multihop.c -o obj_native/multihop.o
+
+Error: Error while processing file
+../../core/net/rime/multihop.c:72: Error: Type mismatch in coercion:
+  from: struct unicast_conn * BND(...)  
+    to: struct multihop_conn * BND(...)  
+   exp: uc
+
+../../core/net/rime/multihop.c:76: Error: Assertion will always fail in upper bound check:
+  (char *)((void * BND(__this, tmp__e)  )rimebuf_dataptr()) + 6U <= (char *)((void * BND(__this, tmp__e)  )((char * COUNT(0) SNT  )((void * COUNT(0) SNT  )((char * COUNT(0) SNT  )rimebuf_dataptr() + 1))))
+
+make: *** [obj_native/multihop.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.14#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rmh.c -o obj_native/rmh.o
+
+Error: Error while processing file
+../../core/net/rime/rmh.c:69: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rmh_conn * BND(...)  
+   exp: uc
+
+make: *** [obj_native/rmh.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+1.14#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/trickle.c -o obj_native/trickle.o
+
+Error: Error while processing file
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:217: Warning: Mismatched types in patch:
+  original: void (struct broadcast_conn *bc , rimeaddr_t *from )
+     patch: ssize_t (int s , void * COUNT(__n) NONNULL  buf , size_t __n , int flags )
+
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:220: Warning: Mismatched types in patch:
+  original: void (void *ptr )
+     patch: ssize_t (int s , void const   * COUNT(__n) NONNULL  msg , size_t __n , int flags )
+
+
+../../core/net/rime/trickle.c:79: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct trickle_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/trickle.c:93: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct trickle_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/trickle.c:107: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/trickle.c:124: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/trickle.c:138: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct trickle_conn * BND(...)  
+   exp: bc
+
+../../core/net/rime/trickle.c:154: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/trickle.c:167: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/trickle.c:207: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/trickle.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+1.14#3
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/mesh.c -o obj_native/mesh.o
+
+Error: Error while processing file
+../../core/./net/rime/multihop.h:69: Warning: Type "struct multihop_conn *" in <function pointer formal ptr> needs a bound annotation.
+
+../../core/./net/rime/route-discovery.h:66: Warning: Type "struct route_discovery_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/mesh.c:64: Warning: Type "struct multihop_conn *" in formal "multihop" of data_packet_received needs a bound annotation.
+
+../../core/net/rime/mesh.c:68: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct multihop_conn 
+
+../../core/net/rime/mesh.c:91: Warning: Type "struct route_discovery_conn *" in formal "rdc" of found_route needs a bound annotation.
+
+../../core/net/rime/mesh.c:94: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct route_discovery_conn 
+
+../../core/net/rime/mesh.c:106: Warning: Type "struct route_discovery_conn *" in formal "rdc" of route_timed_out needs a bound annotation.
+
+../../core/net/rime/mesh.c:109: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct route_discovery_conn 
+
+../../core/net/rime/mesh.c:68: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct mesh_conn * BND(...)  
+   exp: (char * BND(cbound1__b, cbound1__e)  )multihop - (unsigned int )(& ((struct mesh_conn * SAFE  )0)->multihop)
+
+../../core/net/rime/mesh.c:68: Error: Type mismatch in coercion:
+  from: struct multihop_conn * BND(...)  
+    to: char * BND(...)  
+   exp: multihop
+
+../../core/net/rime/mesh.c:94: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )rdc <= (char * BND(cbound2__b, cbound2__e)  )rdc + 4294967264U
+
+../../core/net/rime/mesh.c:94: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct mesh_conn * BND(...)  
+   exp: (char * BND(cbound2__b, cbound2__e)  )rdc - (unsigned int )(& ((struct mesh_conn * SAFE  )0)->route_discovery_conn)
+
+../../core/net/rime/mesh.c:94: Error: Type mismatch in coercion:
+  from: struct route_discovery_conn * BND(...)  
+    to: char * BND(...)  
+   exp: rdc
+
+../../core/net/rime/mesh.c:109: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )rdc <= (char * BND(cbound3__b, cbound3__e)  )rdc + 4294967264U
+
+../../core/net/rime/mesh.c:109: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct mesh_conn * BND(...)  
+   exp: (char * BND(cbound3__b, cbound3__e)  )rdc - (unsigned int )(& ((struct mesh_conn * SAFE  )0)->route_discovery_conn)
+
+../../core/net/rime/mesh.c:109: Error: Type mismatch in coercion:
+  from: struct route_discovery_conn * BND(...)  
+    to: char * BND(...)  
+   exp: rdc
+
+make: *** [obj_native/mesh.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+1.16#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/route.c -o obj_native/route.o
+
+Error: Error while processing file
+../../core/net/rime/route.c:76: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+../../core/net/rime/route.c:81: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+../../core/net/rime/route.c:82: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+../../core/net/rime/route.c:107: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+../../core/net/rime/route.c:110: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: memb_alloc(& route_mem)
+
+../../core/net/rime/route.c:112: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_chop(route_table)
+
+../../core/net/rime/route.c:123: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+../../core/net/rime/route.c:133: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+../../core/net/rime/route.c:150: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+../../core/net/rime/route.c:151: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+../../core/net/rime/route.c:160: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_pop(route_table)
+
+../../core/net/rime/route.c:162: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+../../core/net/rime/route.c:181: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+../../core/net/rime/route.c:193: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+make: *** [obj_native/route.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.0#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/route-discovery.c -o obj_native/route-discovery.o
+
+Error: Error while processing file
+../../core/./net/rime/netflood.h:68: Warning: Type "struct netflood_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/route-discovery.c:176: Warning: Type "struct netflood_conn *" in formal "nf" of rreq_packet_received needs a bound annotation.
+
+../../core/net/rime/route-discovery.c:181: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct netflood_conn 
+
+../../core/net/rime/route-discovery.c:145: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )uc <= (char * BND(cbound1__b, cbound1__e)  )uc + 4294967216U
+
+../../core/net/rime/route-discovery.c:145: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct route_discovery_conn * BND(...)  
+   exp: (char * BND(cbound1__b, cbound1__e)  )uc - (unsigned int )(& ((struct route_discovery_conn * SAFE  )0)->rrepconn)
+
+../../core/net/rime/route-discovery.c:145: Error: Type mismatch in coercion:
+  from: struct unicast_conn * BND(...)  
+    to: char * BND(...)  
+   exp: uc
+
+../../core/net/rime/route-discovery.c:181: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct route_discovery_conn * BND(...)  
+   exp: (char * BND(cbound2__b, cbound2__e)  )nf - (unsigned int )(& ((struct route_discovery_conn * SAFE  )0)->rreqconn)
+
+../../core/net/rime/route-discovery.c:181: Error: Type mismatch in coercion:
+  from: struct netflood_conn * BND(...)  
+    to: char * BND(...)  
+   exp: nf
+
+../../core/net/rime/route-discovery.c:246: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_discovery_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/route-discovery.c:258: Error: Type mismatch in coercion:
+  from: struct route_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/route-discovery.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.0#2
+-------
+
+
+root@instant-contiki:/home/user/contiki-2.x/examples/hello-world# make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/collect.c -o obj_native/collect.o
+
+Error: Error while processing file
+../../core/./net/rime/neighbor-discovery.h:67: Warning: Type "struct neighbor_discovery_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/./net/rime/runicast.h:68: Warning: Type "struct runicast_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/collect.c:245: Warning: Type "struct runicast_conn *" in formal "c" of node_packet_timedout needs a bound annotation.
+
+../../core/net/rime/collect.c:249: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct runicast_conn 
+
+../../core/net/rime/collect.c:257: Warning: Type "struct neighbor_discovery_conn *" in formal "c" of adv_received needs a bound annotation.
+
+../../core/net/rime/collect.c:260: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct neighbor_discovery_conn 
+
+../../core/net/rime/collect.c:154: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )c <= (char * BND(cbound1__b, cbound1__e)  )c + 4294967188U
+
+../../core/net/rime/collect.c:154: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct collect_conn * BND(...)  
+   exp: (char * BND(cbound1__b, cbound1__e)  )c - (unsigned int )(& ((struct collect_conn * SAFE  )0)->runicast_conn)
+
+../../core/net/rime/collect.c:154: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: char * BND(...)  
+   exp: c
+
+../../core/net/rime/collect.c:237: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )c <= (char * BND(cbound2__b, cbound2__e)  )c + 4294967188U
+
+../../core/net/rime/collect.c:237: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct collect_conn * BND(...)  
+   exp: (char * BND(cbound2__b, cbound2__e)  )c - (unsigned int )(& ((struct collect_conn * SAFE  )0)->runicast_conn)
+
+../../core/net/rime/collect.c:237: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: char * BND(...)  
+   exp: c
+
+../../core/net/rime/collect.c:249: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )c <= (char * BND(cbound3__b, cbound3__e)  )c + 4294967188U
+
+../../core/net/rime/collect.c:249: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct collect_conn * BND(...)  
+   exp: (char * BND(cbound3__b, cbound3__e)  )c - (unsigned int )(& ((struct collect_conn * SAFE  )0)->runicast_conn)
+
+../../core/net/rime/collect.c:249: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: char * BND(...)  
+   exp: c
+
+../../core/net/rime/collect.c:260: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct collect_conn * BND(...)  
+   exp: (char * BND(cbound4__b, cbound4__e)  )c - (unsigned int )(& ((struct collect_conn * SAFE  )0)->neighbor_discovery_conn)
+
+../../core/net/rime/collect.c:260: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: char * BND(...)  
+   exp: c
+
+make: *** [obj_native/collect.o] Error 1
+root@instant-contiki:/home/user/contiki-2.x/examples/hello-world# 
+
+
+
+2.0#3
+-------
+
+
+root@instant-contiki:/home/user/contiki-2.x/examples/hello-world# make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/neighbor.c -o obj_native/neighbor.o
+
+Error: Error while processing file
+../../core/net/rime/neighbor.c:85: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+../../core/net/rime/neighbor.c:98: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+
+../../core/net/rime/neighbor.c:99: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+
+../../core/net/rime/neighbor.c:127: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+../../core/net/rime/neighbor.c:186: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+../../core/net/rime/neighbor.c:198: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: memb_alloc(& neighbors_mem)
+
+../../core/net/rime/neighbor.c:200: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+
+../../core/net/rime/neighbor.c:214: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+../../core/net/rime/neighbor.c:253: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+../../core/net/rime/neighbor.c:258: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+
+../../core/net/rime/neighbor.c:259: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+
+../../core/net/rime/neighbor.c:291: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+../../core/net/rime/neighbor.c:307: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+../../core/net/rime/neighbor.c:343: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+
+make: *** [obj_native/neighbor.o] Error 1
+root@instant-contiki:/home/user/contiki-2.x/examples/hello-world# 
+
+
+
+2.0#4
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/neighbor-discovery.c -o obj_native/neighbor-discovery.o
+
+Error: Error while processing file
+../../core/net/rime/neighbor-discovery.c:89: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor_discovery_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/neighbor-discovery.c:108: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct neighbor_discovery_conn * BND(...)  
+   exp: ibc
+
+../../core/net/rime/neighbor-discovery.c:129: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor_discovery_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/neighbor-discovery.c:131: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: tc
+
+../../core/net/rime/neighbor-discovery.c:134: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: tc
+
+../../core/net/rime/neighbor-discovery.c:181: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/neighbor-discovery.c:182: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/neighbor-discovery.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.0#5
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rudolph0.c -o obj_native/rudolph0.o
+
+Error: Error while processing file
+../../core/./net/rime/polite.h:68: Warning: Type "struct polite_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/./net/rime/stbroadcast.h:70: Warning: Type "struct stbroadcast_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/rudolph0.c:105: Warning: Type "struct stbroadcast_conn *" in formal "stbroadcast" of sent needs a bound annotation.
+
+../../core/net/rime/rudolph0.c:121: Warning: Type "struct stbroadcast_conn *" in formal "stbroadcast" of recv needs a bound annotation.
+
+../../core/net/rime/rudolph0.c:161: Warning: Type "struct polite_conn *" in formal "polite" of recv_nack needs a bound annotation.
+
+../../core/net/rime/rudolph0.c:164: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct polite_conn 
+
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:217: Warning: Mismatched types in patch:
+  original: void (struct stbroadcast_conn *stbroadcast )
+     patch: ssize_t (int s , void * COUNT(__n) NONNULL  buf , size_t __n , int flags )
+
+
+../../core/net/rime/rudolph0.c:108: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: struct rudolph0_conn * BND(...)  
+   exp: stbroadcast
+
+../../core/net/rime/rudolph0.c:124: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: struct rudolph0_conn * BND(...)  
+   exp: stbroadcast
+
+../../core/net/rime/rudolph0.c:164: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )polite <= (char * BND(cbound1__b, cbound1__e)  )polite + 4294967232U
+
+../../core/net/rime/rudolph0.c:164: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct rudolph0_conn * BND(...)  
+   exp: (char * BND(cbound1__b, cbound1__e)  )polite - (unsigned int )(& ((struct rudolph0_conn * SAFE  )0)->nackc)
+
+../../core/net/rime/rudolph0.c:164: Error: Type mismatch in coercion:
+  from: struct polite_conn * BND(...)  
+    to: char * BND(...)  
+   exp: polite
+
+make: *** [obj_native/rudolph0.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.0#6
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rudolph1.c -o obj_native/rudolph1.o
+
+Error: Error while processing file
+../../core/./net/rime/trickle.h:70: Warning: Type "struct trickle_conn *" in <function pointer formal c> needs a bound annotation.
+
+../../core/net/rime/rudolph1.c:206: Warning: Type "struct trickle_conn *" in formal "trickle" of recv_trickle needs a bound annotation.
+
+../../core/net/rime/rudolph1.c:209: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: struct rudolph1_conn * BND(...)  
+   exp: trickle
+
+../../core/net/rime/rudolph1.c:237: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )ipolite <= (char * BND(cbound1__b, cbound1__e)  )ipolite + 4294967188U
+
+../../core/net/rime/rudolph1.c:237: Error: Type mismatch in coercion:
+  from: char * BND(...)  
+    to: struct rudolph1_conn * BND(...)  
+   exp: (char * BND(cbound1__b, cbound1__e)  )ipolite - (unsigned int )(& ((struct rudolph1_conn * SAFE  )0)->ipolite)
+
+../../core/net/rime/rudolph1.c:237: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: char * BND(...)  
+   exp: ipolite
+
+../../core/net/rime/rudolph1.c:277: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rudolph1_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/rudolph1.c:283: Error: Type mismatch in coercion:
+  from: struct rudolph1_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/rudolph1.c:293: Error: Type mismatch in coercion:
+  from: struct rudolph1_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/rudolph1.c:329: Error: Type mismatch in coercion:
+  from: struct rudolph1_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/rudolph1.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.1#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rudolph2.c -o obj_native/rudolph2.o
+
+Error: Error while processing file
+/home/jcondit/tmp/clean2/deputy/include/libc_patch.h:217: Warning: Mismatched types in patch:
+  original: void (struct polite_conn *polite )
+     patch: ssize_t (int s , void * COUNT(__n) NONNULL  buf , size_t __n , int flags )
+
+
+../../core/net/rime/rudolph2.c:120: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * COUNT(0) SNT  )((struct rudolph2_hdr * COUNT(0) SNT  )((char * COUNT(0) SNT  )((void * COUNT(128)  )hdr) + 128)) <= (unsigned char * BND(__this, cbound1__e)  )((struct rudolph2_hdr * BND(__this, hdr__e)  )((void * COUNT(128)  )hdr)) + 1
+
+../../core/net/rime/rudolph2.c:120: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * COUNT(0) SNT  )((struct rudolph2_hdr * COUNT(0) SNT  )((char * COUNT(0) SNT  )rimebuf_dataptr() + 128)) <= (unsigned char * BND(__this, cbound1__e)  )((struct rudolph2_hdr * BND(__this, hdr__e)  )rimebuf_dataptr()) + 1
+
+../../core/net/rime/rudolph2.c:251: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rudolph2_conn * BND(...)  
+   exp: ptr
+
+../../core/net/rime/rudolph2.c:285: Error: Type mismatch in coercion:
+  from: struct rudolph2_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/rudolph2.c:292: Error: Type mismatch in coercion:
+  from: struct polite_conn * BND(...)  
+    to: struct rudolph2_conn * BND(...)  
+   exp: polite
+
+../../core/net/rime/rudolph2.c:349: Error: Type mismatch in coercion:
+  from: struct rudolph2_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/rudolph2.c:398: Error: Type mismatch in coercion:
+  from: struct rudolph2_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+make: *** [obj_native/rudolph2.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.1#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/channel.c -o obj_native/channel.o
+
+Error: Error while processing file
+../../core/net/rime/channel.c:70: Error: Type mismatch in coercion:
+  from: struct channel * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/channel.c:76: Error: Type mismatch in coercion:
+  from: struct channel * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+../../core/net/rime/channel.c:83: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct channel * BND(...)  
+   exp: list_head(channel_list)
+
+make: *** [obj_native/channel.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.2#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/chameleon-raw.c -o obj_native/chameleon-raw.o
+
+Error: Error while processing file
+../../core/./net/rime/chameleon.h:49: Warning: Type "struct rimebuf_attrlist  const  *" in <function pointer formal > needs a bound annotation.
+
+../../core/./net/rime/channel.h:50: Warning: Type "struct rimebuf_attrlist  const  *" in field "attrlist" needs a bound annotation.
+
+../../core/net/rime/chameleon-raw.c:163: Warning: Type "struct rimebuf_attrlist  const  *" in formal "a" of hdrsize needs a bound annotation.
+
+../../core/net/rime/chameleon-raw.c:172: Error: Assertion will always fail in upper bound coercion:
+  (struct rimebuf_attrlist  const  * SAFE  )((struct rimebuf_attrlist  const  * BND(__this, __cil_tmp4__e)  )(a + 1)) + 1 <= (struct rimebuf_attrlist  const  * COUNT(0) SNT  )(a + 1)
+
+make: *** [obj_native/chameleon-raw.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.2#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/chameleon-bitopt.c -o obj_native/chameleon-bitopt.o
+
+Error: Error while processing file
+../../core/./net/rime/rimebuf.h:392: Warning: Type "union __anonunion_rimeaddr_t_2  const  *" in the return value of rimebuf_addr needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:63: Warning: Type "unsigned char *" in formal "from" of get_bits_in_byte needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:79: Warning: Type "unsigned char *" in formal "from" of get_bits needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:79: Warning: Type "unsigned char *" in formal "to" of get_bits needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:112: Warning: Type "struct rimebuf_attrlist  const  *" in formal "a" of header_size needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:135: Warning: Type "unsigned char *" in formal "target" of set_bits_in_byte needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:146: Warning: Type "unsigned char *" in formal "ptr" of set_bits needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:146: Warning: Type "unsigned char *" in formal "val" of set_bits needs a bound annotation.
+
+../../core/net/rime/chameleon-bitopt.c:68: Error: Assertion will always fail in pointer access check:
+  (from + 1) + 1 <= from + 1
+
+../../core/net/rime/chameleon-bitopt.c:121: Error: Assertion will always fail in upper bound coercion:
+  (struct rimebuf_attrlist  const  * SAFE  )((struct rimebuf_attrlist  const  * BND(__this, __cil_tmp4__e)  )(a + 1)) + 1 <= (struct rimebuf_attrlist  const  * COUNT(0) SNT  )(a + 1)
+
+../../core/net/rime/chameleon-bitopt.c:143: Error: Assertion will always fail in pointer access check:
+  (target + 1) + 1 <= target + 1
+
+../../core/net/rime/chameleon-bitopt.c:337: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(struct rimebuf_attrlist  const  * SAFE  a )
+    to: int (* BND(...)  )(struct rimebuf_attrlist  const  * COUNT(...)   )
+   exp: & header_size
+
+make: *** [obj_native/chameleon-bitopt.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.2#3
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/mac/xmac.c -o obj_native/xmac.o
+
+Error: Error while processing file
+../../core/./net/mac/mac.h:47: Warning: Type "char *" in field "name" should be annotated NT.
+
+../../core/net/mac/xmac.c:228: Error: Type mismatch in coercion:
+  from: char (* BND(...)  )(struct rtimer * SAFE  t , void * SAFE  ptr )
+    to: void (* BND(...)  )(struct rtimer * SAFE   , void * SAFE   )
+   exp: & powercycle
+
+../../core/net/mac/xmac.c:241: Error: Type mismatch in coercion:
+  from: char (* BND(...)  )(struct rtimer * SAFE  t , void * SAFE  ptr )
+    to: void (* BND(...)  )(struct rtimer * SAFE   , void * SAFE   )
+   exp: & powercycle
+
+../../core/net/mac/xmac.c:554: Error: Type mismatch in coercion:
+  from: char (* BND(...)  )(struct rtimer * SAFE  t , void * SAFE  ptr )
+    to: void (* BND(...)  )(struct rtimer * SAFE   , void * SAFE   )
+   exp: & powercycle
+
+../../core/net/mac/xmac.c:587: Error: Cast from nullterm to an ordinary pointer: "X-MAC"
+
+make: *** [obj_native/xmac.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.2#4
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/mac/lpp.c -o obj_native/lpp.o
+
+Error: Error while processing file
+../../core/net/mac/lpp.c:131: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ctimer * BND(...)  
+   exp: ptr
+
+../../core/net/mac/lpp.c:140: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+
+../../core/net/mac/lpp.c:140: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+
+../../core/net/mac/lpp.c:148: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+
+../../core/net/mac/lpp.c:148: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+
+../../core/net/mac/lpp.c:155: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+
+../../core/net/mac/lpp.c:155: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+
+../../core/net/mac/lpp.c:315: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+
+../../core/net/mac/lpp.c:315: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: & timer
+
+make: *** [obj_native/lpp.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.2#5
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/sys/process.c -o obj_native/process.o
+
+Error: Error while processing file
+../../core/./sys/process.h:391: Warning: Type "struct process *" in global "process_current" needs a bound annotation.
+
+../../core/./sys/process.h:500: Warning: Type "struct process *" in formal "p___0" of process_is_running needs a bound annotation.
+
+../../core/sys/process.c:63: Warning: Type "struct process *" in field "p" needs a bound annotation.
+
+../../core/sys/process.c:82: Warning: Type "struct process *" in formal "p" of call_process needs a bound annotation.
+
+../../core/sys/process.c:124: Warning: Type "struct process *" in formal "fromprocess" of exit_process needs a bound annotation.
+
+../../core/sys/process.c:124: Warning: Type "struct process *" in formal "p" of exit_process needs a bound annotation.
+
+../../core/sys/process.c:258: Warning: Type "struct process *" in global "receiver" needs a bound annotation.
+
+../../core/sys/process.c:143: Error: Type mismatch in coercion:
+  from: struct process * BND(...)  
+    to: void * BND(...)  
+   exp: (struct process * BND(__this, cbound1__e)  )p
+
+../../core/sys/process.c:170: Error: Type mismatch in coercion:
+  from: int 
+    to: struct process * BND(...)  
+   exp: 1
+
+../../core/sys/process.c:294: Error: Type mismatch in coercion:
+  from: int 
+    to: struct process * BND(...)  
+   exp: 1
+
+make: *** [obj_native/process.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.3#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/loader/elfloader.c -o obj_native/elfloader.o
+../../core/./cfs/cfs.h:160: Warning: Type "void *" in formal "buf" of cfs_read should be annotated NT.
+
+../../core/./loader/elfloader-arch.h:83: Warning: Type "void *" in the return value of elfloader_arch_allocate_ram should be annotated NT.
+
+../../core/./loader/elfloader-arch.h:98: Warning: Type "void *" in the return value of elfloader_arch_allocate_rom should be annotated NT.
+
+../../core/./loader/elfloader-arch.h:119: Warning: Type "char *" in formal "addr" of elfloader_arch_relocate should be annotated NT.
+
+../../core/./loader/elfloader-arch.h:119: Warning: Type "char *" in formal "sectionaddr" of elfloader_arch_relocate should be annotated NT.
+
+../../core/./loader/elfloader-arch.h:119: Warning: Type "struct elf32_rela *" in formal "rela" of elfloader_arch_relocate should be annotated NT.
+
+../../core/./loader/elfloader-arch.h:135: Warning: Type "char *" in formal "mem" of elfloader_arch_write_rom should be annotated NT.
+
+../../core/./loader/elfloader.h:154: Warning: Type "struct process * const  *" in global "elfloader_autostart_processes" should be annotated NT.
+
+../../core/./loader/symtab.h:36: Warning: Type "char const   *" in formal "name" of symtab_lookup should be annotated NT.
+
+../../core/./loader/symtab.h:36: Warning: Type "void *" in the return value of symtab_lookup should be annotated NT.
+
+../../core/loader/elfloader.c:129: Warning: Type "char *" in field "address" should be annotated NT.
+
+../../core/loader/elfloader.c:149: Warning: Type "char *" in formal "buf" of seek_read should be annotated NT.
+
+../../core/loader/elfloader.c:176: Warning: Type "char const   *" in formal "symbol" of find_local_symbol should be annotated NT.
+
+../../core/loader/elfloader.c:176: Warning: Type "void *" in the return value of find_local_symbol should be annotated NT.
+
+../../core/loader/elfloader.c:208: Warning: Type "char *" in formal "sectionbase" of relocate_section should be annotated NT.
+
+../../core/loader/elfloader.c:292: Warning: Type "void *" in the return value of find_program_processes should be annotated NT.
+
+/usr/include/string.h:38: Warning: Solver: Changing User Specified FSEQ node 84 (the global memcpy) to SEQN.
+
+/usr/include/string.h:59: Warning: Solver: Changing User Specified FSEQ node 87 (the global memset) to SEQN.
+
+../../core/loader/elfloader.c:187: Error: Cast from ordinary pointer to nullterm: & s
+
+../../core/loader/elfloader.c:187: Unimplemented: Nullterm cast with different base types:
+  from: struct elf32_sym * BND(...)  
+    to: char * BND(...) NT  
+   exp: & s
+
+../../core/loader/elfloader.c:242: Error: Cast from nullterm to an ordinary pointer: name
+
+../../core/loader/elfloader.c:246: Error: Cast from nullterm to an ordinary pointer: name
+
+../../core/loader/elfloader.c:575: Error: Cast from nullterm to an ordinary pointer: "autostart_processes"
+
+make: *** [obj_native/elfloader.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.3#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/loader/elfloader.c -o obj_native/elfloader.o
+../../core/loader/elfloader.c:129: Warning: Type "char *" in field "address" needs a bound annotation.
+
+../../core/loader/elfloader.c:149: Warning: Type "char *" in formal "buf" of seek_read should be annotated NT.
+
+../../core/loader/elfloader.c:176: Warning: Type "char const   *" in formal "symbol" of find_local_symbol should be annotated NT.
+
+../../core/loader/elfloader.c:187: Error: Cast from ordinary pointer to nullterm: & s
+
+../../core/loader/elfloader.c:187: Unimplemented: Nullterm cast with different base types:
+  from: struct elf32_sym * BND(...)  
+    to: char * BND(...) NT  
+   exp: & s
+
+../../core/loader/elfloader.c:242: Error: Target "addr" of trusted cast must have user-supplied bounds
+
+make: *** [obj_native/elfloader.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.3#3
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/loader/elfloader.c -o obj_native/elfloader.o
+
+Error: Error while processing file
+../../core/loader/elfloader.c:176: Warning: Type "char const   *" in formal "symbol" of find_local_symbol should be annotated NT.
+
+../../core/loader/elfloader.c:190: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:191: Error: Cast from ordinary pointer to nullterm: symbol
+
+../../core/loader/elfloader.c:191: Error: Cast from ordinary pointer to nullterm: symbol + 1
+
+../../core/loader/elfloader.c:240: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:242: Error: Target "addr" of trusted cast must have user-supplied bounds
+
+../../core/loader/elfloader.c:246: Error: Cast from nullterm to an ordinary pointer: name
+
+../../core/loader/elfloader.c:260: Error: Assertion will always fail in upper bound check:
+  name + 30U <= name + 29
+
+../../core/loader/elfloader.c:305: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:426: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:575: Error: Cast from nullterm to an ordinary pointer: "autostart_processes"
+
+../../core/loader/elfloader.c:575: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_local_symbol(fd, "autostart_processes", symtaboff, symtabsize, strtaboff)
+
+../../core/loader/elfloader.c:582: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_program_processes(fd, symtaboff, symtabsize, strtaboff)
+
+make: *** [obj_native/elfloader.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.3#4
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+Making dependencies for ../../core/loader/elfloader.c
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/loader/elfloader.c -o obj_native/elfloader.o
+
+Error: Error while processing file
+../../core/loader/elfloader.c:241: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:243: Error: Target "addr" of trusted cast must have user-supplied bounds
+
+../../core/loader/elfloader.c:261: Error: Assertion will always fail in upper bound check:
+  name + 30U <= name + 29
+
+../../core/loader/elfloader.c:306: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:427: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:576: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_local_symbol(fd, "autostart_processes", symtaboff, symtabsize, strtaboff)
+
+../../core/loader/elfloader.c:583: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_program_processes(fd, symtaboff, symtabsize, strtaboff)
+
+make: *** [obj_native/elfloader.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.3#5
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/loader/elfloader.c -o obj_native/elfloader.o
+
+Error: Error while processing file
+../../core/loader/elfloader.c:176: Warning: Type "void *" in the return value of find_local_symbol needs a bound annotation.
+
+../../core/loader/elfloader.c:305: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:426: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:575: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_local_symbol(fd, "autostart_processes", symtaboff, symtabsize, strtaboff)
+
+../../core/loader/elfloader.c:582: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_program_processes(fd, symtaboff, symtabsize, strtaboff)
+
+make: *** [obj_native/elfloader.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.3#6
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/loader/elfloader.c -o obj_native/elfloader.o
+
+Error: Error while processing file
+../../core/loader/elfloader.c:260: Error: Assertion will always fail in upper bound check:
+  name + 30U <= name + 29
+
+../../core/loader/elfloader.c:305: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:426: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+../../core/loader/elfloader.c:575: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: ret158.__p
+
+../../core/loader/elfloader.c:582: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_program_processes(fd, symtaboff, symtabsize, strtaboff)
+
+make: *** [obj_native/elfloader.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.4#1
+-------
+
+
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/sys/profile.c -o obj_native/profile.o
+
+Error: Error while processing file
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable-aggregate.h:47: Warning: Type "char const   *" in field "id" should be annotated NT.
+
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable-aggregate.h:53: Warning: Type "struct timetable_aggregate_entry *" in field "entries" needs a bound annotation.
+
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable.h:48: Warning: Type "char const   *" in field "id" should be annotated NT.
+
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable.h:55: Warning: Type "struct timetable_timestamp *" in field "timestamps" needs a bound annotation.
+
+/home/user/contiki-2.x/examples/hello-world/../../core/sys/profile.c:125: Warning: Type "char const   *" in formal "id" of find_aggregate should be annotated NT.
+
+/home/user/contiki-2.x/examples/hello-world/../../core/sys/profile.c:150: Error: Cast from ordinary pointer to nullterm: (a->entries + i)->id
+
+make: *** [obj_native/profile.o] Error 1
+Completed unsuccessful
+Total time taken: 1 secs
+
+
+
+2.4#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/sys/timetable.c -o obj_native/timetable.o
+
+../../core/sys/timetable.c:109: Warning: Calling function clock_time without prototype.
+
+Error: Error while processing file
+../../core/./sys/timetable.h:132: Warning: Type "char const   *" in formal "id1" of timetable_timediff should be annotated NT.
+
+../../core/./sys/timetable.h:132: Warning: Type "char const   *" in formal "id2" of timetable_timediff should be annotated NT.
+
+../../core/sys/timetable.c:109: Error: Calling function that has no prototype: clock_time
+
+../../core/sys/timetable.c:109: Error: Cast from ordinary pointer to nullterm: & dummy1
+
+../../core/sys/timetable.c:110: Error: Calling function that has no prototype: clock_time
+
+../../core/sys/timetable.c:110: Error: Cast from ordinary pointer to nullterm: & dummy2
+
+../../core/sys/timetable.c:111: Error: Cast from ordinary pointer to nullterm: & dummy1
+
+../../core/sys/timetable.c:111: Error: Cast from ordinary pointer to nullterm: & dummy2
+
+
+make: *** [obj_native/timetable.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+2.4#3
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/sys/timetable-aggregate.c -o obj_native/timetable-aggregate.o
+
+Error: Error while processing file
+../../core/sys/timetable-aggregate.c:83: Warning: Type "char const   *" in formal "id" of find_aggregate should be annotated NT.
+
+../../core/sys/timetable-aggregate.c:157: Error: Cast from nullterm to an ordinary pointer: (timetable->timestamps.__p + (i - 1))->id
+
+make: *** [obj_native/timetable-aggregate.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.4#4
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/lib/list.c -o obj_native/list.o
+
+Error: Error while processing file
+../../core/lib/list.c:126: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:128: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: l
+
+../../core/lib/list.c:147: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound1__b, cbound1__e)  )item + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )item + 1)
+
+../../core/lib/list.c:147: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: item
+
+../../core/lib/list.c:149: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: list_tail(list)
+
+../../core/lib/list.c:154: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: item
+
+../../core/./lib/list.h:110: Warning: Type "void *" in formal "newitem" of list_insert needs a bound annotation.
+
+../../core/lib/list.c:166: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound2__b, cbound2__e)  )item + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )item + 1)
+
+../../core/lib/list.c:166: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:166: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: item
+
+../../core/lib/list.c:187: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound3__b, cbound3__e)  )*list + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )*list + 1)
+
+../../core/lib/list.c:187: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:188: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:190: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: l
+
+../../core/lib/list.c:193: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:198: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: r
+
+../../core/lib/list.c:215: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound4__b, cbound4__e)  )*list + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )*list + 1)
+
+../../core/lib/list.c:215: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: ((struct list * BND(cbound4__b, cbound4__e)  )*list)->next
+
+../../core/lib/list.c:215: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:241: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:245: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: l->next
+
+../../core/lib/list.c:272: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+
+../../core/lib/list.c:301: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: newitem
+
+../../core/lib/list.c:301: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: previtem
+
+../../core/lib/list.c:302: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: newitem
+
+../../core/lib/list.c:302: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: previtem
+
+make: *** [obj_native/list.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.5#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make SAFETY=yes TARGET=native
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/sys/etimer.c -o obj_native/etimer.o
+
+Error: Error while processing file
+../../core/sys/etimer.c:93: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * BND(...)  
+   exp: data
+
+../../core/sys/etimer.c:119: Error: Type mismatch in coercion:
+  from: struct etimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+
+make: *** [obj_native/etimer.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.5#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make SAFETY=yes TARGET=native
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/lib/crc16.c -o obj_native/crc16.o
+
+Error: Error while processing file
+../../core/lib/crc16.c:66: Warning: Type "unsigned char const   *" in formal "data" of crc16_data needs a bound annotation.
+
+../../core/lib/crc16.c:74: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char const   * SAFE  )((unsigned char const   * BND(__this, __cil_tmp6__e)  )(data + 1)) + 1 <= (unsigned char const   * COUNT(0) SNT  )(data + 1)
+
+make: *** [obj_native/crc16.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.5#3
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make SAFETY=yes TARGET=native
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/uip.c -o obj_native/uip.o
+
+Error: Error while processing file
+../../core/./net/uip.h:554: Warning: Type "void const   *" in formal "data" of uip_send needs a bound annotation.
+
+../../core/./net/uip.h:1152: Warning: Type "void *" in global "uip_appdata" needs a bound annotation.
+
+../../core/./net/uip.h:1243: Warning: Type "struct uip_conn *" in global "uip_conn" needs a bound annotation.
+
+../../core/./net/uip.h:1275: Warning: Type "struct uip_udp_conn *" in global "uip_udp_conn" needs a bound annotation.
+
+../../core/./net/uip.h:1614: Warning: Type "unsigned short *" in formal "data" of uip_chksum needs a bound annotation.
+
+../../core/./net/uip_arch.h:84: Warning: Type "unsigned char *" in formal "op32" of uip_add32 needs a bound annotation.
+
+../../core/net/uip.c:130: Warning: Type "void *" in global "uip_sappdata" needs a bound annotation.
+
+../../core/net/uip.c:267: Warning: Type "unsigned char const   *" in formal "data" of chksum needs a bound annotation.
+
+../../core/net/uip.c:239: Error: Assertion will always fail in upper bound check:
+  op32 + (3 + 1) <= op32 + 1
+
+../../core/net/uip.c:240: Error: Assertion will always fail in upper bound check:
+  op32 + (2 + 1) <= op32 + 1
+
+../../core/net/uip.c:241: Error: Assertion will always fail in pointer access check:
+  (op32 + 1) + 1 <= op32 + 1
+
+../../core/net/uip.c:1091: Error: Assertion will always fail in upper bound coercion:
+  (struct uip_udp_conn * SAFE  )((struct uip_udp_conn * BND(__this, __cil_tmp12__e)  )(uip_udp_conn + 1)) + 1 <= (struct uip_udp_conn * COUNT(0) SNT  )(uip_udp_conn + 1)
+
+make: *** [obj_native/uip.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.5#4
+-------
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make 
+TARGET not defined, using target 'native'
+Making dependencies for ../../core/net/uip.c
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/uip.c -o obj_native/uip.o
+
+Error: Error while processing file
+../../core/net/uip.c:333: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * BND(cbound2__b, cbound2__e)  )(& ((struct uip_tcpip_hdr * SAFE  )(& uip_buf[14]))->srcipaddr) + (unsigned short)8 <= (unsigned char * COUNT(0) SNT  )(& ((struct uip_tcpip_hdr * SAFE  )(& uip_buf[14]))->srcipaddr + 1)
+
+../../core/net/uip.c:1091: Error: Assertion will always fail in upper bound coercion:
+  (struct uip_udp_conn * COUNT(10)  )((struct uip_udp_conn * BND(__this, __cil_tmp12__e)  )((struct uip_udp_conn * BND(__this, cbound4__e)  )(uip_udp_conn + 1))) + 10 <= (struct uip_udp_conn * COUNT(0) SNT  )((struct uip_udp_conn * COUNT(0) SNT  )(uip_udp_conn + 10))
+
+make: *** [obj_native/uip.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.5#5
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make 
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/uiplib.c -o obj_native/uiplib.o
+
+Error: Error while processing file
+../../core/./net/uiplib.h:67: Warning: Type "char *" in formal "addrstr" of uiplib_ipaddrconv needs a bound annotation.
+
+../../core/./net/uiplib.h:67: Warning: Type "unsigned char *" in formal "ipaddr" of uiplib_ipaddrconv needs a bound annotation.
+
+../../core/net/uiplib.c:61: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * SAFE  )((unsigned char * BND(__this, __cil_tmp7__e)  )(ipaddr + 1)) + 1 <= (unsigned char * COUNT(0) SNT  )(ipaddr + 1)
+
+../../core/net/uiplib.c:61: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * SAFE  )((unsigned char * BND(__this, __cil_tmp8__e)  )(ipaddr + 1)) + 1 <= (unsigned char * COUNT(0) SNT  )(ipaddr + 1)
+
+../../core/net/uiplib.c:68: Error: Assertion will always fail in upper bound coercion:
+  (char * SAFE  )((char * BND(__this, __cil_tmp9__e)  )(addrstr + 1)) + 1 <= (char * COUNT(0) SNT  )(addrstr + 1)
+
+make: *** [obj_native/uiplib.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.5#6
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make 
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/resolv.c -o obj_native/resolv.o
+
+Error: Error while processing file
+../../core/./net/resolv.h:51: Warning: Type "char *" in formal "name" of resolv_found should be annotated NT.
+
+../../core/./net/resolv.h:57: Warning: Type "char *" in formal "name" of resolv_lookup should be annotated NT.
+
+../../core/./net/resolv.h:58: Warning: Type "char *" in formal "name" of resolv_query should be annotated NT.
+
+../../core/./sys/process.h:353: Warning: Type "void *" in formal "data" of process_post should be annotated NT.
+
+../../core/net/resolv.c:109: Warning: Type "char [32]" in field "name" should be annotated NT.
+
+../../core/net/resolv.c:154: Warning: Type "unsigned char *" in formal "query" of parse_name needs a bound annotation.
+
+../../core/net/resolv.c:154: Warning: Type "unsigned char *" in the return value of parse_name needs a bound annotation.
+
+../../core/net/resolv.c:160: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * SAFE  )((unsigned char * BND(__cil_tmp4__b, __cil_tmp4__e)  )(query + 1)) + 1 <= (unsigned char * COUNT(0) SNT  )(query + 1)
+
+../../core/net/resolv.c:164: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * SAFE  )((unsigned char * BND(__cil_tmp5__b, __cil_tmp5__e)  )(query + 1)) + 1 <= (unsigned char * COUNT(0) SNT  )(query + 1)
+
+../../core/net/resolv.c:170: Error: Assertion will always fail in upper bound coercion:
+  query + 1 == 0
+
+../../core/net/resolv.c:217: Error: Cast from ordinary pointer to nullterm: namemapptr->name
+
+../../core/net/resolv.c:218: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) NT SNT  )((char * COUNT(0) NT SNT  )((char * COUNT(0) NT SNT  )(namemapptr->name))) <= (char * BND(__cil_tmp6__b, __cil_tmp6__e) NT  )((char * BND(nameptr__b, nameptr__e) NT  )(namemapptr->name) - 1)
+
+../../core/net/resolv.c:218: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) NT SNT  )((char * COUNT(0) NT SNT  )(namemapptr->name)) <= (char * BND(nameptr__b, nameptr__e) NT  )(namemapptr->name) - 1
+
+../../core/net/resolv.c:218: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) NT SNT  )(namemapptr->name) <= (char * BND(nameptr__b, nameptr__e) NT  )(namemapptr->name) + -1
+
+../../core/net/resolv.c:293: Error: Assertion will always fail in upper bound check:
+  (unsigned char * BND(tmp___2__b, tmp___2__e)  )parse_name((unsigned char * BND(cbound5__b, cbound5__e)  )uip_appdata__deputy.__p + 12) + 4 <= (unsigned char * COUNT(0) SNT  )((unsigned char * COUNT(0) SNT  )(parse_name((unsigned char * BND(cbound5__b, cbound5__e)  )uip_appdata__deputy.__p + 12) + 1))
+
+../../core/net/resolv.c:293: Error: Assertion will always fail in upper bound check:
+  (unsigned char * BND(tmp___2__b, tmp___2__e)  )parse_name((unsigned char * BND(cbound5__b, cbound5__e)  )uip_appdata__deputy.__p + 12) + 4 <= (unsigned char * COUNT(0) SNT  )(parse_name((unsigned char * BND(cbound5__b, cbound5__e)  )uip_appdata__deputy.__p + 12) + 1)
+
+../../core/net/resolv.c:394: Error: Pointer variable nameptr may be used without being defined.
+
+../../core/net/resolv.c:414: Error: Cast from ordinary pointer to nullterm: name
+
+../../core/net/resolv.c:414: Error: Cast from ordinary pointer to nullterm: nameptr->name
+
+../../core/net/resolv.c:448: Error: Cast from ordinary pointer to nullterm: name
+
+../../core/net/resolv.c:448: Error: Cast from ordinary pointer to nullterm: name + 1
+
+../../core/net/resolv.c:448: Error: Cast from ordinary pointer to nullterm: nameptr->name
+
+../../core/net/resolv.c:448: Error: Cast from ordinary pointer to nullterm: nameptr->name + 1
+
+make: *** [obj_native/resolv.o] Error 1
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ 
+
+
+
+
+2.5#7
+-------
+
+
+user@instant-contiki:~/GECI/contikiprojects/cusat.ac.in/safe-contiki/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/tcpip.c -o obj_native/tcpip.o
+
+Error: Error while processing file
+../../core/./sys/process.h:308: Warning: Type "void *" in <function pointer formal > needs a bound annotation.
+
+../../core/net/tcpip.c:73: Warning: Type "void *" in formal "data" of process_thread_tcpip_process needs a bound annotation.
+
+../../core/net/tcpip.c:221: Warning: Type "void *" in formal "data" of eventhandler needs a bound annotation.
+
+../../core/net/tcpip.c:234: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * BND(...)  
+   exp: data
+
+../../core/net/tcpip.c:299: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct uip_conn * BND(...)  
+   exp: data
+
+../../core/net/tcpip.c:314: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct uip_udp_conn * BND(...)  
+   exp: data
+
+../../core/net/tcpip.c:339: Error: Type mismatch in coercion:
+  from: struct uip_udp_conn * BND(...)  
+    to: void * BND(...)  
+   exp: conn
+
+../../core/net/tcpip.c:346: Error: Type mismatch in coercion:
+  from: struct uip_conn * BND(...)  
+    to: void * BND(...)  
+   exp: conn
+
+make: *** [obj_native/tcpip.o] Error 1
+

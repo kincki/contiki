@@ -1,0 +1,267 @@
+#!/bin/sh
+# EMMA Gateway - Network Discovery Utilities Suite
+#   Copyright (C) 2010  Clement Duhart - Samuel Martin Moro
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Clement Duhart: <duhart.clement@gmail.com>
+#   Samuel Martin Moro: <faust64@gmail.com>
+#
+
+. /opt/emma/core/DiscoverFunctions
+
+NOTIFY="[DiscoverRessource]"
+if ! test -e $LOCKFILE; then
+    echo "$NOTIFY can't start: DiscoverNetwork Daemon is not running" >>$LOGFILE
+    exit $NODAEMON
+fi
+
+test -z "$1" && exit 1 || addr=$1
+test -z "$2" && fail_state=$STAT_RETR || fail_state=$2
+pid=$$
+
+node=$ROOT/$NetName/{$addr}
+touch $node/lock
+echo "$NOTIFY starting $addr" >>$LOGFILE
+
+
+ExitRess()
+{
+    echo $1 >$node/status
+    chown $EMMAUSER:$EMMAGROUP $node/status
+    chmod $FILERIGHTS $node/status
+    rm -f $TMPELT$pid $node/lock
+    echo "$NOTIFY exiting: $addr does not answer [$1]" >>$LOGFILE
+
+    exit $DLGERROR
+}
+
+GetUrl()
+{
+    local cpt ret
+
+    cpt=0
+    while :
+    do
+	curl -G -g "$1" 2>/dev/null >$TMPELT$pid
+	ret=$?
+	test $ret -eq 0 && return 0
+	test $cpt -eq $MAXRETRY && break
+	cpt=`expr $cpt + 1`
+    done
+    test $ret -eq 7 && ExitRess $STAT_IGNR
+    test $ret -ne 0 && ExitRess $fail_state
+
+    return $ret
+}
+
+PostCurl()
+{
+    local cpt ret
+
+    cpt=0
+    while :
+    do
+	curl -X POST --data-ascii "`cat $2`" -g "$1" 2>/dev/null >$TMPELT$pid
+	ret=$?
+	test $ret -eq 0 && return 0
+	test $cpt -eq $MAXRETRY && break
+	cpt=`expr $cpt + 1`
+    done
+
+    return $ret
+}
+
+DeleteCurl()
+{
+    local cpt ret aret
+
+    cpt=0
+    while :
+    do
+	curl -X DELETE -g "$1" 2>/dev/null >$TMPELT$pid
+	ret=$?
+	test "$aret" || aret=$ret
+	test $ret = 0 -a $aret -ne 0 && aret=$ret
+	test $cpt -eq $MAXRETRY && break
+	cpt=`expr $cpt + 1`
+    done
+
+    return $aret
+}
+
+CreateDirs()
+{
+    for elt in `cat $TMPELT$pid | awk -F '"' '/^"name":"/{print $4}'`
+    do
+	if ! test -d $node/$elt; then
+	    mkdir "$node/$elt"
+	    chown $EMMAUSER:$EMMAGROUP "$node/$elt"
+	    chmod $DIRRIGHTS "$node/$elt"
+	fi
+	test -e $node/$elt/uri && continue
+	uri=`echo "/\"[ 	]*name[ 	]*\"[ 	]*:[ 	]*\"[ 	]*$elt[ 	]*\"/\n\n" | ed - $TMPELT$pid | awk -F '"' '/^"uri":"/{print $4}' | sed 's/[ 	]*//g'`
+	echo "$uri" >$node/$elt/uri
+	chown $EMMAUSER:$EMMAGROUP $node/$elt/uri
+	chmod $FILERIGHTS $node/$elt/uri
+    done
+    if ! test -d $node/report; then
+	mkdir $node/report
+	chown $EMMAUSER:$EMMAGROUP $node/report
+	chmod $DIRRIGHTS $node/report
+    fi
+}
+
+ParseResult()
+{
+    local elt dest
+
+    test "$1" && dest=$1 || return 1
+
+    >$TMPELT$pid.1
+    for elt in `cat $TMPELT$pid`
+    do
+	if echo "$elt" | grep "}" >/dev/null; then
+#end of object
+	    echo "$elt" | sed 's/[ 	]*}.*/}/' >>$TMPELT$pid.1
+
+	    name=`cat $TMPELT$pid.1 | grep '"[ 	]*name[ 	]*"' | sed 's/.*"[ 	]*name[ 	]*"[ 	]*:[ 	]*"[ 	]*//' | sed 's/[ 	]*".*//'`
+	    if test -d $node/$name; then
+		mv $TMPELT$pid.1 $node/$name/$dest
+		chown $EMMAUSER:$EMMAGROUP $node/$name/$dest
+		chmod $FILERIGHTS $node/$name/$dest
+	    else
+#no directory => not discovered in `get $addr/'
+		echo "lost element '$name'"
+		cat $TMPELT$pid.1
+	    fi
+
+	    if echo "$elt" | grep "{" >/dev/null; then
+		echo "{" >$TMPELT$pid.1
+	    else
+		>$TMPELT$pid.1
+	    fi
+	elif echo "$elt" | grep "^[ 	]*\[" >/dev/null; then
+#start of array
+	    echo "$elt" | sed 's/[ 	]*\[[ 	]*//' >>$TMPELT$pid.1
+	else
+	    echo "$elt" >>$TMPELT$pid.1
+	fi
+    done
+    test -s $TMPELT$pid.1 && echo "still there:" && cat $TMPELT$pid.1
+    rm -f $TMPELT$pid.1
+}
+
+ParseReport()
+{
+    local elt dst id
+
+    >$TMPELT$pid.1
+    for elt in `cat $TMPELT$pid`
+    do
+	if echo "$elt" | grep "}" >/dev/null; then
+	    echo "$elt" | sed 's/[ 	]*}.*/}/' >>$TMPELT$pid.1
+	    id=`cat $TMPELT$pid.1 | grep '"[ 	]*id[ 	]*"' | sed 's/.*"[ 	]*id[ 	]*"[ 	]*:[ 	]*"[ 	]*//' | sed 's/[ 	]*".*//'`
+	    echo report id is $id
+	    if test -z "$id"; then
+		id=0
+		while :
+		do
+		    test -e $node/report/bad_formatted_$id || break
+		    id=`expr $id + 1`
+		done
+		dst="bad_formatted_$id"
+	    else
+		dst=$id
+	    fi
+	    mv $TMPELT$pid.1 $node/report/$dst
+	    chown $EMMAUSER:$EMMAGROUP $node/report/$dst
+	    chmod $FILERIGHTS $node/report/$dst
+	    if echo "$elt" | grep "{" >/dev/null; then
+		echo "{" >$TMPELT$pid.1
+	    else
+		>$TMPELT$pid.1
+	    fi
+	elif echo "$elt" | grep "^[ 	]*\[" >/dev/null; then
+	    echo "$elt" | sed 's/[ 	]*\[[ 	]*//' >>$TMPELT$pid.1
+	else
+	   echo "$elt" >>$TMPELT$pid.1
+	fi
+    done
+    test -s $TMPELT$pid.1 && echo "still there:" && cat $TMPELT$pid.1
+    rm -f $TMPELT$pid.1
+}
+
+GetUrl "http://[$addr]/"
+CreateDirs
+
+GetUrl "http://[$addr]/data/*"
+ParseResult data
+
+GetUrl "http://[$addr]/data/*/meta"
+ParseResult meta
+
+if GetUrl "http://[$addr]/report/*"; then
+    rm -f $node/report/* 2>/dev/null
+    ParseReport
+fi
+
+if HasOurReport $addr; then
+    echo "$NOTIFY $addr already has report for us" >>$LOGFILE
+    echo $STAT_CONN >$node/status
+else
+    nbr=`find $node/report | awk 'END{print NR - 1}' 2>/dev/null`
+    echo "$NOTIFY $addr has [$nbr/$MAXREPORT] reports" >>$LOGFILE
+    if test $nbr -ge $MAXREPORT; then
+	echo "$NOTIFY cleaning $addr reports" >>$LOGFILE
+	cantsend=y
+	if DeleteCurl "http://[$addr]/report"; then
+	    cantsend=
+	    echo "$NOTIFY $addr reports cleaned" >>$LOGFILE
+	    rm -f $node/report/*
+	else
+	    echo "$NOTIFY failed cleaning $addr reports" >>$LOGFILE
+	fi
+    fi
+    if test -z "$cantsend"; then
+	SetDev
+	echo "{\n\"host\":\"[`cat $TMPID`]\",\n\"uri\":\"$NOTIFYURI\",\n\"method\":\"$NOTIFYMETHOD\",\n\"port\":\"$NOTIFYPORT\",\n\"condition\":\"$NOTIFYCOND\"\n}\n" >$TMPELT$pid
+	if PostCurl "http://[$addr]/report/*" $TMPELT$pid; then
+	rm -f $node/report/* 2>/dev/null
+	    GetUrl "http://[$addr]/report/*"
+	    ParseReport
+	    if HasOurReport $addr; then
+		echo "$NOTIFY $addr now has our report" >>$LOGFILE
+		echo $STAT_CONN >$node/status
+	    else
+		echo "$NOTIFY $addr still does not have our report" >>$LOGFILE
+		echo $STAT_RETR >$node/status
+	    fi
+	else
+	    echo "$NOTIFY $addr failed sending our report" >>$LOGFILE
+	    echo $STAT_RETR >$node/status
+	fi
+	>$TMPELT$pid
+    else
+	echo "$NOTIFY $addr failed cleaning reports" >>$LOGFILE
+	echo $STAT_RETR >$node/status
+    fi
+fi
+chown $EMMAUSER:$EMMAGROUP $node/status
+chmod $FILERIGHTS $node/status
+
+rm -f $node/lock $TMPELT$pid
+echo "$NOTIFY done $addr" >>$LOGFILE
+
+exit 0

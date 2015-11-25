@@ -1,0 +1,11 @@
+Name: Rudolph1 based on mesh networking
+Contact: Moritz "Morty" Strübe <morty@cs.fau.de>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: CVS 2010-06-22
+Intended platforms: Any
+Tested platforms: Tmote Sky
+Description:
+Rime missed a reliable mesh networking protokoll for bulk data. This is
+a quick port of the Rudolph1 protokoll to the mesh network layer. 

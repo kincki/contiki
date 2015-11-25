@@ -1,0 +1,11 @@
+Name: Cooja-Twist plugin
+Contact: Fredrik Osterlind, SICS, fros@sics.se
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Contiki: Contiki 2.6
+Intended platforms: cooja
+Tested platforms: cooja
+URL:
+Screenshot: 
+Description:
+Plugin that connects the Cooja simulator to the Twist testned.
+Allows to control Twist nodes from Cooja, and see live serial log output from the GUI.

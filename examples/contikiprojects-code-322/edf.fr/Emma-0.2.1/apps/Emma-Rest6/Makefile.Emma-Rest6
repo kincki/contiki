@@ -1,0 +1,2 @@
+Emma-Rest6_src = Emma-Rest6.c Emma-Rest6Engine_cfs.c Rest6-Agent.c Emma-interpreteur.c 
+

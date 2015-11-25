@@ -1,0 +1,245 @@
+.TH "apps/Emma-Rest6/Emma-API.h" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+apps/Emma-Rest6/Emma-API.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Emma-Rest6.h'\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include <stdio.h>\fP
+.br
+\fC#include <avr/pgmspace.h>\fP
+.br
+\fC#include 'contiki.h'\fP
+.br
+\fC#include 'contiki-net.h'\fP
+.br
+\fC#include 'uip-netif.h'\fP
+.br
+\fC#include 'cfs.h'\fP
+.br
+\fC#include 'dev/eeprom.h'\fP
+.br
+\fC#include <avr/io.h>\fP
+.br
+
+.SS "Defines"
+
+.PP
+.RI "\fBRessource functions API\fP"
+.br
+ 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "#define \fBRESSOURCES_LOADER\fP()   void ressources_loader()"
+.br
+.RI "\fILoader of ressources in Emma-Rest6 Engine.
+.br
+ This function must be implemented in the file : /contiki-2.x/plateform/{MyApps}/Agent-Rest6.c. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCES_INIT\fP()   void ressources_init()"
+.br
+.RI "\fIInit function called by Emma Core on starting device.
+.br
+ This function must be implemented in the file : /contiki-2.x/plateform/{MyApps}/Agent-Rest6.c. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_INIT\fP(sensor)   volatile struct \fBRessource\fP sensor"
+.br
+.RI "\fIDeclaration of a ressource in the Emma-Rest6 Engine
+.br
+ A new declaration of ressource will allocate slot for data ressource and data log. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_UNIT\fP(sensor, unite)"
+.br
+.RI "\fIInitialization of the ressource unit. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_SET\fP(sensor, setFunc)   sensor.setData = setFunc"
+.br
+.RI "\fIInitialization of the setter function for a ressource. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_GET\fP(sensor, getFunc)   sensor.getData = getFunc"
+.br
+.RI "\fIInitialization of the getter function for a ressource. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_LOAD\fP(sensor)   extern struct \fBRessource\fP sensor"
+.br
+.RI "\fIGet an external ressource. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_LIST\fP(name)"
+.br
+.RI "\fICreate a new ressource list. \fP"
+.ti -1c
+.RI "#define \fBRESSOURCE_LIST_LOAD\fP(name)   extern list_t name"
+.br
+.RI "\fILoad an external ressource list. \fP"
+.in -1c
+.in -1c
+.PP
+.RI "\fBHardware Digit Functions API\fP"
+.br
+Abstract functions for getting or setting a specific pin state. 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "#define \fBHARDWARE_DIGIT_GET\fP(port, pin)   ((port & ( 1 << pin)) > 0)"
+.br
+.RI "\fIReturn the current value of a specify pin. \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_DIGIT_SET_UP\fP(port, pin)   port |= (1 << pin)"
+.br
+.RI "\fISet up a specify pin. \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_DIGIT_SET_DOWN\fP(port, pin)   port &= ~(1<<pin)"
+.br
+.RI "\fISet down a specify pin. \fP"
+.in -1c
+.in -1c
+.PP
+.RI "\fBHardware PWM (Pulse Width Modulation) API\fP"
+.br
+ 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "#define \fBHARDWARE_PWM_INIT\fP()   initPWM()"
+.br
+.RI "\fIInitialize the four standard PWM (OCR1A, OCR1B, OCR3A, OCR3B). \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_PWM_SET\fP(pin, val)   setPWM(pin,val)"
+.br
+.RI "\fISet the value of a specify pwm. \fP"
+.ti -1c
+.RI "#define \fBHARDWARE_PWM_GET\fP(pin)   getPWM(pin)"
+.br
+.RI "\fIGet the value of a specify pwm. \fP"
+.in -1c
+.in -1c
+.PP
+.RI "\fBHardware Two Wire Interface (I2C) API\fP"
+.br
+ 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_READ_FLAG\fP   1"
+.br
+.ti -1c
+.RI "#define \fBI2C_WRITE_FLAG\fP   0"
+.br
+.ti -1c
+.RI "#define \fBI2C_INIT\fP()   i2c_init()"
+.br
+.RI "\fIInterface function for init TWI(I2C) interface, all plateforms must implement this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_START\fP(addr)   i2c_start(addr)"
+.br
+.RI "\fIInterface function for start TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_START_WAIT\fP(addr)   i2c_start_wait(addr)"
+.br
+.RI "\fIWaiting Interface function for start TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_REP_START\fP(addr)   i2c_rep_start(addr)"
+.br
+.RI "\fIInterface function for repeating start TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_STOP\fP()   i2c_stop()"
+.br
+.RI "\fIInterface function for stopping and releasing TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_WRITE\fP(data)   i2c_write(data)"
+.br
+.RI "\fIInterface function for sending a byte over TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_READ_ACK\fP()   i2c_readAck()"
+.br
+.RI "\fIInterface function for reading one byte from TWI(I2C) communication, all plateform must implements this function. \fP"
+.ti -1c
+.RI "#define \fBI2C_READ_NACK\fP()   i2c_readNak()"
+.br
+.RI "\fIInterface function for reading one byte if followed by a stop condition from TWI(I2C) communication, all plateform must implements this function. \fP"
+.in -1c
+.in -1c
+.SS "Functions"
+
+.PP
+.RI "\fBImplemented functions depending of the CPU / Plateform\fP"
+.br
+This function must be implemented for using full EMMA HARDWARE API. 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "void \fBinitPWM\fP (void)"
+.br
+.ti -1c
+.RI "void \fBsetPWM\fP (char pin, int val)"
+.br
+.ti -1c
+.RI "int \fBgetPWM\fP (char pin)"
+.br
+.ti -1c
+.RI "void \fBi2c_init\fP (void)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_start\fP (unsigned char address)"
+.br
+.ti -1c
+.RI "int \fBi2c_start_wait\fP (unsigned char address)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_rep_start\fP (unsigned char address)"
+.br
+.ti -1c
+.RI "void \fBi2c_stop\fP (void)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_write\fP (unsigned char data)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_readAck\fP (void)"
+.br
+.ti -1c
+.RI "unsigned char \fBi2c_readNak\fP (void)"
+.br
+.in -1c
+.in -1c
+.PP
+.RI "\fBImplemented functions for each EMMA Applications\fP"
+.br
+This must be never used. \fBRESSOURCES_INIT\fP \fBRESSOURCES_LOADER\fP 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "void \fBressources_init\fP ()"
+.br
+.ti -1c
+.RI "void \fBressources_loader\fP ()"
+.br
+.in -1c
+.in -1c
+.SH "Detailed Description"
+.PP 
+EMMA API - Application function This file contains the application function to construct a plateform of RestFull publication. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Clement DUHART <duhart.clement@gmail.com> 
+.RE
+.PP
+
+.PP
+Definition in file \fBEmma-API.h\fP.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

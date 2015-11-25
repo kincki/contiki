@@ -1,0 +1,14 @@
+Name: Power Profiling Demo from ACM SenSys 2007
+Contact: Adam Dunkels <adam@sics.se>
+URL: http://www.sics.se/~adam/publications-abstracts.html#dunkels07demo
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: http://www.sics.se/contiki/images/stories/energyestimation.png
+Contiki version: CVS 2009-11-23
+Intended platforms: Tmote Sky
+Tested platforms: Tmote Sky
+Description:
+A Tmote Sky application that measures the power consumption with
+different radio duty cycles and sends the data to a gateway Tmote Sky,
+which is connected to a PC. The PC runs a Java program (included in
+this Contikiproject) that displays the power consumption data on
+screen. 

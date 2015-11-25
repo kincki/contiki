@@ -1,0 +1,39 @@
+Name: basic_interferer
+
+Contact: 
+Carlo Alberto Boano <cboano@iti.uni-luebeck.de>
+
+
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+
+
+Contiki version: 2.4
+
+
+Intended platforms: Tmote Sky, Sentilla JCreate (and others with CC2420).
+
+Tested platforms: Tmote Sky and Sentilla JCreate
+
+
+Description:
+ Some simple examples on how to use the CC2420 radio special test modes to create interference.
+
+interference_example_1: Periodic interference
+interference_example_2: Continuous interference with random power
+interference_example_3: Continuous interference with predefined power value
+interference_example_4: Incremental interference
+interference_example_5: Accurate timing
+interference_example_6: Continuous interference shape like  ____--_-----_--____
+interference_example_7: Interference triggered by Tmote/TelosB user button 
+
+
+References: 
+
+C.A. Boano et al. Controllable Radio Interference for Experimental and Testing Purposes in Wireless Sensor Networks. In Proceedings of the 4th International Workshop on Practical Issues in Building Sensor Network Applications (SenseApp) in conjunction with the 34th Conference on Local Computer Networks (LCN). Zurich, Switzerland. October 2009. 
+
+C.A. Boano et al. JamLab: Augmenting Sensornet Testbeds with Realistic and Controlled Interference Generation. In Proceedings of the 10th International Conference on Information Processing in Sensor Networks (IPSN) Chicago, IL, USA. April 2011.
+
+
+How to run it: "make interferer_example_X.upload"
+
+Screenshot: http://www.carloalbertoboano.com/documents/basic_interferer_screenshot.jpg

@@ -1,0 +1,130 @@
+/**
+
+\mainpage Environnement Monitoring & Management Agent
+
+Energy Monitoring & Management Agent is a project to make an easy way for publishing, notifying and logging ressource on the Internet.\n
+EMMA works on the uIP contiki stack with IPV6 on HTTP protocole and used JSON representation on the RestFull paradigm.\n
+\n
+All of the project can be loaded on a very small target device like AVR ZIGBIT 8bits with only 8 Kbytes of SRAM and 50 Kbytes of ROM.\n
+\n
+It's composed of :
+\li \ref webserver which allows auto-publishing data and node configuration.\n
+\li \ref client A report mechanism allows the node to send a specified HTTP request to an other node, the reports are configured throw HTTP request.
+\li \ref datalogger saves periodically data values in EEPROM memory (Internal by default or external by using Log CFS API).
+\li \ref API which offers a lot of basic hardware functions for accessing ADC, PWM, I2C, etc..., and API functions for the RestFull core.\n
+\n
+Download :\n
+\code
+svn : https://contikiprojects.svn.sourceforge.net/svnroot/contikiprojects/edf.fr/Emma-0.2.1/
+\endcode
+
+\image html ../EMMA-Overview.png
+
+\section EmmaNetwork Emma Network
+
+The main goal of Emma Network is to dispatch all tasks and responsabilities on the entire network. The node communicates directly in peer to peer on the LowPAN network. An edge router allows the self-establishment of the layer network 802.15.4 and 6loWPAN (IPV6 Router Advertissement), and the Internet access.\n
+\n
+The whole network (LowPAN and Over Internet) runs on the HTTP protocol with RestFull paradigm and JSON representation. Each node is composed of a web client-server which allows bidirectional request without any modification of the HTTP protocole neither using annex services. \n
+To avoid persistent concentration of main decisions on a node, each node can ask notification throw report, or sends order over notification mechanism.
+To do that, a network configuration mechanism allows us to post on a node a report to delegate a task or a responsability. This report is entirely configurable throw attributes like : host, port, uri, body, method, condition, etc...\n
+\n
+Finally, the network needn't have a persistent server to concentrate datas and making decisions. The configuration of the network can be realized by a network administrator or by a dedicated server : Network Manager. This server must monitor and manage the whole network to detect failures or bad optimizations. The Network Manager can attribute by posting, the order or notification on the node. The feedback of the network must allow the Network Manager to converge to the best network topology solution. A proxy can facilitate and optimize network requests for the Network Manager.\n
+\n
+In some case, the Network Manager can be embedded on a smartphone which is not continously present or directly on an Internet webserver throw an 6to4 tunnel for multi-site topology network.
+\n
+If the network is permanently connected, the network is \ref dynamic because the network can be reconfigured in real time to resolve punctual problems. Otherwise, if the Network Manager can be absent or zomby, the network is \ref static.\n
+\n
+The report mechanism can make complex tasks, it can make internet connections, and so access to all internet ressources, perhapps it's more easy to use a Web Intermediaries to optimize network flow.\n\n
+\n
+The main goal of using HTTP RestFull JSON solution is to be able debugging with a simple web client and to be homogeneous with the whole of the Internet.
+\n
+
+\section reportnotification Report notification mechanism
+We are working on very small and constrainted object, this features imply a bad runtime and so bad time responce. Like we don't know the best time to acces on a node, we will delegate the responsabilities of it on the node. Indeed, the node knows when it don't do anything and can send a notification of the ressource consummer.\n
+\n
+The report notification mechanism is based on the principe of posting a report for a specific web request under some specific conditions. We can set the host (recipient), the port, the uri, the http method, the body and one condition.\n
+The condition is parsed by a simple arithmetic evaluator : EmmaLanguage. For constant reporting (each 30 secondes min), we can set condition to 1, otherwise there are more complex conditions with time, internal ressource, etc ...\n
+\n
+The "body" fields can be use to PUT an order directly on a ressource of the recipient on an other node like {"value":"100"} or {"value":"this.pwm + 100"}...
+\n
+\section Scenario Scenario : Use case of a corridor
+
+\subsection static Static EmmaNetwork
+A corridor is lit by several EMMA Lighter which are drived by two EMMA Sensors placed of both side. The Emma Sensors are composed by two ressources : \n
+\li A brightness sensor
+\li A presence sensor\n
+\n\n
+Standard configuration :\n\n
+\li 
+Sensor1->Proxy sur /data/*/report/\n
+POST http://[Proxy]:8081/uri1/)\n\n
+\li
+Sensor2->Proxy sur /data/*/report/\n
+POST http://[Proxy]:8081/uri1/)\n\n
+\li
+Lampe->Proxy sur /data/*/report/\n
+POST http://[Proxy]:8081/uri1/)\n\n
+\li
+Sensor1->Lampe sur /data/presence/report/ et /data/brightness/report/\n
+PUT http://[Proxy]:8081/data/white1/ {« value »: « 1000 »}\n\n
+\li
+Sensor2->Lampe sur /data/presence/report/ et /data/brightness/report/\n
+PUT http://[Proxy]:8081/data/white1/ {« value »: « 1000 »}\n\n
+\n
+When a state event appears on a node, a report is sended to the proxy. If the node is a sensor, an order is sended to the Emma Lampes to update their internal ressource value.
+\n
+The report/order conditions for sending HTTP request are actually specified by the report attribute :\n
+\li Min : If the value is lower than min
+\li Max : If the value is greater than max
+\li Period : If the interval time, between the last sended request and now, is more greater than period.
+\li Condition : If the condition is true\n
+\n
+
+\n
+Exemple :\n
+\code
+{
+"host":"[3ffe:0501:ffff:0100:0206:98ff:fe00:0231]",
+"uri":"notify.php",
+"id":"2",
+"port":"80",
+"method":"GET",
+"body":"",
+"condition":"this.ressource1 > 100 && this.ressource2 < 1000 "
+}
+\endcode
+
+\subsection dynamic EmmaNetwork Dynamique
+In a dynamic network, the Network Manager checks and configures the network in real time. In this case, it can repair some basic problems like a zomby node, ...\n
+\n
+If a brightness ressource of one Emma Sensor is down and if the two sensor shares their ressources, the sensors are able to detect that their don't see the same brightness in the corridor. The Network Manager detects the anomaly and decides to order one sensor to update the ressource data of the other sensor for guarantee the homogenous of the decisions.\n
+\n
+The Sensor2 receives brightness data by the Sensor1 but uses its presence data to send order to the Emma Lampe. The Network Manager can notify the network administrator that a sensor is probably dead.\n
+\n
+The new configuration :\n\n
+\li
+Sensor1->Proxy sur /data/*/report/\n
+POST http://[Proxy]:8081/uri1/\n\n
+\li
+Sensor2->Proxy sur /data/*/report/\n
+POST http://[Proxy]:8081/uri1/\n\n
+\li
+Lampe->Proxy sur /data/*/report/\n
+POST http://[Proxy]:8081/uri1/\n\n
+\li
+Sensor1->Lampe sur /data/presence/report/\n
+PUT http://[Proxy]:8081/data/white1/ {« value »: « 1000 »}\n\n
+\li
+Sensor2->Lampe sur /data/presence/report/ et /data/brightness/report/\n
+PUT http://[Proxy]:8081/data/white1/ {« value »: « 1000 »}\n\n
+\li
+Sensor2->Sensor1 sur /data/brightness/report/\n
+PUT http://[Sensor1]/data/brightness/ {« value »: «brightness»}\n\n
+\n
+
+\example    Rest6-Agent-sensor.c
+\example    Rest6-Agent-actuator.c
+\example    ressources.c
+
+\tutorial tuto Emma-Proxy-tutorial.txt
+*/

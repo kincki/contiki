@@ -1,0 +1,11 @@
+Name: Skeleton Project Example
+Contact: Adam Dunkels <adam@sics.se>
+URL: http://www.sics.se/contiki/
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot:
+Contiki version: HEAD
+Intended platforms:
+Tested platforms:
+Description:
+This is an example PROJECT-INFO.TXT that shows the fields that a
+PROJECT-INFO.TXT file should contain. 

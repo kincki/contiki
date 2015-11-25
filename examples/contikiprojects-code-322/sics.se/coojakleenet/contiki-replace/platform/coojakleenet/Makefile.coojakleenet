@@ -1,0 +1,120 @@
+LIBNAME=mtype001
+CLASSNAME=Lib1
+include $(CONTIKI)/platform/cooja/Makefile.cooja
+
+MYPATH = ${addprefix $(CONTIKI)/platform/coojakleenet/,. dev lib sys cfs net} ${addprefix $(CONTIKI)/platform/cooja/,. dev lib sys cfs net}
+vpath %.c $(MYPATH)
+vpath %.h $(MYPATH)
+vpath %.S $(MYPATH)
+CFLAGS += ${addprefix -I,$(MYPATH)}
+
+# XXX: To be removed. Defined from COOJA
+EXTRA_CC_ARGS=-Wall -include ${KLEE}/include/klee/klee.h -include ${KLEE}/include/kleenet/interface/SpecialFunctions.h \
+-I'${JAVA_HOME}/include' -I'${JAVA_HOME}/../Headers' -I'${JAVA_HOME}/include/linux' -fno-builtin-printf
+
+# USAGE:
+#  1. Compile mote types:        make hello.coojakleenet-motetype.bc
+#                                make bye.coojakleenet-motetype.bc
+#  2. Compile motes:             make hello-1.coojakleenet-mote.bc
+#                                make bye-2.coojakleenet-mote.bc
+#  3. Link KleeNet executable:
+#     make APP.coojakleenet-executable.bc MOTES=hello-1.coojakleenet-mote.bc,bye-2.coojakleenet-mote.bc
+
+CLEAN = network_driver_conf.h *.bc *.cooja symbols.* *.coojakleenet scenario.dot scenario.png *scenario
+
+CFLAGSNO += -DCOOJAKLEENET=1
+
+# KleeNet toolchain
+CC=klee-gcc
+AR=llvm-ar
+LD=llvm-ld -disable-opt
+KLEE_RUN=kleenet -disable-opt
+PREFIX_SYMBOLS=prefix-symbols
+TREEGRAPH=TreeGraph.py
+SCENARIO=scenario.conf
+GENERATESCENARIO=coojakleenetscenario.py
+IMAGEMAGICK_CONVERT=convert
+KTEST_TOOL=kntest-tool
+
+CONTIKI_TARGET_DIRS += ${addprefix ../cooja/,. dev lib sys cfs net}
+CONTIKI_TARGET_SOURCEFILES += mote_driver.c
+
+${warn WARNING: overriding archive target (should instead be remade in COOJA)}
+$(OBJECTDIR)/%.a: ${addprefix $(OBJECTDIR)/, $(CONTIKI_SOURCEFILES:.c=.o)}
+	$(AR) rcf $@ $^ $(AR_COMMAND_2)
+
+# Mote types
+%.coojakleenet-motetype.bc: %.co $(OBJECTDIR)/$(LIBNAME).o $(OBJECTDIR)/%.a
+	@echo ""
+	@echo "Compiling KleeNet mote type: $@"
+	@echo ""
+	$(LD) -o $*.coojakleenet-motetype $^
+	-rm $*.coojakleenet-motetype
+
+# Motes ([MOTETYPE].[ID].coojakleenet-mote.bc)
+.SECONDEXPANSION:
+MOTETYPE = ${word 1,${subst ., ,$(*)}}
+ID = ${lastword ${subst ., ,$(*)}}
+%.coojakleenet-mote.bc: $${word 1,$${subst ., ,$$*}}.coojakleenet-motetype.bc
+	@echo ""
+	@echo "Prefixing KleeNet mote: $@"
+	@echo ""
+	$(PREFIX_SYMBOLS) --prefix="mote$(ID)_" -ignore="in_buffers,dgrm_nr_links,dgrm_to,dgrm_from" $< -f -o $@
+
+# KleeNet executable
+COMMA := ,
+%.coojakleenet-executable.bc: ${subst $(COMMA), ,$(MOTES)} network_driver.o failure.o
+	@echo ""
+	@echo "Linking KleeNet executable: $^"
+	$(LD) $^ -o $*.coojakleenet-executable
+	-rm $*.coojakleenet-executable
+
+# KleeNet scenario generation and execution
+scenario: $(SCENARIO)
+	@echo "Generating KleeNet scenario from $(SCENARIO)"
+	$(GENERATESCENARIO)
+
+# KleeNet run
+.PHONY: %.coojakleenet-run
+%.coojakleenet-run: %.coojakleenet-executable.bc
+	$(KLEE_RUN) -libc=klee -suppress-external-warnings -emit-all-errors -sde-use-cooja-search -write-sym-paths -write-test-info $^
+
+# KleeNet TreeGraphs
+%.pdf: %.ts
+	@echo ""
+	@echo "Generating tree-graph: $^ -> $@"
+	$(TREEGRAPH) $^ $@
+
+%.png: %.pdf
+	@echo ""
+	@echo "Generating tree-graph (PNG): $^ -> $@"
+	$(IMAGEMAGICK_CONVERT) $^ $@
+
+%.ktest.parsed: %.ktest
+	@echo ""
+	@echo "Parsing ktest: $^ -> $@"
+	$(KTEST_TOOL) --write-ints $^ > $@
+
+%.ktest.json: %.ktest
+	@echo ""
+	@echo "Exporting ktest to JSON format: $^ -> $@"
+	$(KTEST_TOOL) --write-json $^ > $@
+
+# KleeNet parsing of test output
+%/ktest.json.all:
+	@echo ""
+	@echo "Exporting all .ktest to JSON format: $*/*.ktest -> $@"
+	echo "[" > $@
+	$(KTEST_TOOL) --write-json $*/*.ktest >> $@
+	echo "]" >> $@
+
+# KleeNet parsing of test output
+.PHONY: halt-kleenet switch-searcher
+halt-kleenet:
+	@echo "Halting KleeNet process"
+	klee-control -H klee-last
+
+# KleeNet switching the searcher strategy
+switch-searcher:
+	@echo "Switching KleeNet searcher strategy"
+	klee-control -s klee-last

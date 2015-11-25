@@ -1,0 +1,11 @@
+Name: Migmem
+Contact: Moritz "Morty" Strübe <morty@cs.fau.de>
+URL:
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+Screenshot: 
+Contiki version: CVS 2010-06-22
+Intended platforms: Tmote Sky
+Tested platforms: Tmote Sky
+Description:
+Migmem serializes and unserializes programms linked using the Minilink Linker.
+

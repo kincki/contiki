@@ -1,0 +1,3276 @@
+
+
+
+
+1.4#0
+-------
+
+
+../../core/./sys/process.h:308: Warning: Type "char const   *" in field "name" should be annotated NT.
+
+const char * NTS name;
+
+
+1.4#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rimebuf.c -o obj_native/rimebuf.o
+
+Error: Error while processing file
+../../core/./net/rime/rimebuf.h:180: Warning: Type "void *" in formal "ptr" of rimebuf_reference needs a bound annotation.
+void * COUNT(len) ptr
+
+
+
+../../core/./net/rime/rimebuf.h:205: Warning: Type "void *" in the return value of rimebuf_reference_ptr needs a bound annotation.
+void * COUNT (RIMEBUF_SIZE) rimebuf_reference_ptr
+
+
+
+../../core/./net/rime/rimebuf.h:236: Warning: Type "void const   *" in formal "from" of rimebuf_copyfrom needs a bound annotation.
+int rimebuf_copyfrom(const void * COUNT (RIMEBUF_SIZE) from, uint16_t len)
+
+
+
+../../core/./net/rime/rimebuf.h:256: Warning: Type "void *" in formal "to" of rimebuf_copyto needs a bound annotation.
+int rimebuf_copyto(void * COUNT (RIMEBUF_SIZE + RIMEBUF_HDR_SIZE) to)
+
+
+
+../../core/./net/rime/rimebuf.h:272: Warning: Type "unsigned char *" in formal "to" of rimebuf_copyto_hdr needs a bound annotation.
+uint8_t * COUNT (RIMEBUF_HDR_SIZE) to
+
+
+
+../../core/./net/rime/rimebuf.h:315: Warning: Type "char const   *" in global "rimebuf_attr_strings" should be annotated NT.
+extern const char * NTS rimebuf_attr_strings[]
+
+
+
+../../core/./net/rime/rimebuf.h:398: Warning: Type "struct rimebuf_addr *" in formal "addrs" of rimebuf_attr_copyto needs a bound annotation.
+struct rimebuf_addr * COUNT (RIMEBUF_NUM_ADDRS) addrs
+
+
+
+../../core/./net/rime/rimebuf.h:398: Warning: Type "struct rimebuf_attr *" in formal "attrs" of rimebuf_attr_copyto needs a bound annotation.
+struct rimebuf_attr * COUNT (RIMEBUF_NUM_ATTRS) attrs
+
+
+
+../../core/./net/rime/rimebuf.h:400: Warning: Type "struct rimebuf_addr *" in formal "addrs" of rimebuf_attr_copyfrom needs a bound annotation.
+struct rimebuf_addr * COUNT (RIMEBUF_NUM_ADDRS) addrs
+
+
+
+../../core/./net/rime/rimebuf.h:400: Warning: Type "struct rimebuf_attr *" in formal "attrs" of rimebuf_attr_copyfrom needs a bound annotation.
+struct rimebuf_attr * COUNT (RIMEBUF_NUM_ATTRS) attrs
+
+
+
+../../core/net/rime/rimebuf.c:88: Warning: Type "unsigned char *" in global "rimebufptr" needs a bound annotation.
+static uint8_t * COUNT (RIMEBUF_SIZE) rimebufptr
+
+
+
+
+
+
+
+
+1.4#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+
+Error: Error while processing file
+../../core/./net/rime/rimebuf.h:118: Warning: Type "void *" in the return value of rimebuf_hdrptr needs a bound annotation.
+void * COUNT (RIMEBUF_HDR_SIZE) rimebuf_hdrptr
+
+
+
+
+
+
+1.5#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+
+Error: Error while processing file
+
+../../core/net/rime/queuebuf.c:69: Warning: Type "unsigned char *" in field "ref" needs a bound annotation.
+uint8_t * COUNT (len) ref
+
+
+
+
+../../core/net/rime/queuebuf.c:77: Error: Type mismatch in coercion:
+  from: struct queuebuf_ref * BND(...)  
+    to: void * BND(...)  
+   exp: refbufmem_memb_mem
+
+Modified contiki-2.x/core/lib/memb.h line #95
+#define MEMB(name, structure, num) \
+        static char CC_CONCAT(name,_memb_count)[num]; \
+        static structure CC_CONCAT(name,_memb_mem)[num]; \
+        static struct memb_blocks name = {sizeof(structure), num, \
+                                          CC_CONCAT(name,_memb_count), \
+                      >>>>>>              (void *) TC( CC_CONCAT(name,_memb_mem) )}
+
+
+
+
+../../core/net/rime/queuebuf.c:110: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: memb_alloc(& refbufmem)
+
+rbuf = TC(memb_alloc(&refbufmem));
+struct queuebuf_ref * SAFE rbuf;         line#107
+                                                  !!!!  DONE TWO SIMILAR ANNOTATIONS   !!!      
+buf = TC(memb_alloc(&bufmem));           line#128
+  struct queuebuf * SAFE buf;		 line#106
+
+
+
+
+
+
+1.5#2
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/queuebuf.c -o obj_native/queuebuf.o
+
+Error: Error while processing file
+
+../../core/net/rime/queuebuf.c:126: Error: Type mismatch in coercion:
+  from: struct queuebuf_ref * BND(...)  
+    to: struct queuebuf * BND(...)  
+   exp: rbuf
+
+return (struct queuebuf *)TC(rbuf);              !!!   REPLACED WITH  !!!
+return TC(rbuf);
+
+
+
+
+../../core/net/rime/queuebuf.c:187: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+r = (struct queuebuf_ref *)b;                    !!!   REPLACED WITH  !!! 
+r = TC(b);
+struct queuebuf_ref * r;                         !!!   REPLACED WITH  !!!   line# 181
+struct queuebuf_ref * SAFE r;
+
+
+
+                                       
+../../core/net/rime/queuebuf.c:203: Error: Type mismatch in coercion:
+  from: struct queuebuf * BND(...)  
+    to: struct queuebuf_ref * BND(...)  
+   exp: b
+
+r = (struct queuebuf_ref *)b;                    !!!   REPLACED WITH  !!! 
+r = TC(b);
+struct queuebuf_ref * r;                         !!!   REPLACED WITH  !!!   line# 198
+struct queuebuf_ref * SAFE r;
+
+
+
+
+
+
+
+1.7#1
+-------
+
+
+
+Error: Error while processing file
+
+../../core/net/rime/ctimer.c:70: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ctimer * BND(...)  
+   exp: list_head(ctimer_list)
+
+c = list_head(ctimer_list)                       !!!   REPLACED WITH  !!! 
+c = TC (list_head(ctimer_list))
+struct ctimer *c;                                !!!   REPLACED WITH  !!!   line# 67
+struct ctimer * SAFE c;
+
+
+
+
+../../core/net/rime/ctimer.c:77: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ctimer * BND(...)  
+   exp: list_head(ctimer_list)
+
+c = list_head(ctimer_list)                       !!!   REPLACED WITH  !!! 
+c = TC (list_head(ctimer_list))
+
+
+
+
+../../core/net/rime/ctimer.c:79: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+   
+list_remove(ctimer_list, c);                     !!!   REPLACED WITH  !!! 
+list_remove(ctimer_list,TC(c));
+
+
+
+
+../../core/net/rime/ctimer.c:116: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+list_remove(ctimer_list, c);                     !!!   REPLACED WITH  !!! 
+list_remove(ctimer_list,TC(c));
+
+
+
+
+../../core/net/rime/ctimer.c:117: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+list_add(ctimer_list, c);                        !!!   REPLACED WITH  !!! 
+list_add(ctimer_list,TC(c));
+
+
+
+
+../../core/net/rime/ctimer.c:129: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+list_remove(ctimer_list, c);                     !!!   REPLACED WITH  !!! 
+list_remove(ctimer_list,TC(c));
+
+
+
+
+../../core/net/rime/ctimer.c:130: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+list_add(ctimer_list, c);                        !!!   REPLACED WITH  !!! 
+list_add(ctimer_list,TC(c));
+
+
+
+
+../../core/net/rime/ctimer.c:142: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+list_remove(ctimer_list, c);                     !!!   REPLACED WITH  !!! 
+list_remove(ctimer_list,TC(c));
+
+
+
+
+1.8#1
+-------
+
+
+Error: Error while processing file
+
+../../core/net/rime/rime.c:62: Error: Type mismatch in coercion:
+  from: struct rime_sniffer * BND(...)  
+    to: void * BND(...)  
+   exp: s
+
+list_add(sniffers, s);                           !!!   REPLACED WITH  !!! 
+list_add(sniffers,TC(s));
+
+
+
+
+../../core/net/rime/rime.c:68: Error: Type mismatch in coercion:
+  from: struct rime_sniffer * BND(...)  
+    to: void * BND(...)  
+   exp: s
+   
+list_remove(sniffers, s);                        !!!   REPLACED WITH  !!! 
+list_remove(sniffers,TC(s));
+
+
+
+
+../../core/net/rime/rime.c:78: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rime_sniffer * BND(...)  
+   exp: list_head(sniffers)
+   
+s = list_head(sniffers)                          !!!   REPLACED WITH  !!! 
+s = TC(list_head(sniffers))
+
+struct rime_sniffer *s;                          !!!   REPLACED WITH  !!!      line# 75
+struct rime_sniffer * SAFE s;
+
+
+
+
+../../core/net/rime/rime.c:109: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rime_sniffer * BND(...)  
+   exp: list_head(sniffers)
+
+s = list_head(sniffers)                          !!!   REPLACED WITH  !!! 
+s = TC(list_head(sniffers))
+
+struct rime_sniffer *s;                          !!!   REPLACED WITH  !!!      line# 104
+struct rime_sniffer * SAFE s;
+
+
+
+
+1.9#1
+-------
+
+
+Error: Error while processing file
+../../core/./net/rime/abc.h:72: Warning: Type "struct abc_conn *" in <function pointer formal ptr> needs a bound annotation.
+
+struct abc_conn * SAFE ptr
+
+
+
+../../core/net/rime/broadcast.c:63: Warning: Type "struct abc_conn *" in formal "bc" of recv_from_abc needs a bound annotation.
+
+struct abc_conn * SAFE bc
+
+
+
+
+../../core/net/rime/broadcast.c:67: Error: Type mismatch in coercion:
+  from: struct abc_conn * BND(...)  
+    to: struct broadcast_conn * BND(...)  
+   exp: bc
+
+struct broadcast_conn *c = (struct broadcast_conn *)bc;                   !!!   REPLACED WITH  !!! 
+struct broadcast_conn * SAFE c = TC(bc);
+   
+
+
+
+
+1.9#2
+-------
+
+
+
+Error: Error while processing file
+
+
+../../core/./net/rime/broadcast.h:74: Warning: Type "struct broadcast_conn *" in <function pointer formal ptr> needs a bound annotation.
+struct broadcast_conn * SAFE ptr
+
+
+
+../../core/net/rime/stbroadcast.c:52: Warning: Type "struct broadcast_conn *" in formal "broadcast" of recv_from_broadcast needs a bound annotation.
+struct broadcast_conn * SAFE broadcast
+
+
+
+../../core/net/rime/stbroadcast.c:55: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct stbroadcast_conn * BND(...)  
+   exp: broadcast
+
+register struct stbroadcast_conn *c = (struct stbroadcast_conn *)broadcast;          !!! REPLACED WITH !!!
+register struct stbroadcast_conn * SAFE c = TC(broadcast);
+
+
+
+
+../../core/net/rime/stbroadcast.c:82: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct stbroadcast_conn * BND(...)  
+   exp: ptr
+
+struct stbroadcast_conn *c = ptr;                                                    !!! REPLACED WITH !!! 
+struct stbroadcast_conn * SAFE c = TC(ptr);
+
+
+
+
+../../core/net/rime/stbroadcast.c:96: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, t, send, c);                                                       !!! REPLACED WITH !!! 
+ctimer_set(&c->t, t, send, TC(c));
+
+
+
+
+../../core/net/rime/stbroadcast.c:109: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+send(c);                                                                             !!! REPLACED WITH !!! 
+send(TC(c));
+
+
+1.10#1
+-------
+
+
+
+Error: Error while processing file
+../../core/net/rime/unicast.c:69: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct unicast_conn * BND(...)  
+   exp: broadcast
+
+struct unicast_conn *c = (struct unicast_conn *)broadcast;                  !!! RELACED WITH !!!
+struct unicast_conn * SAFE c = TC(broadcast);
+
+
+1.10#2
+-------
+
+
+
+Error: Error while processing file
+
+../../core/./net/rime/unicast.h:68: Warning: Type "struct unicast_conn *" in <function pointer formal c> needs a bound annotation.
+struct unicast_conn * SAFE c
+
+
+
+../../core/net/rime/stunicast.c:59: Warning: Type "struct unicast_conn *" in formal "uc" of recv_from_uc needs a bound annotation.
+struct unicast_conn * SAFE uc
+
+
+
+../../core/net/rime/stunicast.c:62: Error: Type mismatch in coercion:
+  from: struct unicast_conn * BND(...)  
+    to: struct stunicast_conn * BND(...)  
+   exp: uc
+
+register struct stunicast_conn *c = (struct stunicast_conn *)uc;                !!! REPLACED WITH !!!
+register struct stunicast_conn * SAFE c = TC(uc);
+
+
+
+
+../../core/net/rime/stunicast.c:100: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct stunicast_conn * BND(...)  
+   exp: ptr
+
+struct stunicast_conn *c = ptr;                                                 !!! REPLACED WITH !!!
+struct stunicast_conn * SAFE c = TC(ptr);
+
+
+
+
+../../core/net/rime/stunicast.c:116: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, t, send, c);                                                  !!! REPLACED WITH !!!
+ctimer_set(&c->t, t, send, TC(c));
+
+
+
+
+../../core/net/rime/stunicast.c:131: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, rxmittime, send, c);                                          !!! REPLACED WITH !!!
+ctimer_set(&c->t, rxmittime, send, TC(c));
+
+
+
+
+
+
+1.10#3
+-------
+
+
+
+Error: Error while processing file
+../../core/./net/rime/stunicast.h:69: Warning: Type "struct stunicast_conn *" in <function pointer formal c> needs a bound annotation.
+
+void (* recv)(struct stunicast_conn *c, rimeaddr_t *from);                  
+void (* sent)(struct stunicast_conn *c);                                       !!! REPLACED WITH !!!
+
+void (* recv)(struct stunicast_conn * SAFE c, rimeaddr_t *from);                 (2 modifications) 
+void (* sent)(struct stunicast_conn * SAFE c);
+
+
+
+
+../../core/net/rime/runicast.c:71: Warning: Type "struct stunicast_conn *" in formal "stunicast" of sent_by_stunicast needs a bound annotation.
+struct stunicast_conn * SAFE stunicast
+
+
+
+
+../../core/net/rime/runicast.c:101: Warning: Type "struct stunicast_conn *" in formal "stunicast" of recv_from_stunicast needs a bound annotation.
+struct stunicast_conn * SAFE stunicast
+
+
+
+
+../../core/net/rime/runicast.c:74: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: struct runicast_conn * BND(...)  
+   exp: stunicast
+   
+struct runicast_conn *c = (struct runicast_conn *)stunicast;                   !!! REPLACED WITH !!!
+struct runicast_conn * SAFE c = TC(stunicast);
+
+
+
+
+../../core/net/rime/runicast.c:104: Error: Type mismatch in coercion:
+  from: struct stunicast_conn * BND(...)  
+    to: struct runicast_conn * BND(...)  
+   exp: stunicast
+
+struct runicast_conn *c = (struct runicast_conn *)stunicast;                   !!! REPLACED WITH !!!
+struct runicast_conn * SAFE c = TC(stunicast);
+
+
+
+
+
+
+
+1.13#1
+-------
+
+
+
+Error: Error while processing file
+
+../../core/./net/rime/abc.h:136: Warning: Type "struct channel *" in formal "channel" of abc_input needs a bound annotation.
+struct channel * SAFE channel
+
+
+
+
+
+../../core/net/rime/abc.c:92: Error: Type mismatch in coercion:
+  from: struct channel * BND(...)  
+    to: struct abc_conn * BND(...)  
+   exp: channel
+   
+struct abc_conn *c = (struct abc_conn *)channel;               !!! REPLACED WITH !!!
+struct abc_conn * SAFE c = TC(channel);
+
+
+
+1.13#2
+-------
+
+
+
+Error: Error while processing file
+../../core/./net/rime/runicast.h:68: Warning: Type "struct runicast_conn *" in <function pointer formal c> needs a bound annotation.
+  void (* recv)(struct runicast_conn * SAFE c, rimeaddr_t *from, uint8_t seqno);
+  void (* sent)(struct runicast_conn * SAFE c, rimeaddr_t *to, uint8_t retransmissions);
+
+
+
+
+../../core/net/rime/rucb.c:71: Warning: Type "struct runicast_conn *" in formal "ruc" of acked needs a bound annotation.
+  struct runicast_conn * SAFE ruc
+
+
+
+../../core/net/rime/rucb.c:87: Warning: Type "struct runicast_conn *" in formal "ruc" of timedout needs a bound annotation.
+  struct runicast_conn * SAFE ruc
+
+
+
+../../core/net/rime/rucb.c:98: Warning: Type "struct runicast_conn *" in formal "ruc" of recv needs a bound annotation.
+  struct runicast_conn * SAFE ruc
+
+
+
+
+
+
+../../core/net/rime/rucb.c:74: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rucb_conn * BND(...)  
+   exp: ruc
+
+struct rucb_conn *c = (struct rucb_conn *)ruc;                          !!! REPLACED WITH !!!
+struct rucb_conn * SAFE c = TC(ruc);
+
+
+
+
+
+
+../../core/net/rime/rucb.c:90: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rucb_conn * BND(...)  
+   exp: ruc
+
+struct rucb_conn *c = (struct rucb_conn *)ruc;                          !!! REPLACED WITH !!!
+struct rucb_conn * SAFE c = TC(ruc);
+
+
+
+
+
+
+../../core/net/rime/rucb.c:101: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rucb_conn * BND(...)  
+   exp: ruc
+
+struct rucb_conn *c = (struct rucb_conn *)ruc;                          !!! REPLACED WITH !!!
+struct rucb_conn * SAFE c = TC(ruc);
+
+
+
+
+
+1.13#3
+-------
+
+
+
+Error: Error while processing file
+
+
+
+
+../../core/./net/rime/queuebuf.h:67: Warning: Type "void *" in the return value of queuebuf_dataptr needs a bound annotation.
+
+void * COUNT(RIMEBUF_SIZE + RIMEBUF_HDR_SIZE) queuebuf_dataptr(struct queuebuf *b);
+
+
+
+
+
+
+
+
+../../core/./net/rime/rimebuf.h:106: Warning: Type "void *" in the return value of rimebuf_dataptr needs a bound annotation.
+
+void * COUNT (RIMEBUF_SIZE) rimebuf_dataptr(void);               
+
+
+
+
+
+
+
+../../core/net/rime/polite.c:65: Error: Type mismatch in coercion:
+  from: struct abc_conn * BND(...)  
+    to: struct polite_conn * BND(...)  
+   exp: abc
+   
+struct polite_conn *c = (struct polite_conn *)abc;                          !!! REPLACED WITH !!!
+struct polite_conn * SAFE c = TC(abc);
+
+
+
+
+
+../../core/net/rime/polite.c:87: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct polite_conn * BND(...)  
+   exp: ptr
+
+struct polite_conn *c = ptr;                                                !!! REPLACED WITH !!!
+struct polite_conn * SAFE c = TC(ptr);
+
+
+
+
+
+../../core/net/rime/polite.c:131: Error: Type mismatch in coercion:
+  from: struct polite_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+TC(c)
+
+
+
+
+
+
+
+
+
+1.13#4
+-------
+
+
+
+Error: Error while processing file
+
+
+
+../../core/net/rime/ipolite.c:72: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct ipolite_conn * BND(...)  
+   exp: broadcast
+   
+struct ipolite_conn *c = (struct ipolite_conn *)broadcast;                    !!! REPLACED WITH !!!
+struct ipolite_conn * SAFE c = TC(broadcast);
+
+
+
+
+
+../../core/net/rime/ipolite.c:94: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ipolite_conn * BND(...)  
+   exp: ptr
+
+struct ipolite_conn *c = ptr;                                                 !!! REPLACED WITH !!!
+struct ipolite_conn * SAFE c = TC(ptr);
+
+
+
+
+
+../../core/net/rime/ipolite.c:155: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+TC(c)
+
+
+
+
+
+
+
+
+
+
+
+1.13#5
+-------
+
+
+
+
+
+Error: Error while processing file
+
+../../core/./net/rime/ipolite.h:68: Warning: Type "struct ipolite_conn *" in <function pointer formal c> needs a bound annotation.
+
+  void (* recv)(struct ipolite_conn * SAFE c, rimeaddr_t *from);
+  void (* sent)(struct ipolite_conn * SAFE c);
+  void (* dropped)(struct ipolite_conn * SAFE c);
+
+
+
+
+
+
+../../core/net/rime/netflood.c:75: Warning: Type "struct ipolite_conn *" in formal "ipolite" of recv_from_ipolite needs a bound annotation.
+  
+  struct ipolite_conn * SAFE ipolite
+
+
+
+
+../../core/net/rime/netflood.c:125: Warning: Type "struct ipolite_conn *" in formal "ipolite" of sent needs a bound annotation.
+  
+  struct ipolite_conn * SAFE ipolite
+  
+  
+  
+  
+  
+../../core/net/rime/netflood.c:134: Warning: Type "struct ipolite_conn *" in formal "ipolite" of dropped needs a bound annotation.
+
+  struct ipolite_conn * SAFE ipolite
+
+
+
+
+
+../../core/net/rime/netflood.c:78: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: struct netflood_conn * BND(...)  
+   exp: ipolite
+   
+  struct netflood_conn *c = (struct netflood_conn *)ipolite;                        !!! REPLACED WITH !!!
+  struct netflood_conn * SAFE c = TC(ipolite);
+  
+  
+  
+  
+  
+../../core/net/rime/netflood.c:128: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: struct netflood_conn * BND(...)  
+   exp: ipolite
+   
+  struct netflood_conn *c = (struct netflood_conn *)ipolite;                        !!! REPLACED WITH !!!
+  struct netflood_conn * SAFE c = TC(ipolite);
+  
+  
+  
+  
+  
+../../core/net/rime/netflood.c:137: Error: Type mismatch in coercion:
+  from: struct ipolite_conn * BND(...)  
+    to: struct netflood_conn * BND(...)  
+   exp: ipolite
+   
+  struct netflood_conn *c = (struct netflood_conn *)ipolite;                        !!! REPLACED WITH !!!
+  struct netflood_conn * SAFE c = TC(ipolite);
+  
+  
+
+
+
+1.13#6
+-------
+
+
+
+
+Error: Error while processing file
+
+
+
+../../core/net/rime/multihop.c:72: Error: Type mismatch in coercion:
+  from: struct unicast_conn * BND(...)  
+    to: struct multihop_conn * BND(...)  
+   exp: uc
+
+  struct multihop_conn *c = (struct multihop_conn *)uc;                   !!! REPLACED WITH !!!
+  struct multihop_conn * SAFE c = TC(uc);
+  
+  
+  
+  
+  
+ 
+  
+
+
+1.14#1
+-------
+
+
+
+Error: Error while processing file
+
+../../core/net/rime/rmh.c:69: Error: Type mismatch in coercion:
+  from: struct runicast_conn * BND(...)  
+    to: struct rmh_conn * BND(...)  
+   exp: uc
+
+      struct rmh_conn *c = (struct rmh_conn *)uc;    !!! REPLACED WITH !!!
+      struct rmh_conn * SAFE c = TC(uc);
+
+
+1.14#2
+-------
+
+
+
+Error: Error while processing file
+
+
+../../core/net/rime/trickle.c:79: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct trickle_conn * BND(...)  
+   exp: ptr
+   
+ struct trickle_conn *c = ptr;                             !!! REPLACED WITH !!!
+ struct trickle_conn * SAFE c = TC(ptr);       
+ 
+ 
+ 
+ 
+ 
+ 
+../../core/net/rime/trickle.c:93: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct trickle_conn * BND(...)  
+   exp: ptr
+
+ struct trickle_conn *c = ptr;                             !!! REPLACED WITH !!!
+ struct trickle_conn * SAFE c = TC(ptr);       
+ 
+ 
+ 
+ 
+ 
+ 
+
+../../core/net/rime/trickle.c:107: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+   
+ TC(c)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+../../core/net/rime/trickle.c:124: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ TC(c)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+../../core/net/rime/trickle.c:138: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct trickle_conn * BND(...)  
+   exp: bc
+
+  struct trickle_conn *c = (struct trickle_conn *)bc;                              !!! REPLACED WITH !!!
+  struct trickle_conn * SAFE c = TC(bc);
+  
+  
+  
+  
+  
+  
+../../core/net/rime/trickle.c:154: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ TC(c)
+ 
+ 
+ 
+
+ 
+
+../../core/net/rime/trickle.c:167: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ TC(c)
+ 
+ 
+ 
+ 
+ 
+
+../../core/net/rime/trickle.c:207: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ TC(c)
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+1.14#3
+-------
+
+
+Error: Error while processing file
+
+../../core/./net/rime/multihop.h:69: Warning: Type "struct multihop_conn *" in <function pointer formal ptr> needs a bound annotation.
+  
+  struct multihop_conn * SAFE ptr
+
+
+
+
+
+../../core/./net/rime/route-discovery.h:66: Warning: Type "struct route_discovery_conn *" in <function pointer formal c> needs a bound annotation.
+
+  void (* new_route)(struct route_discovery_conn * SAFE c, rimeaddr_t *to);
+  void (* timedout)(struct route_discovery_conn * SAFE c);
+
+
+
+
+
+
+
+../../core/net/rime/mesh.c:64: Warning: Type "struct multihop_conn *" in formal "multihop" of data_packet_received needs a bound annotation.
+
+  struct multihop_conn * SAFE multihop
+  
+  
+  
+  
+  
+  
+../../core/net/rime/mesh.c:68: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct multihop_conn 
+
+  struct mesh_conn *c = (struct mesh_conn *)
+    ((char *)multihop - offsetof(struct mesh_conn, multihop));                   !!! REPLACED WITH !!!
+    
+  struct mesh_conn * SAFE c = TC((TC(multihop) - offsetof(struct mesh_conn, multihop)));
+  
+  
+  
+  
+  
+  
+
+../../core/net/rime/mesh.c:91: Warning: Type "struct route_discovery_conn *" in formal "rdc" of found_route needs a bound annotation.
+
+struct route_discovery_conn * SAFE rdc
+
+
+
+
+
+
+
+../../core/net/rime/mesh.c:94: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct route_discovery_conn 
+
+  struct mesh_conn *c = (struct mesh_conn *)
+    ((char *)rdc - offsetof(struct mesh_conn, route_discovery_conn));            !!! REPLACED WITH !!!
+
+  struct mesh_conn * SAFE c = TC((TC(rdc) - offsetof(struct mesh_conn, route_discovery_conn)));
+
+
+
+
+
+
+    
+  
+../../core/net/rime/mesh.c:106: Warning: Type "struct route_discovery_conn *" in formal "rdc" of route_timed_out needs a bound annotation.
+
+struct route_discovery_conn * SAFE rdc
+
+
+
+
+
+
+
+
+
+../../core/net/rime/mesh.c:109: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct route_discovery_conn 
+
+  struct mesh_conn *c = (struct mesh_conn *)
+    ((char *)rdc - offsetof(struct mesh_conn, route_discovery_conn));            !!! REPLACED WITH !!!
+
+  struct mesh_conn * SAFE c = TC((TC(rdc) - offsetof(struct mesh_conn, route_discovery_conn)));
+
+
+
+
+
+
+    
+  
+
+
+
+1.16#1
+-------
+
+
+
+Error: Error while processing file
+
+../../core/net/rime/route.c:76: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+struct route_entry * SAFE e;
+e = TC(list_head(route_table))
+
+
+
+
+
+
+../../core/net/rime/route.c:81: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+list_remove(route_table, TC(e));
+
+
+
+
+
+
+
+../../core/net/rime/route.c:82: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+memb_free(&route_mem, TC(e));
+
+
+
+
+
+
+
+../../core/net/rime/route.c:107: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+   list_remove(route_table,TC(e));    
+  
+
+
+
+
+
+
+../../core/net/rime/route.c:110: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: memb_alloc(& route_mem)
+
+  struct route_entry * SAFE e;
+  e = TC(memb_alloc(&route_mem));
+  
+  
+  
+  
+
+../../core/net/rime/route.c:112: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_chop(route_table)
+
+  e = TC(list_chop(route_table));
+  
+  
+  
+  
+  
+  
+../../core/net/rime/route.c:123: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+  list_push(route_table, TC(e));
+
+
+
+
+
+
+
+../../core/net/rime/route.c:133: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+  struct route_entry * SAFE e;
+  e = TC(list_head(route_table))
+  
+  
+  
+  
+  
+  
+../../core/net/rime/route.c:150: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+  list_remove(route_table, TC(e));
+
+
+
+
+
+
+
+../../core/net/rime/route.c:151: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+  memb_free(&route_mem, TC(e));
+
+
+
+
+
+
+
+../../core/net/rime/route.c:160: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_pop(route_table)
+
+  struct route_entry * SAFE e;
+  e = TC(list_pop(route_table))
+  
+  
+  
+  
+
+
+
+
+../../core/net/rime/route.c:162: Error: Type mismatch in coercion:
+  from: struct route_entry * BND(...)  
+    to: void * BND(...)  
+   exp: e
+
+ memb_free(&route_mem, TC(e));
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+../../core/net/rime/route.c:181: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+  struct route_entry * SAFE e;
+  e = TC(list_head(route_table))
+  
+  
+  
+  
+  
+  
+
+../../core/net/rime/route.c:193: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_entry * BND(...)  
+   exp: list_head(route_table)
+
+  struct route_entry * SAFE e;
+  e = TC(list_head(route_table))
+
+
+
+
+
+
+
+2.0#1
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/route-discovery.c -o obj_native/route-discovery.o
+
+Error: Error while processing file
+../../core/./net/rime/netflood.h:68: Warning: Type "struct netflood_conn *" in <function pointer formal c> needs a bound annotation.
+
+struct netflood_callbacks {
+  int (* recv)(struct netflood_conn * SAFE c, rimeaddr_t *from,
+	       rimeaddr_t *originator, uint8_t seqno, uint8_t hops);
+  void (* sent)(struct netflood_conn * SAFE c);
+  void (* dropped)(struct netflood_conn * SAFE c);
+};
+  
+  
+ 
+ 
+ 
+ 
+../../core/net/rime/route-discovery.c:176: Warning: Type "struct netflood_conn *" in formal "nf" of rreq_packet_received needs a bound annotation.
+
+  struct netflood_conn * SAFE nf
+  
+  
+
+
+
+
+
+../../core/net/rime/route-discovery.c:181: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct netflood_conn 
+
+  struct route_discovery_conn * SAFE c = TC(
+    (TC(nf) - offsetof(struct route_discovery_conn, rreqconn)));
+    
+    
+
+
+
+
+
+
+../../core/net/rime/route-discovery.c:145: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )uc <= (char * BND(cbound1__b, cbound1__e)  )uc + 4294967216U
+  
+struct route_discovery_conn * SAFE c = TC(
+    (TC(uc) - offsetof(struct route_discovery_conn, rrepconn)));
+    
+    
+
+
+    
+    
+    
+../../core/net/rime/route-discovery.c:246: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct route_discovery_conn * BND(...)  
+   exp: ptr
+   
+  struct route_discovery_conn * SAFE c = TC(ptr);
+
+
+
+
+
+
+
+
+../../core/net/rime/route-discovery.c:258: Error: Type mismatch in coercion:
+  from: struct route_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+  TC(c)
+
+
+
+
+2.0#2
+-------
+
+
+root@instant-contiki:/home/user/contiki-2.x/examples/hello-world# make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/collect.c -o obj_native/collect.o
+
+Error: Error while processing file
+../../core/./net/rime/neighbor-discovery.h:67: Warning: Type "struct neighbor_discovery_conn *" in <function pointer formal c> needs a bound annotation.
+
+  void (* recv)(struct neighbor_discovery_conn * SAFE c,
+		rimeaddr_t *from, uint16_t val);
+  void (* sent)(struct neighbor_discovery_conn * SAFE c);
+  
+  
+  
+  
+  
+../../core/./net/rime/runicast.h:68: Warning: Type "struct runicast_conn *" in <function pointer formal c> needs a bound annotation.
+
+  void (* timedout)(struct runicast_conn * SAFE c, rimeaddr_t *to, uint8_t retransmissions);
+
+
+
+
+
+
+../../core/net/rime/collect.c:245: Warning: Type "struct runicast_conn *" in formal "c" of node_packet_timedout needs a bound annotation.
+
+  struct runicast_conn * SAFE c
+
+
+
+
+
+../../core/net/rime/collect.c:249: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct runicast_conn 
+
+  struct collect_conn * SAFE tc = TC(
+    TC(c) - offsetof(struct collect_conn, runicast_conn));
+    
+    
+    
+    
+    
+../../core/net/rime/collect.c:257: Warning: Type "struct neighbor_discovery_conn *" in formal "c" of adv_received needs a bound annotation.
+  struct neighbor_discovery_conn * SAFE c
+  
+  
+  
+  
+  
+    
+../../core/net/rime/collect.c:260: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct neighbor_discovery_conn 
+
+  struct collect_conn * SAFE tc = TC(
+    TC(c) - offsetof(struct collect_conn, neighbor_discovery_conn));
+
+
+
+
+
+../../core/net/rime/collect.c:154: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )c <= (char * BND(cbound1__b, cbound1__e)  )c + 4294967188U
+
+  struct collect_conn * SAFE tc = TC(
+    TC(c) - offsetof(struct collect_conn, runicast_conn));
+
+
+
+
+
+
+../../core/net/rime/collect.c:237: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )c <= (char * BND(cbound2__b, cbound2__e)  )c + 4294967188U
+
+  struct collect_conn * SAFE tc = TC(
+    TC(c) - offsetof(struct collect_conn, runicast_conn));
+
+
+
+
+
+
+
+
+
+2.0#3
+-------
+
+
+root@instant-contiki:/home/user/contiki-2.x/examples/hello-world# make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/neighbor.c -o obj_native/neighbor.o
+
+
+Error: Error while processing file
+
+../../core/net/rime/neighbor.c:85: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+   
+   struct neighbor * SAFE n, * SAFE next;
+   for(n = TC(list_head(neighbors_list)); n != NULL; n = next)
+   
+   
+   
+   
+
+../../core/net/rime/neighbor.c:98: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+
+  TC(n)
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:99: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+   
+  TC(n)
+  
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:127: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+   
+  struct neighbor * SAFE n;
+  for(n = TC(list_head(neighbors_list)); n != NULL; n = n->next)
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:186: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+   
+  struct neighbor * SAFE n, * SAFE max;
+  for(n = TC(list_head(neighbors_list)); n != NULL; n = n->next)
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:198: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: memb_alloc(& neighbors_mem)
+  
+  n = TC(memb_alloc(&neighbors_mem))
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:200: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+  
+  list_add(neighbors_list, TC(n))
+  
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:214: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+  
+  for(n = TC(list_head(neighbors_list)); n != NULL; n = n->next)
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:253: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+   
+  struct neighbor * SAFE n;
+  for(n = TC(list_head(neighbors_list)); n != NULL; n = n->next)
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:258: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+  
+  list_remove(neighbors_list, TC(n))
+  
+  
+  
+  
+  
+    
+../../core/net/rime/neighbor.c:259: Error: Type mismatch in coercion:
+  from: struct neighbor * BND(...)  
+    to: void * BND(...)  
+   exp: n
+  
+  memb_free(&neighbors_mem, TC(n))
+  
+  
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:291: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+  
+  struct neighbor * SAFE n, * SAFE lowest, * SAFE best;
+  for(n = TC(list_head(neighbors_list)); n != NULL; n = n->next)
+  
+  
+  
+  
+  
+  
+  
+../../core/net/rime/neighbor.c:307: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+  
+  for(n = TC(list_head(neighbors_list)); n != NULL; n = n->next)
+  
+
+
+
+
+
+
+../../core/net/rime/neighbor.c:343: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor * BND(...)  
+   exp: list_head(neighbors_list)
+  
+  struct neighbor * SAFE n;
+  for(n = TC(list_head(neighbors_list)); n != NULL; n = n->next)
+  
+  
+
+
+
+
+
+
+
+
+2.0#4
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/neighbor-discovery.c -o obj_native/neighbor-discovery.o
+
+
+
+Error: Error while processing file
+
+../../core/net/rime/neighbor-discovery.c:89: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor_discovery_conn * BND(...)  
+   exp: ptr
+  
+  struct neighbor_discovery_conn * SAFE c = TC(ptr);
+  
+  
+
+
+  
+  
+  
+  
+../../core/net/rime/neighbor-discovery.c:108: Error: Type mismatch in coercion:
+  from: struct broadcast_conn * BND(...)  
+    to: struct neighbor_discovery_conn * BND(...)  
+   exp: ibc
+  
+  struct neighbor_discovery_conn * SAFE c = TC(ibc);
+  
+  
+  
+
+
+  
+  
+../../core/net/rime/neighbor-discovery.c:129: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct neighbor_discovery_conn * BND(...)  
+   exp: ptr
+  
+  struct neighbor_discovery_conn * SAFE tc = TC(ptr);
+  
+  
+  
+  
+  
+  
+ 
+../../core/net/rime/neighbor-discovery.c:131: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: tc
+  
+  ctimer_set(&tc->send_timer,
+	     tc->max_interval / 2 + random_rand() % (tc->max_interval / 2),
+	     send_adv,TC(tc));
+	     
+	     
+	     
+	     
+	     
+	     
+../../core/net/rime/neighbor-discovery.c:134: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: tc
+  
+  ctimer_set(&tc->send_timer,
+	     tc->max_interval / 2 + random_rand() % (tc->max_interval / 2),
+	     send_adv,TC(tc));
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+../../core/net/rime/neighbor-discovery.c:181: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+ 
+ ctimer_set(&c->interval_timer, interval, send_timer, TC(c));
+ 
+ 
+ 
+ 
+ 
+ 
+../../core/net/rime/neighbor-discovery.c:182: Error: Type mismatch in coercion:
+  from: struct neighbor_discovery_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+  
+  ctimer_set(&c->send_timer, interval / 2 + random_rand() % (interval / 2),
+	     send_adv,TC(c));
+	     
+	     
+	     
+	     
+	     
+	     
+
+
+
+
+2.0#5
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rudolph0.c -o obj_native/rudolph0.o
+
+Error: Error while processing file
+
+../../core/./net/rime/polite.h:68: Warning: Type "struct polite_conn *" in <function pointer formal c> needs a bound annotation.
+
+struct polite_callbacks {
+  void (* recv)(struct polite_conn * SAFE c);
+  void (* sent)(struct polite_conn * SAFE c);
+  void (* dropped)(struct polite_conn * SAFE c);
+};
+
+
+
+
+
+
+
+../../core/./net/rime/stbroadcast.h:70: Warning: Type "struct stbroadcast_conn *" in <function pointer formal c> needs a bound annotation.
+
+struct stbroadcast_callbacks {
+  void (* recv)(struct stbroadcast_conn * SAFE c);
+  void (* sent)(struct stbroadcast_conn * SAFE c);
+};
+
+
+
+
+
+
+
+../../core/net/rime/rudolph0.c:105: Warning: Type "struct stbroadcast_conn *" in formal "stbroadcast" of sent needs a bound annotation.
+
+static void
+sent(struct stbroadcast_conn * SAFE stbroadcast)
+
+
+
+
+
+
+
+../../core/net/rime/rudolph0.c:121: Warning: Type "struct stbroadcast_conn *" in formal "stbroadcast" of recv needs a bound annotation.
+
+static void
+recv(struct stbroadcast_conn * SAFE stbroadcast)
+
+
+
+
+
+
+
+../../core/net/rime/rudolph0.c:161: Warning: Type "struct polite_conn *" in formal "polite" of recv_nack needs a bound annotation.
+
+static void
+recv_nack(struct polite_conn * SAFE polite)
+
+
+
+
+
+
+../../core/net/rime/rudolph0.c:164: Warning: Solver: BAD CAST / SEQ-SEQ
+   char 
+<- struct polite_conn 
+
+struct rudolph0_conn * SAFE c = TC(
+    (TC(polite) - offsetof(struct rudolph0_conn,
+			     nackc)));
+			     
+			     
+			     
+			     
+
+
+../../core/net/rime/rudolph0.c:108: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: struct rudolph0_conn * BND(...)  
+   exp: stbroadcast
+   
+struct rudolph0_conn * SAFE c = TC(stbroadcast);
+
+
+
+
+
+
+
+
+../../core/net/rime/rudolph0.c:124: Error: Type mismatch in coercion:
+  from: struct stbroadcast_conn * BND(...)  
+    to: struct rudolph0_conn * BND(...)  
+   exp: stbroadcast
+
+struct rudolph0_conn * SAFE c = TC(stbroadcast);
+
+
+
+
+
+
+
+
+
+
+2.0#6
+-------
+
+
+user@instant-contiki:~/contiki-2.x/examples/hello-world$ make
+TARGET not defined, using target 'native'
+deputy -DCONTIKI_TARGET=native -Wall -g -I/usr/local/include  -O  -I../../platform/native/. -I../../platform/native/dev -I../../cpu/native/. -I../../cpu/native/net -I../../core/dev -I../../core/lib -I../../core/net -I../../core/net/mac -I../../core/net/rime -I../../core/sys -I../../core/cfs -I../../core/ctk -I../../core/lib/ctk -I../../core/loader -I../../core/. -c ../../core/net/rime/rudolph1.c -o obj_native/rudolph1.o
+
+
+
+Error: Error while processing file
+
+../../core/./net/rime/trickle.h:70: Warning: Type "struct trickle_conn *" in <function pointer formal c> needs a bound annotation.
+
+struct trickle_callbacks {
+  void (* recv)(struct trickle_conn * SAFE c);
+};
+
+
+
+
+
+
+../../core/net/rime/rudolph1.c:206: Warning: Type "struct trickle_conn *" in formal "trickle" of recv_trickle needs a bound annotation.
+
+static void
+recv_trickle(struct trickle_conn * SAFE trickle)
+
+
+
+
+
+
+../../core/net/rime/rudolph1.c:209: Error: Type mismatch in coercion:
+  from: struct trickle_conn * BND(...)  
+    to: struct rudolph1_conn * BND(...)  
+   exp: trickle
+   
+struct rudolph1_conn * SAFE c = TC(trickle);
+
+
+
+
+
+
+../../core/net/rime/rudolph1.c:237: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) SNT  )ipolite <= (char * BND(cbound1__b, cbound1__e)  )ipolite + 4294967188U
+
+struct rudolph1_conn * SAFE c = TC(
+    (TC(ipolite) - offsetof(struct rudolph1_conn, ipolite)));
+    
+    
+    
+    
+    
+    
+    
+
+../../core/net/rime/rudolph1.c:277: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rudolph1_conn * BND(...)  
+   exp: ptr
+
+struct rudolph1_conn * SAFE c = TC(ptr);
+
+
+
+
+
+
+
+../../core/net/rime/rudolph1.c:283: Error: Type mismatch in coercion:
+  from: struct rudolph1_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, c->send_interval, send_next_packet, TC(c));
+
+
+
+
+
+
+
+
+../../core/net/rime/rudolph1.c:293: Error: Type mismatch in coercion:
+  from: struct rudolph1_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, c->send_interval, send_next_packet, TC(c));
+
+
+
+
+
+
+
+../../core/net/rime/rudolph1.c:329: Error: Type mismatch in coercion:
+  from: struct rudolph1_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+void
+rudolph1_send(struct rudolph1_conn * SAFE c, clock_time_t send_interval)
+
+ctimer_set(&c->t, send_interval, send_next_packet, TC(c));
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.1#1
+-------
+
+
+../../core/net/rime/rudolph2.c:120: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * COUNT(0) SNT  )((struct rudolph2_hdr * COUNT(0) SNT  )((char * COUNT(0) SNT  )((void * COUNT(128)  )hdr) + 128)) <= (unsigned char * BND(__this, cbound1__e)  )((struct rudolph2_hdr * BND(__this, hdr__e)  )((void * COUNT(128)  )hdr)) + 1
+
+len = read_data(c, TC(hdr) + sizeof(struct rudolph2_hdr), chunk);
+
+
+
+
+
+../../core/net/rime/rudolph2.c:120: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * COUNT(0) SNT  )((struct rudolph2_hdr * COUNT(0) SNT  )((char * COUNT(0) SNT  )rimebuf_dataptr() + 128)) <= (unsigned char * BND(__this, cbound1__e)  )((struct rudolph2_hdr * BND(__this, hdr__e)  )rimebuf_dataptr()) + 1
+
+got corrected with the above
+
+
+
+
+../../core/net/rime/rudolph2.c:251: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct rudolph2_conn * BND(...)  
+   exp: ptr
+
+struct rudolph2_conn * SAFE c =  TC(ptr);
+
+
+
+
+../../core/net/rime/rudolph2.c:285: Error: Type mismatch in coercion:
+  from: struct rudolph2_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, interval, timed_send,  TC(c));
+
+
+
+
+../../core/net/rime/rudolph2.c:292: Error: Type mismatch in coercion:
+  from: struct polite_conn * BND(...)  
+    to: struct rudolph2_conn * BND(...)  
+   exp: polite
+
+struct rudolph2_conn * SAFE c =  TC(polite);
+
+
+
+
+../../core/net/rime/rudolph2.c:349: Error: Type mismatch in coercion:
+  from: struct rudolph2_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, RESEND_INTERVAL, timed_send,  TC(c));
+
+
+
+
+../../core/net/rime/rudolph2.c:398: Error: Type mismatch in coercion:
+  from: struct rudolph2_conn * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+ctimer_set(&c->t, SEND_INTERVAL, timed_send,  TC(c));
+
+
+
+
+
+
+2.1#2
+-------
+
+
+../../core/net/rime/channel.c:70: Error: Type mismatch in coercion:
+  from: struct channel * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+list_add(channel_list,  TC(c));
+
+
+
+
+../../core/net/rime/channel.c:76: Error: Type mismatch in coercion:
+  from: struct channel * BND(...)  
+    to: void * BND(...)  
+   exp: c
+
+list_remove(channel_list,  TC(c));
+
+
+
+../../core/net/rime/channel.c:83: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct channel * BND(...)  
+   exp: list_head(channel_list)
+
+struct channel * SAFE c;
+for(c = TC(list_head(channel_list)); c != NULL; c = c->next) {
+
+
+
+
+
+
+2.2#1
+-------
+
+
+../../core/./net/rime/chameleon.h:49: Warning: Type "struct rimebuf_attrlist  const  *" in <function pointer formal > needs a bound annotation.
+
+int (* hdrsize)(const struct rimebuf_attrlist * COUNT(RIMEBUF_ATTR_MAX));
+
+
+
+
+../../core/./net/rime/channel.h:50: Warning: Type "struct rimebuf_attrlist  const  *" in field "attrlist" needs a bound annotation.
+
+const struct rimebuf_attrlist * COUNT(RIMEBUF_ATTR_MAX) attrlist;
+
+
+
+
+../../core/net/rime/chameleon-raw.c:163: Warning: Type "struct rimebuf_attrlist  const  *" in formal "a" of hdrsize needs a bound annotation.
+
+static int
+hdrsize(const struct rimebuf_attrlist * TRUSTED a)
+
+
+
+
+../../core/net/rime/chameleon-raw.c:172: Error: Assertion will always fail in upper bound coercion:
+  (struct rimebuf_attrlist  const  * SAFE  )((struct rimebuf_attrlist  const  * BND(__this, __cil_tmp4__e)  )(a + 1)) + 1 <= (struct rimebuf_attrlist  const  * COUNT(0) SNT  )(a + 1)
+
+Automatically solved with the above.
+
+
+2.2#2
+-------
+
+
+../../core/./net/rime/rimebuf.h:392: Warning: Type "union __anonunion_rimeaddr_t_2  const  *" in the return value of rimebuf_addr needs a bound annotation.
+
+const rimeaddr_t * SAFE rimebuf_addr(uint8_t type);
+
+
+
+
+../../core/net/rime/chameleon-bitopt.c:63: Warning: Type "unsigned char *" in formal "from" of get_bits_in_byte needs a bound annotation.
+
+get_bits_in_byte(uint8_t * COUNT(2) from, int bitpos, int vallen)
+
+
+
+
+../../core/net/rime/chameleon-bitopt.c:79: Warning: Type "unsigned char *" in formal "from" of get_bits needs a bound annotation.
+../../core/net/rime/chameleon-bitopt.c:79: Warning: Type "unsigned char *" in formal "to" of get_bits needs a bound annotation.
+
+get_bits(uint8_t * SAFE to, uint8_t * SAFE from, int bitpos, int vallen)
+
+
+
+
+../../core/net/rime/chameleon-bitopt.c:112: Warning: Type "struct rimebuf_attrlist  const  *" in formal "a" of header_size needs a bound annotation.
+
+header_size(const struct rimebuf_attrlist * TRUSTED a)
+
+
+
+
+../../core/net/rime/chameleon-bitopt.c:135: Warning: Type "unsigned char *" in formal "target" of set_bits_in_byte needs a bound annotation.
+
+set_bits_in_byte(uint8_t * COUNT(2) target, int bitpos, uint8_t val, int vallen)
+
+
+
+
+../../core/net/rime/chameleon-bitopt.c:146: Warning: Type "unsigned char *" in formal "ptr" of set_bits needs a bound annotation.
+../../core/net/rime/chameleon-bitopt.c:146: Warning: Type "unsigned char *" in formal "val" of set_bits needs a bound annotation.
+
+set_bits(uint8_t * SAFE ptr, int bitpos, uint8_t * SAFE val, int vallen)
+
+
+
+
+
+../../core/net/rime/chameleon-bitopt.c:337: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(struct rimebuf_attrlist  const  * SAFE  a )
+    to: int (* BND(...)  )(struct rimebuf_attrlist  const  * COUNT(...)   )
+   exp: & header_size
+
+TC( header_size)
+
+
+
+
+
+
+2.2#3
+-------
+
+
+../../core/./net/mac/mac.h:47: Warning: Type "char *" in field "name" should be annotated NT.
+
+char * NTS name;
+
+
+
+
+
+../../core/net/mac/xmac.c:228: Error: Type mismatch in coercion:
+  from: char (* BND(...)  )(struct rtimer * SAFE  t , void * SAFE  ptr )
+    to: void (* BND(...)  )(struct rtimer * SAFE   , void * SAFE   )
+   exp: & powercycle
+
+r = rtimer_set(t, RTIMER_TIME(t) + xmac_config.off_time, 1,
+		     TC(powercycle), ptr);
+
+
+
+
+
+../../core/net/mac/xmac.c:241: Error: Type mismatch in coercion:
+  from: char (* BND(...)  )(struct rtimer * SAFE  t , void * SAFE  ptr )
+    to: void (* BND(...)  )(struct rtimer * SAFE   , void * SAFE   )
+   exp: & powercycle
+
+r = rtimer_set(t, RTIMER_TIME(t) + xmac_config.on_time, 1,
+		   TC(powercycle), ptr);
+
+
+
+
+../../core/net/mac/xmac.c:554: Error: Type mismatch in coercion:
+  from: char (* BND(...)  )(struct rtimer * SAFE  t , void * SAFE  ptr )
+    to: void (* BND(...)  )(struct rtimer * SAFE   , void * SAFE   )
+   exp: & powercycle
+
+rtimer_set(&rt, RTIMER_NOW() + xmac_config.off_time, 1,
+	     TC(powercycle), NULL);
+
+
+
+
+
+
+
+2.2#4
+-------
+
+
+../../core/net/mac/lpp.c:131: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct ctimer * BND(...)  
+   exp: ptr
+
+struct ctimer * SAFE t = TC(ptr);
+
+
+
+
+
+
+../../core/net/mac/lpp.c:140: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+../../core/net/mac/lpp.c:140: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+
+ctimer_set(t, OFF_TIME * 2, TC(dutycycle), TC(t));
+
+
+
+
+
+
+../../core/net/mac/lpp.c:148: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+../../core/net/mac/lpp.c:148: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+
+ctimer_set(t, LISTEN_TIME, TC(dutycycle), TC(t));
+
+
+
+
+
+
+
+
+../../core/net/mac/lpp.c:155: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+../../core/net/mac/lpp.c:155: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+
+ctimer_set( t , OFF_TIME / 2 + (random_rand() % OFF_TIME / 2),
+	       TC(dutycycle),TC(t));
+	       
+	       	       
+
+
+
+
+../../core/net/mac/lpp.c:315: Error: Type mismatch in coercion:
+  from: int (* BND(...)  )(void * SAFE  ptr )
+    to: void (* BND(...)  )(void * SAFE   )
+   exp: & dutycycle
+../../core/net/mac/lpp.c:315: Error: Type mismatch in coercion:
+  from: struct ctimer * BND(...)  
+    to: void * BND(...)  
+   exp: & timer
+
+ctimer_set(&timer, LISTEN_TIME, TC(dutycycle), TC( &timer));
+
+
+
+
+
+2.2#5
+-------
+
+
+../../core/./sys/process.h:391: Warning: Type "struct process *" in global "process_current" needs a bound annotation.
+
+CCIF extern struct process * SAFE process_current;
+
+
+
+
+../../core/./sys/process.h:500: Warning: Type "struct process *" in formal "p___0" of process_is_running needs a bound annotation.
+
+CCIF int process_is_running(struct process * SAFE p);
+
+
+
+
+
+../../core/sys/process.c:63: Warning: Type "struct process *" in field "p" needs a bound annotation.
+
+struct process * SAFE p;
+
+
+
+
+
+
+../../core/sys/process.c:82: Warning: Type "struct process *" in formal "p" of call_process needs a bound annotation.
+
+static void call_process(struct process * SAFE p, process_event_t ev, process_data_t data);
+
+
+
+
+
+
+
+../../core/sys/process.c:124: Warning: Type "struct process *" in formal "fromprocess" of exit_process needs a bound annotation.
+../../core/sys/process.c:124: Warning: Type "struct process *" in formal "p" of exit_process needs a bound annotation.
+
+static void
+exit_process(struct process * SAFE p, struct process * SAFE fromprocess)
+
+
+
+
+
+
+
+
+
+../../core/sys/process.c:258: Warning: Type "struct process *" in global "receiver" needs a bound annotation.
+
+static struct process * SAFE receiver;
+
+
+
+
+
+
+
+
+
+../../core/sys/process.c:143: Error: Type mismatch in coercion:
+  from: struct process * BND(...)  
+    to: void * BND(...)  
+   exp: (struct process * BND(__this, cbound1__e)  )p
+   
+call_process(q, PROCESS_EVENT_EXITED, TC(p));
+
+
+
+
+
+
+
+../../core/sys/process.c:170: Error: Type mismatch in coercion:
+  from: int 
+    to: struct process * BND(...)  
+   exp: 1
+   
+events[i].p = TC(0x1);          //PROCESS_ZOMBIE==0x1
+
+
+
+
+
+
+
+
+../../core/sys/process.c:294: Error: Type mismatch in coercion:
+  from: int 
+    to: struct process * BND(...)  
+   exp: 1
+
+} else if(receiver == TC(0x1)) {        //PROCESS_ZOMBIE==0x1
+
+
+
+
+
+
+
+
+
+2.3#1
+-------
+
+
+
+../../core/./cfs/cfs.h:160: Warning: Type "void *" in formal "buf" of cfs_read should be annotated NT.
+CCIF int cfs_read(int fd, void * COUNT (len) buf, unsigned int len);
+
+
+../../core/./loader/elfloader-arch.h:83: Warning: Type "void *" in the return value of elfloader_arch_allocate_ram should be annotated NT.
+void * COUNT (ELFLOADER_DATAMEMORY_SIZE) elfloader_arch_allocate_ram(int size);
+bss.address = TC(elfloader_arch_allocate_ram(bsssize + datasize));   //line# 507 of /core/loader/elfloader.c
+
+
+
+
+../../core/./loader/elfloader-arch.h:98: Warning: Type "void *" in the return value of elfloader_arch_allocate_rom should be annotated NT.
+void * COUNT ( ELFLOADER_TEXTMEMORY_SIZE) elfloader_arch_allocate_rom(int size);
+text.address = TC(elfloader_arch_allocate_rom(textsize + rodatasize));  //line# 510 of /core/loader/elfloader.c
+
+
+
+
+
+../../core/./loader/elfloader-arch.h:119: Warning: Type "char *" in formal "addr" of elfloader_arch_relocate should be annotated NT.
+../../core/./loader/elfloader-arch.h:119: Warning: Type "char *" in formal "sectionaddr" of elfloader_arch_relocate should be annotated NT.
+../../core/./loader/elfloader-arch.h:119: Warning: Type "struct elf32_rela *" in formal "rela" of elfloader_arch_relocate should be annotated NT.
+
+void elfloader_arch_relocate(int fd, unsigned int sectionoffset,
+			     char *sectionaddr,
+			     struct elf32_rela * SAFE rela, char *addr);
+
+elfloader_arch_relocate(fd, sectionaddr,NTDROP(sectionbase), NTDROP(&rela), NTDROP(addr)); //line# 287 of /core/loader/
+													elfloader.c
+
+
+
+
+
+
+
+../../core/./loader/elfloader-arch.h:135: Warning: Type "char *" in formal "mem" of elfloader_arch_write_rom should be annotated NT.
+void elfloader_arch_write_rom(int fd, unsigned short textoff, unsigned int size, char * COUNT ( ELFLOADER_TEXTMEMORY_SIZE) mem);
+
+elfloader_arch_write_rom(fd, textoff, textsize, NTDROP(text.address));//line# 568 of /core/loader/elfloader.c
+elfloader_arch_write_rom(fd, rodataoff, rodatasize, NTDROP(rodata.address));//line# 569 of /core/loader/elfloader.c
+
+
+
+
+
+
+../../core/./loader/elfloader.h:154: Warning: Type "struct process * const  *" in global "elfloader_autostart_processes" should be annotated NT.
+elfloader_autostart_processes = NTDROP(process); //line# 578 of /core/loader/elfloader.c
+
+
+
+
+
+
+
+
+
+../../core/./loader/symtab.h:36: Warning: Type "char const   *" in formal "name" of symtab_lookup should be annotated NT.
+void *symtab_lookup(const char * NTS name);
+
+
+
+
+
+
+
+../../core/./loader/symtab.h:36: Warning: Type "void *" in the return value of symtab_lookup should be annotated NT.
+addr = TC(symtab_lookup(name));//line# 242 of /core/loader/elfloader.c
+
+
+
+
+
+
+
+../../core/loader/elfloader.c:129: Warning: Type "char *" in field "address" should be annotated NT.
+seek_read(fd, dataoff, TC(data.address), datasize); //line# 572 of /core/loader/elfloader.c 
+
+
+
+
+
+
+
+
+
+2.3#2
+-------
+
+
+
+
+../../core/loader/elfloader.c:129: Warning: Type "char *" in field "address" needs a bound annotation.
+char * COUNT ( ELFLOADER_TEXTMEMORY_SIZE) address; //TBM
+
+
+
+
+
+
+../../core/loader/elfloader.c:149: Warning: Type "char *" in formal "buf" of seek_read should be annotated NT.
+
+static void
+seek_read(int fd, unsigned int offset, char * COUNT(len) buf, int len)
+
+seek_read(fd, strtab + s.st_name, NTDROP(name), sizeof(name)); //line# 190 of /core/loader/elfloader.c
+
+seek_read(fd, strtab + s.st_name, NTDROP(name), sizeof(name)); //line# 240 of /core/loader/elfloader.c
+
+seek_read(fd, strtab + s.st_name, NTDROP(name), sizeof(name)); //line# 305 of /core/loader/elfloader.c
+
+seek_read(fd, nameptr, NTDROP(name), sizeof(name)); //line# 426 of /core/loader/elfloader.c
+
+
+
+2.3#3
+-------
+
+
+
+../../core/loader/elfloader.c:176: Warning: Type "char const   *" in formal "symbol" of find_local_symbol should be annotated NT.
+
+static void *
+find_local_symbol(int fd, const char * NTS symbol,
+		  unsigned int symtab, unsigned short symtabsize,
+		  unsigned int strtab)
+
+
+../../core/loader/elfloader.c:190: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+seek_read(fd, strtab + s.st_name, NTDROP(name), sizeof(name)-1);
+	  name[29]=0;if(strcmp (name, symbol) == 0) {
+
+
+
+
+2.3#4
+-------
+
+
+
+../../core/loader/elfloader.c:241: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+      seek_read(fd, strtab + s.st_name, NTDROP(name), sizeof(name)-1);
+      name[29] = 0;PRINTF("name: %s\n", name);
+
+
+
+
+
+../../core/loader/elfloader.c:243: Error: Target "addr" of trusted cast must have user-supplied bounds
+
+char * BOUND(__auto,__auto) addr;
+
+
+
+
+
+
+
+../../core/loader/elfloader.c:261: Error: Assertion will always fail in upper bound check:
+  name + 30U <= name + 29
+
+memcpy(elfloader_unknown, NTEXPAND(name), sizeof(elfloader_unknown));
+
+
+
+
+
+
+
+
+
+
+
+2.3#5
+-------
+
+
+
+../../core/loader/elfloader.c:176: Warning: Type "void *" in the return value of find_local_symbol needs a bound annotation.
+
+static void * BOUND(__auto,__auto)
+find_local_symbol(int fd, const char * NTS symbol,
+		  unsigned int symtab, unsigned short symtabsize,
+		  unsigned int strtab)
+
+
+
+
+2.3#6
+-------
+
+
+
+../../core/loader/elfloader.c:305: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+seek_read(fd, strtab + s.st_name, NTDROP(name), sizeof(name)-1);
+      name[29] = 0; if(strcmp(name, "autostart_processes") == 0) {
+
+
+
+
+
+
+
+
+
+../../core/loader/elfloader.c:426: Error: Assertion will always fail in upper bound coercion:
+  (char * COUNT(0) COPYTYPE __attribute__((__ntdrop__)) )(name) == 0
+
+seek_read(fd, nameptr, NTDROP(name), sizeof(name)-1);name[11] = 0;
+
+
+
+
+
+
+
+
+../../core/loader/elfloader.c:575: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: ret158.__p
+
+process = TC(find_local_symbol(fd, "autostart_processes", symtaboff, symtabsize, strtaboff));
+
+struct process ** SAFE process;  //Line # 359
+
+
+
+
+
+../../core/loader/elfloader.c:582: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * SAFE  * BND(...)  
+   exp: find_program_processes(fd, symtaboff, symtabsize, strtaboff)
+
+process = TC(find_program_processes(fd, symtaboff, symtabsize, strtaboff));
+
+
+
+
+2.4#1
+-------
+
+
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable-aggregate.h:47: Warning: Type "char const   *" in field "id" should be annotated NT.
+
+const char * NTS id;
+
+
+
+
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable-aggregate.h:53: Warning: Type "struct timetable_aggregate_entry *" in field "entries" needs a bound annotation.
+
+struct timetable_aggregate_entry * BOUND(__auto,__auto) entries;
+
+
+
+
+
+
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable.h:48: Warning: Type "char const   *" in field "id" should be annotated NT.
+
+const char * NTS id;
+
+
+
+
+
+
+
+
+/home/user/contiki-2.x/examples/hello-world/../../core/./sys/timetable.h:55: Warning: Type "struct timetable_timestamp *" in field "timestamps" needs a bound annotation.
+
+struct timetable_timestamp * BOUND (__auto,__auto) timestamps;
+
+
+
+
+
+
+
+
+/home/user/contiki-2.x/examples/hello-world/../../core/sys/profile.c:125: Warning: Type "char const   *" in formal "id" of find_aggregate should be annotated NT.
+
+const char * NTS id
+
+
+
+
+2.4#2
+-------
+
+
+
+../../core/./sys/timetable.h:132: Warning: Type "char const   *" in formal "id1" of timetable_timediff should be annotated NT.
+../../core/./sys/timetable.h:132: Warning: Type "char const   *" in formal "id2" of timetable_timediff should be annotated NT.
+
+rtimer_clock_t timetable_timediff(struct timetable *t,
+				  const char * NTS id1, const char * NTS id2);
+
+
+
+
+
+
+
+
+../../core/sys/timetable.c:109: Error: Cast from ordinary pointer to nullterm: & dummy1
+TIMETABLE_TIMESTAMP(temp, TC(&dummy1));
+
+
+
+
+
+
+
+../../core/sys/timetable.c:110: Error: Cast from ordinary pointer to nullterm: & dummy2
+TIMETABLE_TIMESTAMP(temp, TC(&dummy2));
+
+
+
+
+
+
+
+../../core/sys/timetable.c:111: Error: Cast from ordinary pointer to nullterm: & dummy1
+../../core/sys/timetable.c:111: Error: Cast from ordinary pointer to nullterm: & dummy2
+timetable_timestamp_time = timetable_timediff(&temp, TC(&dummy1), TC(&dummy2));
+
+
+../../core/sys/timetable.c:109: Error: Calling function that has no prototype: clock_time
+../../core/sys/timetable.c:110: Error: Calling function that has no prototype: clock_time
+#include "sys/clock.h" //line# 42
+
+
+
+
+2.4#3
+-------
+
+
+../../core/sys/timetable-aggregate.c:83: Warning: Type "char const   *" in formal "id" of find_aggregate should be annotated NT.
+const char * NTS id
+
+
+../../core/sys/timetable-aggregate.c:157: Error: Cast from nullterm to an ordinary pointer: (timetable->timestamps.__p + (i - 1))->id
+TC(timetable->timestamps[i - 1].id)
+
+
+
+
+2.4#4
+-------
+
+
+../../core/lib/list.c:126: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+TC(*list)
+struct list * SAFE l;//line# 120
+
+
+
+../../core/lib/list.c:128: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: l
+return TC(l);
+
+
+
+
+
+../../core/lib/list.c:147: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound1__b, cbound1__e)  )item + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )item + 1)
+void list_add(list_t list, void * BOUND(__auto,__auto)item)//line# 142
+
+
+
+
+
+../../core/lib/list.c:147: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: item
+((struct list * SAFE) TC(item))->next = NULL;
+
+
+
+
+../../core/lib/list.c:149: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: list_tail(list)
+l = TC(list_tail(list));
+struct list * SAFE l;//line# 145
+
+
+
+
+
+../../core/lib/list.c:154: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: item
+l->next = TC(item);
+
+
+
+
+../../core/./lib/list.h:110: Warning: Type "void *" in formal "newitem" of list_insert needs a bound annotation.
+void   list_insert(list_t list, void * BOUND(__auto,__auto) previtem, void * BOUND(__auto,__auto) newitem);
+
+
+
+
+
+
+../../core/lib/list.c:166: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound2__b, cbound2__e)  )item + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )item + 1)
+void
+list_push(list_t list, void * BOUND(__auto,__auto) item) //line# 161
+
+
+
+
+
+../../core/lib/list.c:166: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+../../core/lib/list.c:166: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: item
+((struct list * SAFE) TC(item))->next = TC(*list);
+
+
+
+
+
+../../core/lib/list.c:187: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound3__b, cbound3__e)  )*list + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )*list + 1)
+void *
+list_chop(list_t  BOUND(__auto,__auto)  list)   //line# 179
+
+
+
+../../core/lib/list.c:187: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+if(((struct list * SAFE ) TC(*list))->next == NULL) {
+
+
+
+
+
+
+../../core/lib/list.c:188: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+l = TC(*list) ;
+struct list * SAFE l, * SAFE r;//line# 182
+
+
+
+
+
+
+
+../../core/lib/list.c:190: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: l
+return TC(l);
+
+
+
+
+
+
+../../core/lib/list.c:193: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+for(l = TC(*list); l->next->next != NULL; l = l->next);
+
+
+
+
+
+
+../../core/lib/list.c:198: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: r
+return TC(r);
+
+
+
+
+
+../../core/lib/list.c:215: Error: Assertion will always fail in pointer access check:
+  (struct list * BND(cbound4__b, cbound4__e)  )*list + 1 <= (struct list * COUNT(0) SNT  )((char * COUNT(0) SNT  )*list + 1)
+void *
+list_pop(list_t BOUND(__auto,__auto) list)//line# 211
+
+
+
+
+
+
+
+../../core/lib/list.c:215: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: ((struct list * BND(cbound4__b, cbound4__e)  )*list)->next
+../../core/lib/list.c:215: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+*list = TC(((struct list * SAFE) TC(*list))->next);
+
+
+
+
+
+
+
+
+../../core/lib/list.c:241: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+for(l = TC(*list) ; l != NULL; l = l->next) {
+struct list * SAFE l, * SAFE r;//line# 234
+
+
+
+
+
+
+
+../../core/lib/list.c:245: Error: Type mismatch in coercion:
+  from: struct list * BND(...)  
+    to: void * BND(...)  
+   exp: l->next
+*list = TC(l->next);
+
+
+
+
+
+
+../../core/lib/list.c:272: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: *list
+for(l = TC(*list); l != NULL; l = l->next) {
+struct list * SAFE l;//line# 269
+
+
+
+
+
+
+
+../../core/lib/list.c:301: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: newitem
+../../core/lib/list.c:301: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: previtem
+
+((struct list * SAFE) TC(newitem))->next = ((struct list * SAFE) TC(previtem))->next;
+
+
+
+
+
+
+
+
+../../core/lib/list.c:302: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: newitem
+../../core/lib/list.c:302: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct list * BND(...)  
+   exp: previtem
+
+((struct list * SAFE) TC(previtem))->next = TC(newitem);
+
+
+
+
+2.5#1
+-------
+
+
+../../core/sys/etimer.c:93: Error: Type mismatch in coercion:
+  from: void * BND(...)  
+    to: struct process * BND(...)  
+   exp: data
+struct process * BOUND(__auto,__auto) p = TC(data);
+
+
+
+
+
+
+../../core/sys/etimer.c:119: Error: Type mismatch in coercion:
+  from: struct etimer * BND(...)  
+    to: void * BND(...)  
+   exp: t
+if(process_post(t->p, PROCESS_EVENT_TIMER,TC(t)) == PROCESS_ERR_OK) {
+
+
+
+
+2.5#2
+-------
+
+
+../../core/lib/crc16.c:66: Warning: Type "unsigned char const   *" in formal "data" of crc16_data needs a bound annotation.
+unsigned short
+crc16_data(const unsigned char * COUNT(len) data, int len, unsigned short acc)
+
+
+
+
+../../core/lib/crc16.c:74: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char const   * SAFE  )((unsigned char const   * BND(__this, __cil_tmp6__e)  )(data + 1)) + 1 <= (unsigned char const   * COUNT(0) SNT  )(data + 1)
+
+crc = crc16_add(*data, crc);
+++data;                                        !!!REPLACED WITH!!! //TBM
+
+crc = crc16_add(data[i], crc);
+//++data;   
+
+
+
+
+2.5#3
+-------
+
+
+../../core/./net/uip.h:554: Warning: Type "void const   *" in formal "data" of uip_send needs a bound annotation.
+CCIF void uip_send(const void * COUNT(len) data, int len);
+
+
+
+
+../../core/./net/uip.h:1152: Warning: Type "void *" in global "uip_appdata" needs a bound annotation.
+CCIF extern void * BOUND(__this,__this) uip_appdata; // TBM
+
+
+
+
+../../core/./net/uip.h:1243: Warning: Type "struct uip_conn *" in global "uip_conn" needs a bound annotation.
+CCIF extern struct uip_conn * COUNT(UIP_CONNS) uip_conn;
+
+
+
+
+
+../../core/./net/uip.h:1275: Warning: Type "struct uip_udp_conn *" in global "uip_udp_conn" needs a bound annotation.
+extern struct uip_udp_conn * COUNT(UIP_UDP_CONNS) uip_udp_conn;
+extern struct uip_udp_conn * BOUND(__auto,__auto) uip_udp_conn;//changed due to error 2 of 2.5#4
+
+
+
+
+../../core/./net/uip.h:1614: Warning: Type "unsigned short *" in formal "data" of uip_chksum needs a bound annotation.
+u16_t
+uip_chksum(u16_t * COUNT(len) data, u16_t len)//line#298 of uip.c
+
+
+
+
+../../core/./net/uip_arch.h:84: Warning: Type "unsigned char *" in formal "op32" of uip_add32 needs a bound annotation.
+void uip_add32(u8_t * COUNT(4) op32, u16_t op16);
+
+
+
+
+
+../../core/net/uip.c:130: Warning: Type "void *" in global "uip_sappdata" needs a bound annotation.
+void * BOUND(__auto,__auto) uip_sappdata;
+
+
+
+
+
+../../core/net/uip.c:267: Warning: Type "unsigned char const   *" in formal "data" of chksum needs a bound annotation.
+static u16_t
+chksum(u16_t sum, const u8_t * COUNT(len) data, u16_t len)
+
+
+
+
+2.5#4
+-------
+
+../../core/net/uip.c:333: Error: Assertion will always fail in upper bound coercion:
+  (unsigned char * BND(cbound2__b, cbound2__e)  )(& ((struct uip_tcpip_hdr * SAFE  )(& uip_buf[14]))->srcipaddr) + (unsigned short)8 <= (unsigned char * COUNT(0) SNT  )(& ((struct uip_tcpip_hdr * SAFE  )(& uip_buf[14]))->srcipaddr + 1)
+sum = chksum(sum, TC(&BUF->srcipaddr), 2 * sizeof(uip_ipaddr_t));
+
+
+
+
+../../core/net/uip.c:1091: Error: Assertion will always fail in upper bound coercion:
+  (struct uip_udp_conn * COUNT(10)  )((struct uip_udp_conn * BND(__this, __cil_tmp12__e)  )((struct uip_udp_conn * BND(__this, cbound4__e)  )(uip_udp_conn + 1))) + 10 <= (struct uip_udp_conn * COUNT(0) SNT  )((struct uip_udp_conn * COUNT(0) SNT  )(uip_udp_conn + 10))
+extern struct uip_udp_conn * BOUND(__auto,__auto) uip_udp_conn;line# 1275 of uip.h
+
+
+
+
+2.5#5
+-------
+
+
+../../core/./net/uiplib.h:67: Warning: Type "char *" in formal "addrstr" of uiplib_ipaddrconv needs a bound annotation.
+../../core/./net/uiplib.h:67: Warning: Type "unsigned char *" in formal "ipaddr" of uiplib_ipaddrconv needs a bound annotation.
+CCIF unsigned char uiplib_ipaddrconv(char * NTS addrstr, unsigned char * BOUND(__auto,__auto) addr);//TBM  BOUND to COUNT
+
+
+
+
+2.5#6
+-------
+
+
+../../core/./net/resolv.h:51: Warning: Type "char *" in formal "name" of resolv_found should be annotated NT.
+
+resolv_found(NTDROP(namemapptr->name), NULL);namemapptr->name[31]=0;   //resolve.c line#196
+resolv_found(NTDROP(namemapptr->name), NULL);namemapptr->name[31]=0;   //resolve.c line#281
+resolv_found(NTDROP(namemapptr->name), namemapptr->ipaddr);namemapptr->name[31]=0;   //resolve.c line#327
+
+
+
+
+../../core/./net/resolv.h:57: Warning: Type "char *" in formal "name" of resolv_lookup should be annotated NT.
+CCIF u16_t *resolv_lookup(char *NTS name);
+
+../../core/./net/resolv.h:58: Warning: Type "char *" in formal "name" of resolv_query should be annotated NT.
+CCIF void resolv_query(char *NTS name);
+
+
+
+
+
+../../core/net/resolv.c:109: Warning: Type "char [32]" in field "name" should be annotated NT.
+char (NT name) [32];//resolv.c line#120
+ 
+ 
+ 
+../../core/net/resolv.c:154: Warning: Type "unsigned char *" in formal "query" of parse_name needs a bound annotation.
+../../core/net/resolv.c:154: Warning: Type "unsigned char *" in the return value of parse_name needs a bound annotation.
+static unsigned char * BOUND(__auto,__auto)
+parse_name(unsigned char * BOUND(__auto,__auto) query)
+
+
+
+
+
+
+
+../../core/net/resolv.c:218: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) NT SNT  )((char * COUNT(0) NT SNT  )((char * COUNT(0) NT SNT  )(namemapptr->name))) <= (char * BND(__cil_tmp6__b, __cil_tmp6__e) NT  )((char * BND(nameptr__b, nameptr__e) NT  )(namemapptr->name) - 1)
+../../core/net/resolv.c:218: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) NT SNT  )((char * COUNT(0) NT SNT  )(namemapptr->name)) <= (char * BND(nameptr__b, nameptr__e) NT  )(namemapptr->name) - 1
+../../core/net/resolv.c:218: Error: Assertion will always fail in lower bound check:
+  (char * COUNT(0) NT SNT  )(namemapptr->name) <= (char * BND(nameptr__b, nameptr__e) NT  )(namemapptr->name) + -1
+char *query, *nptr, * TRUSTED nameptr;//resolv.c line # 182
+
+
+
+
+../../core/net/resolv.c:394: Error: Pointer variable nameptr may be used without being defined.
+void
+resolv_query(char *name)TRUSTED//TBM Function bypassed
+{
+  static u8_t i;
+  static u8_t lseq, lseqi;
+  register struct namemap *nameptr;
+
+
+
+2.5#7
+-------
+
+
+

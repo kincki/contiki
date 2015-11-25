@@ -1,0 +1,188 @@
+.TH "platform/avr-meshnectics/contiki-conf.h" 3 "22 Jun 2010" "Version 0.2" "EMMA" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+platform/avr-meshnectics/contiki-conf.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint.h>\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMCU_MHZ\fP   8"
+.br
+.ti -1c
+.RI "#define \fBPLATFORM\fP   PLATFORM_AVR"
+.br
+.ti -1c
+.RI "#define \fBHARWARE_REVISION\fP   ZIGBIT"
+.br
+.ti -1c
+.RI "#define \fBCLOCK_CONF_SECOND\fP   125"
+.br
+.ti -1c
+.RI "#define \fBINFINITE_TIME\fP   0xffff"
+.br
+.ti -1c
+.RI "#define \fBSLIP_PORT\fP   RS232_PORT_0"
+.br
+.ti -1c
+.RI "#define \fBMMEM_CONF_SIZE\fP   256"
+.br
+.ti -1c
+.RI "#define \fBEEPROMFS_ADDR_CODEPROP\fP   0x8000"
+.br
+.ti -1c
+.RI "#define \fBCCIF\fP"
+.br
+.ti -1c
+.RI "#define \fBCLIF\fP"
+.br
+.ti -1c
+.RI "#define \fBRIMEADDR_CONF_SIZE\fP   8"
+.br
+.ti -1c
+.RI "#define \fBPACKETBUF_CONF_HDR_SIZE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSICSLOWPAN_CONF_COMPRESSION_IPV6\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSICSLOWPAN_CONF_COMPRESSION_HC1\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSICSLOWPAN_CONF_COMPRESSION_HC01\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSICSLOWPAN_CONF_COMPRESSION\fP   SICSLOWPAN_CONF_COMPRESSION_HC01"
+.br
+.ti -1c
+.RI "#define \fBSICSLOWPAN_CONF_MAX_ADDR_CONTEXTS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSICSLOWPAN_CONF_FRAG\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSICSLOWPAN_CONF_MAXAGE\fP   5"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_LL_802154\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_LLH_LEN\fP   14"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_MAX_CONNECTIONS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_MAX_LISTENPORTS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_UDP_CONNS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_IP_FORWARD\fP   0"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_FWCACHE_SIZE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_IPV6\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_IPV6_CHECKS\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_IPV6_QUEUE_PKT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_IPV6_REASSEMBLY\fP   0"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_NETIF_MAX_ADDRESSES\fP   3"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_ND6_MAX_PREFIXES\fP   3"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_ND6_MAX_NEIGHBORS\fP   4"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_ND6_MAX_DEFROUTERS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_ICMP6\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_UDP\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_UDP_CHECKSUMS\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_TCP\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUIP_CONF_TCP_SPLIT\fP   1"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int32_t \fBs32_t\fP"
+.br
+.ti -1c
+.RI "typedef unsigned short \fBclock_time_t\fP"
+.br
+.ti -1c
+.RI "typedef unsigned char \fBu8_t\fP"
+.br
+.ti -1c
+.RI "typedef unsigned short \fBu16_t\fP"
+.br
+.ti -1c
+.RI "typedef unsigned long \fBu32_t\fP"
+.br
+.ti -1c
+.RI "typedef unsigned short \fBuip_stats_t\fP"
+.br
+.ti -1c
+.RI "typedef unsigned long \fBoff_t\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBclock_delay\fP (unsigned int us2)"
+.br
+.ti -1c
+.RI "void \fBclock_wait\fP (int ms10)"
+.br
+.ti -1c
+.RI "void \fBclock_set_seconds\fP (unsigned long s)"
+.br
+.ti -1c
+.RI "unsigned long \fBclock_seconds\fP (void)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Configuration for sample STK 501 Contiki kernel
+.PP
+\fBAuthor:\fP
+.RS 4
+Simon Barner <barner@in.tum.de 
+.RE
+.PP
+
+.PP
+Definition in file \fBcontiki-conf.h\fP.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for EMMA from the source code.

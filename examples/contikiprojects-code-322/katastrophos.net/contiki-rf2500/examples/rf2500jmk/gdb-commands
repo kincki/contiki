@@ -1,0 +1,8 @@
+set remoteaddresssize 64
+set remotetimeout 999999
+target remote localhost:3333
+
+monitor erase main
+load rf2500jmk.rf2500
+c
+

@@ -1,0 +1,30 @@
+Name: interferer_incremental
+
+Contact: 
+Carlo Alberto Boano <cboano@iti.uni-luebeck.de>
+
+
+License: BSD http://www.opensource.org/licenses/bsd-license.php
+
+
+Contiki version: 2.4
+
+
+Intended platforms: Tmote Sky (and others with CC2420).
+
+Tested platforms: Tmote Sky
+
+
+Description:
+ A simple example on how to use the CC2420 radio special test modes to create an interferer in order to debug wireless sensor network protocols robustness. 
+Two nodes are involved: node 1 and node 2. 
+The interferer (node 1) increments its transmission power and the noise scanner can print the corresponding increase in the radio channel noise for each of the transmission power values used.
+
+How to run it: 
+- Download the java rxtx libraries from http://www.rxtx.org/ and place dll and jar files in the same folder
+- "make incremental_interferer.upload" MOTES=XX on node 1
+- "make noise_scanner.uploade" MOTES=YY on node 2
+- set the correct COM ports in GetNoise.java
+- "make run"
+
+Reference: C.A. Boano et al. Controllable Radio Interference for Experimental and Testing Purposes in Wireless Sensor Networks.  In Proc. of the 4th International Workshop on Practical Issues in Building Sensor Network Applications (SenseApp). Zurich, Switzerland. October 2009. 
