@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <simconf>
-  <project EXPORT="discard">[COOJA_DIR]/apps/mrm</project>
-  <project EXPORT="discard">[COOJA_DIR]/apps/mspsim</project>
-  <project EXPORT="discard">[COOJA_DIR]/apps/avrora</project>
-  <project EXPORT="discard">[COOJA_DIR]/apps/serial_socket</project>
-  <project EXPORT="discard">[COOJA_DIR]/apps/collect-view</project>
-  <project EXPORT="discard">[COOJA_DIR]/apps/powertracker</project>
-  <project EXPORT="discard">[APPS_DIR]</project>
+  <project EXPORT="discard">[APPS_DIR]/mrm</project>
+  <project EXPORT="discard">[APPS_DIR]/mspsim</project>
+  <project EXPORT="discard">[APPS_DIR]/avrora</project>
+  <project EXPORT="discard">[APPS_DIR]/serial_socket</project>
+  <project EXPORT="discard">[APPS_DIR]/collect-view</project>
+  <project EXPORT="discard">[APPS_DIR]/powertracker</project>
   <simulation>
     <title>Leader Selection</title>
     <speedlimit>2.0</speedlimit>
@@ -139,7 +138,7 @@
   <plugin>
     org.contikios.cooja.plugins.SimControl
     <width>280</width>
-    <z>0</z>
+    <z>1</z>
     <height>160</height>
     <location_x>400</location_x>
     <location_y>0</location_y>
@@ -168,11 +167,11 @@
       <formatted_time />
       <coloring />
     </plugin_config>
-    <width>1320</width>
-    <z>1</z>
-    <height>675</height>
+    <width>945</width>
+    <z>0</z>
+    <height>507</height>
     <location_x>400</location_x>
-    <location_y>160</location_y>
+    <location_y>161</location_y>
   </plugin>
   <plugin>
     org.contikios.cooja.plugins.TimeLine

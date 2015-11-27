@@ -53,13 +53,14 @@ PROCESS(leader_mote, "Leader Candidate");
 AUTOSTART_PROCESSES(&leader_mote);
 /*---------------------------------------------------------------------------*/
 
+#define NUM_MOTES 5
+
+#define CONF_TIMEOUT 8
+
 // keep track of current leader status
 static bool isLeaderAssigned = false; // initially no leader is assigned
 static bool amILeader = false; // initially no body is leader
 static struct etimer et_leader; // timer for keeping track of leader beacon status messages
-
-// these variables are going to be used for conflicting leaders cases
-static uint8_t conflictingLeaders = 0; // counts the number of conflicting leadership messages
 
 // define a new structure for xferring leadership beacons
 typedef struct {
@@ -71,12 +72,24 @@ typedef struct {
 
 static strLeader s_leader;
 
+// these variables are going to be used for conflicting leaders cases
+typedef struct {
+	uint8_t confLeader; // conflicting leader ID
+	uint8_t sourceID; // who reported this conflict
+	struct etimer confTimer;
+	bool bSet; // determines if timer is set
+} confStr;
+
+static confStr confTmrArr[NUM_MOTES];
+
+/*-----------------------Function Prototypes--------------------------*/
+
 // This method is used for sending out leadership beacons that contains
 // leadership structure contents.
 void send_leadership_beacon(void);
 
 // This method sets the Leader structure with new values and current clock_time
-void set_leader(uint8_t, uint8_t, bool);
+void set_leader(uint8_t, uint8_t, bool, clock_time_t);
 
 // This method retrieves the leader id from the leader struct
 uint8_t get_leader_id();
@@ -89,6 +102,12 @@ clock_time_t get_refreshTime();
 
 // This method checks whether the leadership beacon is fresh or not
 bool is_leader_fresh(clock_time_t);
+
+// This method checks whether the incoming message is fresh
+bool is_msg_fresh(clock_time_t);
+
+
+/*--------------------------------------------------------------------*/
 
 // This is the Callback function that is called by Contiki-OS whenever a new 
 // broadcast message is received
@@ -103,167 +122,98 @@ broadcast_recv(struct broadcast_conn *c, const linkaddr_t *from)
 	strLeader *sLeadMe;
 	sLeadMe = (strLeader *) packetbuf_dataptr();
 	
-	// delete this line, it's just for example
-	is_leader_fresh( (clock_time_t) sLeadMe->refreshTime);
-	
 	promotedLeaderID = (uint16_t) sLeadMe->leader;
 
 	printf("Received ->  LBeacon(%d) from Mote-%d\n", promotedLeaderID, senderID);
 
-	if (sLeadMe->lSource == node_id)
+	if ( true == is_msg_fresh(sLeadMe->refreshTime) )
 	{
-		// this message originates from myself, i can omit it
-		printf("Received -> My LBeacon(%d) Bounced Back from Mote-%d\n", node_id, senderID);
-		
-		// hmm. but it might be the case that I acquired a new leader
-		// i should check that too
-		if (sLeadMe->leader == get_leader_id())
+		if (promotedLeaderID < get_leader_id())
 		{
-			printf("Received -> Ok, I know I'm the Leader!\n");
-			return; // don't do this again!!!
+			set_leader(promotedLeaderID, senderID, true, sLeadMe->refreshTime);
+			send_leadership_beacon();
+			etimer_restart(&et_leader);
+			printf("Received -> The Leader is set to %d\n", get_leader_id());
+			
+			if (get_leader_id() != node_id)
+				amILeader = false;
+		}
+		else if ( get_leader_id() == promotedLeaderID )
+		{
+			if ( get_leader_id() != node_id )
+			{ // I'm not leader
+				// if there is a conflict timer for Mote-Source, stop it
+				if ( confTmrArr[senderID - 1].bSet == true )
+				{
+					etimer_stop( &(confTmrArr[senderID - 1].confTimer) );
+					printf("Received -> Stopped Conflicting Timer for Conf Leader %d on Mote-%d\n", 
+						confTmrArr[senderID - 1].confLeader, confTmrArr[senderID - 1].sourceID);
+					confTmrArr[senderID - 1].bSet = false;
+	       		}
+					
+				if ( get_refreshTime() < sLeadMe->refreshTime )
+				{ // This is a fresher leadership beacon
+					set_leader(promotedLeaderID, senderID, true, sLeadMe->refreshTime);
+					send_leadership_beacon();
+					etimer_restart(&et_leader);
+					printf("Received -> Refreshed the leader %d\n", get_leader_id());
+					
+					if (get_leader_id() != node_id)
+						amILeader = false;
+				}
+				else
+				; // i don't need to update anything
+			}
+			else
+			; // do nothing
 		}
 		else
-		{
-			if ( sLeadMe->refreshTime < get_refreshTime() )
-				printf("Receieved -> Dear Lord! I happened to acquire a better leader (%d) since the last leader (%d)\n", get_leader_id(), sLeadMe->leader);
-			else
-				printf("Receieved -> Dear Lordy! I happened to acquire a better leader (%d) since the last leader (%d)\n", get_leader_id(), sLeadMe->leader);
-		}
-	}
-	
-	if (sLeadMe->lAlive == true)
-	{
-		if (false == isLeaderAssigned)
-		{ 
-			// check if this node-id is smallar than my id; if not, i'm the leader
-			if (node_id < promotedLeaderID)
-			{
-				set_leader(node_id, node_id, true);
-				
-				amILeader = true;
-				isLeaderAssigned = true;
-				// ignore the incoming leadership beacon
-				
-				// in fact i should immediately send out a broadcast messages stating that i'm the real leader
-			}
-			else if (node_id == promotedLeaderID)
-			{ 
-				// This means that I'm the leader, and this is a relay of my leadership message; ignore it.
-				// I don't need to do anything
-			}
-			else if ( senderID != promotedLeaderID)
-			{ // this is a relay leadership message;
-				if (node_id < promotedLeaderID)
-				{ // i must be the leader, because my id is smallar
-					
-					set_leader(node_id, node_id, true);
-					
-					isLeaderAssigned = true;
-					amILeader = true;
-					
-					printf("Received -> LBeacon(%d) is Greater Than my Leader (%d)\n", promotedLeaderID, get_leader_id());
-					
-					// in fact i should immediately send out a broadcast messages stating that i'm the real leader
+		{ // promotedLeaderID > myLeaderID - There might occur conflicts in the future. 
+			if ( confTmrArr[senderID - 1].bSet == true )
+			{ 	// if there is already a conflict timer for Mote-source
+				if ( confTmrArr[senderID - 1].confLeader == get_leader_id() )
+				{ //		if it's on same LBeacon(ID)
+					if ( etimer_expired( &(confTmrArr[senderID - 1].confTimer) ) )
+					{//			if Conflict Timer Expired
+						//				Trigger a Conflicting Leaders Event
+						printf("Received -> Trigger a Conflicting Leader Event w/ %d from Mote-%d\n", promotedLeaderID, senderID);
+					}
+					else
+					;
 				}
-				else if (get_leader_id() < promotedLeaderID)
-				{ // this case should never occur, because leader has not been assigned yet
-					// because it means that I assigned myself as the leader and my id is smaller than the incoming message
-
-					// in fact i should immediately send out a broadcast messages stating that i'm the real leader
-
-					printf("Received -> This case should not have happened!\n");					
+				else
+				{ // this is a new conflict
+					//			restart the conflict timer for Mote-Source on LBeacon(ID)
+					confTmrArr[senderID - 1].confLeader = promotedLeaderID;
+					confTmrArr[senderID - 1].bSet = true;
+					confTmrArr[senderID - 1].sourceID = senderID;
+					etimer_reset( &(confTmrArr[senderID-1].confTimer) );
+					printf("Received -> Refresh a Conflicting Leader Event w/ %d from Mote-%d\n", promotedLeaderID, senderID);
 				}
 			}
 			else
-			{
-				isLeaderAssigned = true;
-				amILeader = false;
+			{//		start a new conflict timer for Mote-Source on LBeacon(ID)
+				confTmrArr[senderID - 1].confLeader = promotedLeaderID;
+				confTmrArr[senderID - 1].bSet = true;
+				confTmrArr[senderID - 1].sourceID = senderID;
+				etimer_set( &(confTmrArr[senderID - 1].confTimer), CLOCK_SECOND * CONF_TIMEOUT + random_rand() % (CLOCK_SECOND * CONF_TIMEOUT) );
 				
-				/* ******
-				s_leader.leader = (uint16_t) from->u8[0];
-				s_leader.lSource = (uint16_t) from->u8[0];
-				s_leader.refreshTime = clock_time();
-				s_leader.lAlive = true;
-				* ******/
-				
-				set_leader(promotedLeaderID, senderID, true);
-
-				printf("Received -> Leader Elected as %d\n", get_leader_id());
+				printf("Received -> Start a Conflicting Leader Timer w/ %d from Mote-%d\n", promotedLeaderID, senderID);
 			}
-		} // isLeaderAssigned == true
-		else if (promotedLeaderID != s_leader.leader)
-		{
-			printf("Received -> Yet Another LBeacon(%d) from Mote-%d while My Leader is %d \n",	promotedLeaderID, senderID, get_leader_id());
-			
-			// verify that this message is fresher than my records!
-			if (sLeadMe->refreshTime > get_refreshTime())
-			{
-				printf("Received -> a Fresh LBeacon(%d) from Mote-%d\n", promotedLeaderID, senderID);
-			}
-			else
-			{
-				printf("Received -> an Obsolete LBeacon(%d) from Mote-%d\n", promotedLeaderID, senderID);
-			}
-
-			if ( get_leader_id() < promotedLeaderID )
-			{ // my Leader's id is smaller than leader candidate message id, i must be the leader
-				
-				isLeaderAssigned = true;
-				
-				// I need to restart the beacon timeout timer
-				etimer_restart(&et_leader);
-				//printf("Received -> Restart the Leader Timer - %d: My Leader Rules!\n", node_id);
-				
-				// in fact i should immediately send out a broadcast messages stating the real value of leader
-				send_leadership_beacon();
-			}
-			else if ( promotedLeaderID < s_leader.leader )
-			{ // leader id is bigger than the incoming leadership candidate
-				
-				printf("Received -> LBeacon(%d) is Smaller Than My Leader (%d), I revoke its leadership\n", promotedLeaderID, get_leader_id());
-
-				set_leader(promotedLeaderID, senderID, true);
-								
-				isLeaderAssigned = true; 
-				amILeader = false;			
-							
-				// I need to restart the beacon timeout timer
-				etimer_restart(&et_leader);
-				//printf("Received -> Restart the Leader Timer - %d: Revoke My Leader! \n", node_id);
-				
-				// in fact i should immediately send out a broadcast messages stating the real value of leader
-				send_leadership_beacon();
-			}
-			else
-			{ // the current leader seams to be a legitimate leader, carry on buddy!
-			}
-		}
-		else // means that  (promotedLeaderID == leader)
-		{ 
-			// i should find a way to relay the livelihood of leader to my neighboring motes. ??
-			// otherwise, the motes that doesn't have direct link to leader mote will immediately
-			// flag a Leader is Unreachable message to the network.!!
-			
-			
-			// this is a beacon message from my beloved current leader, reset the leader timer
-			if ( senderID == get_leader_id() )
-			{
-				printf("Received -> LBeacon(%d) from our Beloved Leader! \n", get_leader_id());
-				etimer_restart(&et_leader);
-				//printf("Received -> Restart the Leader Timer - %d: LBeacon Received from The Leader! \n", node_id);
-			}
-		}
-	} // if (sLeadMe->lAlive == true)
+		}		
+	} // if (is_msg_fresh())
 	else 
 	{ // sLeadMe->lAlive == false
 		// i see that our beloved (!) leader has went awry
 		// this is my chance to reclaim the throne and announce myself as the eternal leader (!!)
-		set_leader(node_id, node_id, true);
+		set_leader(node_id, node_id, true, clock_time());
 		
 		printf("Received -> I (%d) might be Leader Again!\n", node_id);
 		
 		// notify all network that I am in business!!
 		send_leadership_beacon();
+		
+		amILeader = true;
 	}
 }
 
@@ -282,12 +232,12 @@ send_leadership_beacon()
 /*---------------------------------------------------------------------------*/
 // This method is used to set new values for leadership structure
 void
-set_leader(uint8_t newLeader, uint8_t newSource, bool isAlive)
+set_leader(uint8_t newLeader, uint8_t newSource, bool isAlive, clock_time_t rTime)
 {
 	s_leader.leader = newLeader;
 	s_leader.lSource = newSource;
 	s_leader.lAlive = isAlive;
-	s_leader.refreshTime = clock_time();
+	s_leader.refreshTime = rTime;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -314,22 +264,24 @@ get_refreshTime()
 	return s_leader.refreshTime;
 }
 
-
-/*---------------------------------------------------------------------------*/
-// This method checks whether the leadership beacon is fresh or not
+// This method checks whether the incoming message is fresh
 bool 
-is_leader_fresh(clock_time_t rTime)
+is_msg_fresh(clock_time_t rTime)
 {
 	int seconds = 0;
-	bool bFresh = false;
+	bool bFresh = true;
 	
-	seconds = rTime / CLOCK_SECOND;
+	/* seconds = (clock_time() - rTime) / CLOCK_SECOND;  */
+	seconds = ( rTime - get_refreshTime() ) / CLOCK_SECOND; 
 	
-	printf("%d Seconds Fresh This Message is\n", seconds);
+	if (seconds < 10)
+		printf("This message is %d Seconds Fresh\n", seconds);
+	else
+	{
+		bFresh = false;
+		printf("This message is %d Seconds Old\n", seconds);
+	}
 	
-	if ( seconds < 10 )
-		bFresh = true;
-		
 	return bFresh;
 }
 
@@ -348,7 +300,10 @@ PROCESS_THREAD(leader_mote, ev, data)
 	// initialize to something, computer will initialize its members to 0, since it is 
 	// defined with 'static' storage class.
 	
-	set_leader(node_id, node_id, true);
+	set_leader(node_id, node_id, true, clock_time());
+	isLeaderAssigned = true;
+	amILeader = true;
+	
 	
 	
   /* Set up a timer for waiting Leadership Beacon messages for 10 seconds */
@@ -366,10 +321,8 @@ PROCESS_THREAD(leader_mote, ev, data)
     { // this statement should not be entered, if a prior leadership message received!
 
 		// so, if it enters this statement, I'm the first mote to start broadcasting leadership beacons
-		set_leader(node_id, node_id, true);
+		set_leader(node_id, node_id, true, clock_time());
 		
-		isLeaderAssigned = true;
-		amILeader = true;
 		
     	//send my nodeID as the leadership beacon
     	send_leadership_beacon();
@@ -384,6 +337,8 @@ PROCESS_THREAD(leader_mote, ev, data)
     { // if I am the leader, I should keep sending periodic Leadership Beacon Messages.
 
     	//send my nodeID as the leadership beacon
+    	s_leader.refreshTime = clock_time();
+    	
     	send_leadership_beacon();
 		printf("Sent -> Still I'm LBeacon(%d)\n", node_id);
 		
@@ -403,7 +358,7 @@ PROCESS_THREAD(leader_mote, ev, data)
 	{ // Leader Beacon Timer Has Expired!
 		printf("I (%d) Sensed that Leader (%d) is Unreachable!\n", node_id, s_leader.leader);
 		
-		set_leader(s_leader.leader, node_id, false);
+		set_leader(s_leader.leader, node_id, false, get_refreshTime());
 		
 		// notify all network that I cannot reach leader
     	send_leadership_beacon();
