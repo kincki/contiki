@@ -1,0 +1,1798 @@
+00:00.495	ID:2	Rime started with address 2.0
+00:00.504	ID:2	MAC 02:00:00:00:00:00:00:00 Contiki-3.x-1743-g7861a76 started. Node id is set to 2.
+00:00.513	ID:2	nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.515	ID:2	Starting 'Leader Candidate'
+00:00.607	ID:4	Rime started with address 4.0
+00:00.616	ID:4	MAC 04:00:00:00:00:00:00:00 Contiki-3.x-1743-g7861a76 started. Node id is set to 4.
+00:00.625	ID:4	nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.628	ID:4	Starting 'Leader Candidate'
+00:00.641	ID:1	Rime started with address 1.0
+00:00.650	ID:1	MAC 01:00:00:00:00:00:00:00 Contiki-3.x-1743-g7861a76 started. Node id is set to 1.
+00:00.659	ID:1	nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.661	ID:1	Starting 'Leader Candidate'
+00:00.974	ID:5	Rime started with address 5.0
+00:00.983	ID:5	MAC 05:00:00:00:00:00:00:00 Contiki-3.x-1743-g7861a76 started. Node id is set to 5.
+00:00.992	ID:5	nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.994	ID:5	Starting 'Leader Candidate'
+00:01.158	ID:3	Rime started with address 3.0
+00:01.167	ID:3	MAC 03:00:00:00:00:00:00:00 Contiki-3.x-1743-g7861a76 started. Node id is set to 3.
+00:01.176	ID:3	nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:01.179	ID:3	Starting 'Leader Candidate'
+00:02.894	ID:4	Sent -> Still I'm LBeacon(4)
+00:02.898	ID:4	Sent -> It is time to promote myself as the new leader
+00:02.901	ID:4	Sent -> I Declare Myself as the Next Leader
+00:02.927	ID:3	Received ->  LBeacon(4) from Mote-4
+00:02.932	ID:3	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:02.990	ID:5	Received ->  LBeacon(4) from Mote-4
+00:02.993	ID:5	Received -> The Leader is set to 4
+00:03.015	ID:2	Received ->  LBeacon(4) from Mote-4
+00:03.019	ID:2	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:03.034	ID:1	Received ->  LBeacon(4) from Mote-4
+00:03.038	ID:1	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:03.048	ID:1	Received ->  LBeacon(4) from Mote-4
+00:03.048	ID:5	Received ->  LBeacon(4) from Mote-4
+00:03.048	ID:2	Received ->  LBeacon(4) from Mote-4
+00:03.048	ID:3	Received ->  LBeacon(4) from Mote-4
+00:03.052	ID:1	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:03.052	ID:2	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:03.052	ID:3	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:03.141	ID:2	Sent -> Still I'm LBeacon(2)
+00:03.145	ID:2	Sent -> It is time to promote myself as the new leader
+00:03.148	ID:2	Sent -> I Declare Myself as the Next Leader
+00:03.153	ID:2	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:03.244	ID:5	Received ->  LBeacon(1) from Mote-1
+00:03.248	ID:5	Received -> The Leader is set to 1
+00:03.253	ID:4	Received ->  LBeacon(1) from Mote-1
+00:03.256	ID:4	Received -> The Leader is set to 1
+00:03.263	ID:2	Received ->  LBeacon(1) from Mote-1
+00:03.266	ID:2	Received -> The Leader is set to 1
+00:03.301	ID:3	Received ->  LBeacon(1) from Mote-1
+00:03.305	ID:3	Received -> The Leader is set to 1
+00:03.320	ID:5	Received ->  LBeacon(1) from Mote-1
+00:03.321	ID:4	Received ->  LBeacon(1) from Mote-1
+00:03.321	ID:2	Received ->  LBeacon(1) from Mote-1
+00:03.321	ID:3	Received ->  LBeacon(1) from Mote-1
+00:03.502	ID:4	Received ->  LBeacon(4) from Mote-5
+00:03.506	ID:4	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-5
+00:03.512	ID:2	Received ->  LBeacon(4) from Mote-5
+00:03.517	ID:2	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-5
+00:03.534	ID:1	Received ->  LBeacon(4) from Mote-5
+00:03.539	ID:1	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-5
+00:03.551	ID:3	Received ->  LBeacon(4) from Mote-5
+00:03.555	ID:3	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-5
+00:03.624	ID:4	Received ->  LBeacon(1) from Mote-5
+00:03.629	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-5
+00:03.638	ID:2	Received ->  LBeacon(1) from Mote-5
+00:03.642	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-5
+00:03.660	ID:1	Received ->  LBeacon(1) from Mote-5
+00:03.676	ID:3	Received ->  LBeacon(1) from Mote-5
+00:03.681	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-5
+00:03.763	ID:2	Received ->  LBeacon(1) from Mote-1
+00:03.801	ID:3	Received ->  LBeacon(1) from Mote-1
+00:03.867	ID:5	Received ->  LBeacon(1) from Mote-1
+00:03.875	ID:4	Received ->  LBeacon(1) from Mote-1
+00:03.908	ID:1	Received ->  LBeacon(1) from Mote-4
+00:03.928	ID:3	Received ->  LBeacon(1) from Mote-4
+00:03.932	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:03.993	ID:5	Received ->  LBeacon(1) from Mote-4
+00:04.012	ID:2	Received ->  LBeacon(1) from Mote-4
+00:04.017	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:04.051	ID:3	Received ->  LBeacon(1) from Mote-4
+00:04.081	ID:5	Sent -> Relay LBeacon(1)
+00:04.084	ID:5	Sent -> It is time to promote myself as the new leader
+00:04.088	ID:5	Sent -> I Declare Myself as the Next Leader
+00:04.116	ID:5	Received ->  LBeacon(1) from Mote-4
+00:04.119	ID:5	Received -> The Leader is set to 1
+00:04.140	ID:2	Received ->  LBeacon(1) from Mote-4
+00:04.160	ID:1	Received ->  LBeacon(1) from Mote-4
+00:04.240	ID:5	Received ->  LBeacon(3) from Mote-3
+00:04.244	ID:5	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:04.251	ID:4	Received ->  LBeacon(3) from Mote-3
+00:04.256	ID:4	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:04.265	ID:2	Received ->  LBeacon(3) from Mote-3
+00:04.269	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:04.284	ID:1	Received ->  LBeacon(3) from Mote-3
+00:04.289	ID:1	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:04.344	ID:1	Received ->  LBeacon(3) from Mote-3
+00:04.344	ID:5	Received ->  LBeacon(3) from Mote-3
+00:04.344	ID:2	Received ->  LBeacon(3) from Mote-3
+00:04.344	ID:4	Received ->  LBeacon(3) from Mote-3
+00:04.349	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:04.349	ID:5	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:04.349	ID:4	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:04.349	ID:2	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:04.467	ID:1	Sent -> Still I'm LBeacon(1)
+00:04.470	ID:1	Sent -> It is time to promote myself as the new leader
+00:04.474	ID:1	Sent -> I Declare Myself as the Next Leader
+00:04.478	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:04.483	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:04.492	ID:5	Received ->  LBeacon(1) from Mote-3
+00:04.497	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:04.500	ID:4	Received ->  LBeacon(1) from Mote-3
+00:04.505	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:04.514	ID:2	Received ->  LBeacon(1) from Mote-3
+00:04.519	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:04.540	ID:1	Received ->  LBeacon(1) from Mote-3
+00:04.626	ID:4	Received ->  LBeacon(1) from Mote-3
+00:04.637	ID:2	Received ->  LBeacon(1) from Mote-3
+00:04.659	ID:1	Received ->  LBeacon(1) from Mote-3
+00:04.741	ID:5	Received ->  LBeacon(1) from Mote-3
+00:04.743	ID:3	Sent -> Relay LBeacon(1)
+00:04.747	ID:3	Sent -> It is time to promote myself as the new leader
+00:04.751	ID:3	Sent -> I Declare Myself as the Next Leader
+00:04.785	ID:1	Received ->  LBeacon(1) from Mote-3
+00:04.866	ID:5	Received ->  LBeacon(1) from Mote-3
+00:04.874	ID:4	Received ->  LBeacon(1) from Mote-3
+00:04.889	ID:2	Received ->  LBeacon(1) from Mote-3
+00:04.897	ID:4	Received ->  LBeacon(3) from Mote-3
+00:04.897	ID:5	Received ->  LBeacon(3) from Mote-3
+00:04.897	ID:2	Received ->  LBeacon(3) from Mote-3
+00:04.897	ID:1	Received ->  LBeacon(3) from Mote-3
+00:04.901	ID:4	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:04.901	ID:5	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:04.901	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:04.902	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:05.127	ID:4	Received ->  LBeacon(1) from Mote-5
+00:05.138	ID:2	Received ->  LBeacon(1) from Mote-5
+00:05.159	ID:1	Received ->  LBeacon(1) from Mote-5
+00:05.176	ID:3	Received ->  LBeacon(1) from Mote-5
+00:05.180	ID:3	Received -> The Leader is set to 1
+00:05.193	ID:2	Received ->  LBeacon(5) from Mote-5
+00:05.193	ID:3	Received ->  LBeacon(5) from Mote-5
+00:05.193	ID:4	Received ->  LBeacon(5) from Mote-5
+00:05.193	ID:1	Received ->  LBeacon(5) from Mote-5
+00:05.197	ID:2	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:05.197	ID:3	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:05.198	ID:4	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:05.198	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:05.374	ID:4	Received ->  LBeacon(1) from Mote-5
+00:05.379	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:05.385	ID:2	Received ->  LBeacon(1) from Mote-5
+00:05.390	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:05.410	ID:1	Received ->  LBeacon(1) from Mote-5
+00:05.423	ID:3	Received ->  LBeacon(1) from Mote-5
+00:05.428	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:05.501	ID:4	Received ->  LBeacon(1) from Mote-5
+00:05.512	ID:2	Received ->  LBeacon(1) from Mote-5
+00:05.534	ID:1	Received ->  LBeacon(1) from Mote-5
+00:05.550	ID:3	Received ->  LBeacon(1) from Mote-5
+00:05.597	ID:3	Received ->  LBeacon(1) from Mote-5
+00:05.597	ID:2	Received ->  LBeacon(1) from Mote-5
+00:05.598	ID:1	Received ->  LBeacon(1) from Mote-5
+00:05.598	ID:4	Received ->  LBeacon(1) from Mote-5
+00:05.751	ID:4	Received ->  LBeacon(1) from Mote-5
+00:05.762	ID:2	Received ->  LBeacon(1) from Mote-5
+00:05.776	ID:4	Sent -> Relay LBeacon(1)
+00:05.780	ID:4	Sent -> It is time to promote myself as the new leader
+00:05.781	ID:1	Received ->  LBeacon(1) from Mote-5
+00:05.784	ID:4	Sent -> I Declare Myself as the Next Leader
+00:05.801	ID:3	Received ->  LBeacon(1) from Mote-5
+00:05.908	ID:1	Received ->  LBeacon(1) from Mote-3
+00:05.993	ID:5	Received ->  LBeacon(1) from Mote-3
+00:05.998	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:06.002	ID:4	Received ->  LBeacon(1) from Mote-3
+00:06.005	ID:4	Received -> The Leader is set to 1
+00:06.013	ID:2	Received ->  LBeacon(1) from Mote-3
+00:06.017	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:06.023	ID:5	Received ->  LBeacon(1) from Mote-3
+00:06.023	ID:1	Received ->  LBeacon(1) from Mote-3
+00:06.024	ID:4	Received ->  LBeacon(1) from Mote-3
+00:06.025	ID:2	Received ->  LBeacon(1) from Mote-3
+00:06.028	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:06.125	ID:2	Sent -> Relay LBeacon(1)
+00:06.130	ID:2	Sent -> It is time to promote myself as the new leader
+00:06.135	ID:2	Sent -> I Declare Myself as the Next Leader
+00:06.244	ID:5	Received ->  LBeacon(1) from Mote-1
+00:06.252	ID:4	Received ->  LBeacon(1) from Mote-1
+00:06.263	ID:2	Received ->  LBeacon(1) from Mote-1
+00:06.267	ID:2	Received -> The Leader is set to 1
+00:06.301	ID:3	Received ->  LBeacon(1) from Mote-1
+00:06.320	ID:5	Received ->  LBeacon(1) from Mote-1
+00:06.320	ID:4	Received ->  LBeacon(1) from Mote-1
+00:06.320	ID:3	Received ->  LBeacon(1) from Mote-1
+00:06.320	ID:2	Received ->  LBeacon(1) from Mote-1
+00:06.450	ID:5	Received ->  LBeacon(1) from Mote-1
+00:06.450	ID:3	Received ->  LBeacon(1) from Mote-1
+00:06.450	ID:2	Received ->  LBeacon(1) from Mote-1
+00:06.450	ID:4	Received ->  LBeacon(1) from Mote-1
+00:06.453	ID:3	Received -> Refreshed the leader 1
+00:06.453	ID:5	Received -> Refreshed the leader 1
+00:06.454	ID:4	Received -> Refreshed the leader 1
+00:06.454	ID:2	Received -> Refreshed the leader 1
+00:06.580	ID:5	Received ->  LBeacon(1) from Mote-1
+00:06.580	ID:4	Received ->  LBeacon(1) from Mote-1
+00:06.580	ID:3	Received ->  LBeacon(1) from Mote-1
+00:06.580	ID:2	Received ->  LBeacon(1) from Mote-1
+00:06.710	ID:5	Received ->  LBeacon(1) from Mote-1
+00:06.710	ID:3	Received ->  LBeacon(1) from Mote-1
+00:06.710	ID:4	Received ->  LBeacon(1) from Mote-1
+00:06.710	ID:2	Received ->  LBeacon(1) from Mote-1
+00:06.712	ID:5	Received -> Why Am I Here? !
+00:06.712	ID:3	Received -> Why Am I Here? !
+00:06.712	ID:4	Received -> Why Am I Here? !
+00:06.712	ID:2	Received -> Why Am I Here? !
+00:06.839	ID:3	Received ->  LBeacon(1) from Mote-1
+00:06.839	ID:2	Received ->  LBeacon(1) from Mote-1
+00:06.839	ID:4	Received ->  LBeacon(1) from Mote-1
+00:06.839	ID:5	Received ->  LBeacon(1) from Mote-1
+00:06.841	ID:3	Received -> Why Am I Here? !
+00:06.841	ID:2	Received -> Why Am I Here? !
+00:06.841	ID:4	Received -> Why Am I Here? !
+00:06.841	ID:5	Received -> Why Am I Here? !
+00:06.993	ID:5	Received ->  LBeacon(1) from Mote-1
+00:07.001	ID:4	Received ->  LBeacon(1) from Mote-1
+00:07.012	ID:2	Received ->  LBeacon(1) from Mote-1
+00:07.050	ID:3	Received ->  LBeacon(1) from Mote-1
+00:07.101	ID:3	Sent -> Relay LBeacon(1)
+00:07.102	ID:1	Sent -> Still I'm LBeacon(1)
+00:07.105	ID:3	Sent -> It is time to promote myself as the new leader
+00:07.106	ID:1	Sent -> It is time to promote myself as the new leader
+00:07.108	ID:3	Sent -> I Declare Myself as the Next Leader
+00:07.109	ID:1	Sent -> I Declare Myself as the Next Leader
+00:07.113	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:07.118	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:07.123	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:07.177	ID:3	Received ->  LBeacon(1) from Mote-1
+00:07.180	ID:3	Received -> The Leader is set to 1
+00:07.243	ID:5	Received ->  LBeacon(1) from Mote-1
+00:07.251	ID:4	Received ->  LBeacon(1) from Mote-1
+00:07.262	ID:2	Received ->  LBeacon(1) from Mote-1
+00:07.302	ID:3	Received ->  LBeacon(1) from Mote-1
+00:07.306	ID:3	Received -> Refreshed the leader 1
+00:07.367	ID:5	Received ->  LBeacon(1) from Mote-1
+00:07.370	ID:5	Received -> Refreshed the leader 1
+00:07.375	ID:4	Received ->  LBeacon(1) from Mote-1
+00:07.379	ID:4	Received -> Refreshed the leader 1
+00:07.389	ID:2	Received ->  LBeacon(1) from Mote-1
+00:07.393	ID:2	Received -> Refreshed the leader 1
+00:07.412	ID:4	Received ->  LBeacon(1) from Mote-1
+00:07.412	ID:5	Received ->  LBeacon(1) from Mote-1
+00:07.412	ID:2	Received ->  LBeacon(1) from Mote-1
+00:07.412	ID:3	Received ->  LBeacon(1) from Mote-1
+00:07.415	ID:2	Received -> Refreshed the leader 1
+00:07.415	ID:5	Received -> Refreshed the leader 1
+00:07.415	ID:3	Received -> Refreshed the leader 1
+00:07.415	ID:4	Received -> Refreshed the leader 1
+00:07.542	ID:4	Received ->  LBeacon(1) from Mote-1
+00:07.542	ID:2	Received ->  LBeacon(1) from Mote-1
+00:07.542	ID:3	Received ->  LBeacon(1) from Mote-1
+00:07.542	ID:5	Received ->  LBeacon(1) from Mote-1
+00:07.543	ID:4	Received -> Why Am I Here? !
+00:07.543	ID:2	Received -> Why Am I Here? !
+00:07.544	ID:5	Received -> Why Am I Here? !
+00:07.544	ID:3	Received -> Why Am I Here? !
+00:07.566	ID:5	Sent -> Relay LBeacon(1)
+00:07.570	ID:5	Sent -> It is time to promote myself as the new leader
+00:07.574	ID:5	Sent -> I Declare Myself as the Next Leader
+00:07.671	ID:2	Received ->  LBeacon(1) from Mote-1
+00:07.671	ID:4	Received ->  LBeacon(1) from Mote-1
+00:07.671	ID:5	Received ->  LBeacon(1) from Mote-1
+00:07.672	ID:3	Received ->  LBeacon(1) from Mote-1
+00:07.673	ID:4	Received -> Why Am I Here? !
+00:07.673	ID:2	Received -> Why Am I Here? !
+00:07.673	ID:5	Received -> Why Am I Here? !
+00:07.674	ID:3	Received -> Why Am I Here? !
+00:07.801	ID:2	Received ->  LBeacon(1) from Mote-1
+00:07.801	ID:3	Received ->  LBeacon(1) from Mote-1
+00:07.801	ID:5	Received ->  LBeacon(1) from Mote-1
+00:07.801	ID:4	Received ->  LBeacon(1) from Mote-1
+00:07.803	ID:2	Received -> Why Am I Here? !
+00:07.803	ID:5	Received -> Why Am I Here? !
+00:07.803	ID:3	Received -> Why Am I Here? !
+00:07.803	ID:4	Received -> Why Am I Here? !
+00:08.001	ID:4	Received ->  LBeacon(1) from Mote-5
+00:08.005	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:08.012	ID:2	Received ->  LBeacon(1) from Mote-5
+00:08.015	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:08.019	ID:4	Sent -> Relay LBeacon(1)
+00:08.023	ID:4	Sent -> It is time to promote myself as the new leader
+00:08.026	ID:4	Sent -> I Declare Myself as the Next Leader
+00:08.034	ID:1	Received ->  LBeacon(1) from Mote-5
+00:08.050	ID:3	Received ->  LBeacon(1) from Mote-5
+00:08.054	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:08.125	ID:4	Received ->  LBeacon(1) from Mote-5
+00:08.129	ID:4	Received -> The Leader is set to 1
+00:08.135	ID:2	Received ->  LBeacon(1) from Mote-5
+00:08.139	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:08.160	ID:1	Received ->  LBeacon(1) from Mote-5
+00:08.175	ID:3	Received ->  LBeacon(1) from Mote-5
+00:08.179	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:08.215	ID:1	Received ->  LBeacon(1) from Mote-5
+00:08.215	ID:2	Received ->  LBeacon(1) from Mote-5
+00:08.215	ID:3	Received ->  LBeacon(1) from Mote-5
+00:08.216	ID:4	Received ->  LBeacon(1) from Mote-5
+00:08.219	ID:4	Received -> Refreshed the leader 1
+00:08.345	ID:1	Received ->  LBeacon(1) from Mote-5
+00:08.345	ID:3	Received ->  LBeacon(1) from Mote-5
+00:08.345	ID:2	Received ->  LBeacon(1) from Mote-5
+00:08.345	ID:4	Received ->  LBeacon(1) from Mote-5
+00:08.475	ID:3	Received ->  LBeacon(5) from Mote-5
+00:08.475	ID:2	Received ->  LBeacon(5) from Mote-5
+00:08.475	ID:1	Received ->  LBeacon(5) from Mote-5
+00:08.475	ID:4	Received ->  LBeacon(5) from Mote-5
+00:08.480	ID:3	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:08.480	ID:2	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:08.480	ID:4	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:08.480	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:08.639	ID:2	Received ->  LBeacon(1) from Mote-3
+00:08.643	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:08.658	ID:1	Received ->  LBeacon(1) from Mote-4
+00:08.797	ID:3	Received ->  LBeacon(1) from Mote-4
+00:08.802	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:08.806	ID:3	Received ->  LBeacon(1) from Mote-1
+00:08.813	ID:2	Sent -> Relay LBeacon(1)
+00:08.816	ID:2	Sent -> It is time to promote myself as the new leader
+00:08.820	ID:2	Sent -> I Declare Myself as the Next Leader
+00:08.866	ID:5	Received ->  LBeacon(1) from Mote-1
+00:08.869	ID:5	Received -> The Leader is set to 1
+00:08.871	ID:4	Received ->  LBeacon(1) from Mote-3
+00:08.875	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:08.888	ID:2	Received ->  LBeacon(1) from Mote-1
+00:08.891	ID:2	Received -> The Leader is set to 1
+00:08.993	ID:5	Received ->  LBeacon(1) from Mote-3
+00:08.997	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:09.002	ID:4	Received ->  LBeacon(1) from Mote-3
+00:09.005	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:09.013	ID:2	Received ->  LBeacon(1) from Mote-3
+00:09.017	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:09.034	ID:1	Received ->  LBeacon(1) from Mote-3
+00:09.089	ID:1	Received ->  LBeacon(3) from Mote-3
+00:09.089	ID:2	Received ->  LBeacon(3) from Mote-3
+00:09.089	ID:5	Received ->  LBeacon(3) from Mote-3
+00:09.089	ID:4	Received ->  LBeacon(3) from Mote-3
+00:09.094	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:09.094	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:09.094	ID:5	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:09.094	ID:4	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:09.219	ID:1	Received ->  LBeacon(1) from Mote-3
+00:09.219	ID:5	Received ->  LBeacon(1) from Mote-3
+00:09.219	ID:2	Received ->  LBeacon(1) from Mote-3
+00:09.219	ID:4	Received ->  LBeacon(1) from Mote-3
+00:09.224	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:09.224	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:09.224	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:09.227	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:09.228	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:09.228	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:09.374	ID:4	Received ->  LBeacon(1) from Mote-3
+00:09.378	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:09.388	ID:2	Received ->  LBeacon(1) from Mote-3
+00:09.392	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:09.409	ID:1	Received ->  LBeacon(1) from Mote-3
+00:09.487	ID:1	Received ->  LBeacon(1) from Mote-3
+00:09.487	ID:2	Received ->  LBeacon(1) from Mote-3
+00:09.487	ID:4	Received ->  LBeacon(1) from Mote-3
+00:09.493	ID:5	Received ->  LBeacon(1) from Mote-3
+00:09.639	ID:2	Received ->  LBeacon(1) from Mote-3
+00:09.658	ID:1	Received ->  LBeacon(1) from Mote-3
+00:09.743	ID:5	Received ->  LBeacon(1) from Mote-3
+00:09.751	ID:4	Received ->  LBeacon(1) from Mote-3
+00:09.784	ID:1	Received ->  LBeacon(1) from Mote-3
+00:09.867	ID:5	Received ->  LBeacon(1) from Mote-3
+00:09.875	ID:4	Received ->  LBeacon(1) from Mote-3
+00:09.888	ID:2	Received ->  LBeacon(1) from Mote-3
+00:09.892	ID:1	Received ->  LBeacon(1) from Mote-3
+00:09.892	ID:5	Received ->  LBeacon(1) from Mote-3
+00:09.892	ID:4	Received ->  LBeacon(1) from Mote-3
+00:09.893	ID:2	Received ->  LBeacon(1) from Mote-3
+00:10.035	ID:1	Received ->  LBeacon(1) from Mote-3
+00:10.104	ID:5	Sent -> Relay LBeacon(1)
+00:10.108	ID:5	Sent -> It is time to promote myself as the new leader
+00:10.113	ID:5	Sent -> I Declare Myself as the Next Leader
+00:10.117	ID:5	Received ->  LBeacon(1) from Mote-3
+00:10.121	ID:5	Received -> The Leader is set to 1
+00:10.125	ID:4	Received ->  LBeacon(1) from Mote-3
+00:10.139	ID:2	Received ->  LBeacon(1) from Mote-3
+00:10.154	ID:3	Sent -> Relay LBeacon(1)
+00:10.158	ID:3	Sent -> It is time to promote myself as the new leader
+00:10.161	ID:3	Sent -> I Declare Myself as the Next Leader
+00:10.241	ID:5	Received ->  LBeacon(1) from Mote-3
+00:10.249	ID:4	Received ->  LBeacon(1) from Mote-3
+00:10.263	ID:2	Received ->  LBeacon(1) from Mote-3
+00:10.285	ID:1	Received ->  LBeacon(1) from Mote-3
+00:10.308	ID:2	Received ->  LBeacon(3) from Mote-3
+00:10.308	ID:1	Received ->  LBeacon(3) from Mote-3
+00:10.308	ID:4	Received ->  LBeacon(3) from Mote-3
+00:10.308	ID:5	Received ->  LBeacon(3) from Mote-3
+00:10.312	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:10.312	ID:4	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:10.312	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:10.312	ID:5	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:10.499	ID:4	Received ->  LBeacon(1) from Mote-5
+00:10.504	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:10.513	ID:2	Received ->  LBeacon(1) from Mote-5
+00:10.518	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:10.535	ID:1	Received ->  LBeacon(1) from Mote-5
+00:10.551	ID:3	Received ->  LBeacon(1) from Mote-5
+00:10.554	ID:3	Received -> The Leader is set to 1
+00:10.618	ID:5	Received ->  LBeacon(1) from Mote-4
+00:10.622	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:10.637	ID:2	Received ->  LBeacon(1) from Mote-4
+00:10.640	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:10.659	ID:1	Received ->  LBeacon(1) from Mote-4
+00:10.675	ID:3	Received ->  LBeacon(1) from Mote-4
+00:10.679	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:10.748	ID:4	Received ->  LBeacon(1) from Mote-5
+00:10.764	ID:2	Received ->  LBeacon(1) from Mote-5
+00:10.783	ID:1	Received ->  LBeacon(1) from Mote-5
+00:10.802	ID:3	Received ->  LBeacon(1) from Mote-5
+00:10.807	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:10.849	ID:4	Received ->  LBeacon(1) from Mote-5
+00:10.849	ID:2	Received ->  LBeacon(1) from Mote-5
+00:10.849	ID:1	Received ->  LBeacon(1) from Mote-5
+00:10.850	ID:3	Received ->  LBeacon(1) from Mote-5
+00:10.889	ID:1	Sent -> Still I'm LBeacon(1)
+00:10.892	ID:1	Sent -> It is time to promote myself as the new leader
+00:10.896	ID:1	Sent -> I Declare Myself as the Next Leader
+00:10.900	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:10.905	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:10.910	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:10.979	ID:3	Received ->  LBeacon(1) from Mote-5
+00:10.979	ID:2	Received ->  LBeacon(1) from Mote-5
+00:10.979	ID:1	Received ->  LBeacon(1) from Mote-5
+00:10.979	ID:4	Received ->  LBeacon(1) from Mote-5
+00:11.127	ID:4	Received ->  LBeacon(1) from Mote-5
+00:11.137	ID:2	Received ->  LBeacon(1) from Mote-5
+00:11.159	ID:1	Received ->  LBeacon(1) from Mote-5
+00:11.175	ID:3	Received ->  LBeacon(1) from Mote-5
+00:11.175	ID:4	Sent -> Relay LBeacon(1)
+00:11.179	ID:4	Sent -> It is time to promote myself as the new leader
+00:11.182	ID:4	Sent -> I Declare Myself as the Next Leader
+00:11.247	ID:1	Received ->  LBeacon(5) from Mote-5
+00:11.247	ID:2	Received ->  LBeacon(5) from Mote-5
+00:11.247	ID:3	Received ->  LBeacon(5) from Mote-5
+00:11.247	ID:4	Received ->  LBeacon(5) from Mote-5
+00:11.251	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:11.251	ID:2	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:11.251	ID:3	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:11.251	ID:4	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:11.377	ID:1	Received ->  LBeacon(1) from Mote-5
+00:11.377	ID:2	Received ->  LBeacon(1) from Mote-5
+00:11.377	ID:3	Received ->  LBeacon(1) from Mote-5
+00:11.377	ID:4	Received ->  LBeacon(1) from Mote-5
+00:11.380	ID:4	Received -> The Leader is set to 1
+00:11.381	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:11.382	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:11.386	ID:2	Sent -> Relay LBeacon(1)
+00:11.389	ID:2	Sent -> It is time to promote myself as the new leader
+00:11.393	ID:2	Sent -> I Declare Myself as the Next Leader
+00:11.533	ID:1	Received ->  LBeacon(1) from Mote-5
+00:11.552	ID:3	Received ->  LBeacon(1) from Mote-5
+00:11.626	ID:4	Received ->  LBeacon(1) from Mote-5
+00:11.631	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:11.637	ID:2	Received ->  LBeacon(1) from Mote-5
+00:11.640	ID:2	Received -> The Leader is set to 1
+00:11.659	ID:1	Received ->  LBeacon(1) from Mote-5
+00:11.675	ID:3	Received ->  LBeacon(1) from Mote-5
+00:11.749	ID:4	Received ->  LBeacon(1) from Mote-5
+00:11.763	ID:2	Received ->  LBeacon(1) from Mote-5
+00:11.868	ID:5	Received ->  LBeacon(2) from Mote-2
+00:11.873	ID:5	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:11.876	ID:4	Received ->  LBeacon(2) from Mote-2
+00:11.881	ID:4	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:11.910	ID:1	Received ->  LBeacon(2) from Mote-2
+00:11.914	ID:1	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:11.925	ID:3	Received ->  LBeacon(2) from Mote-2
+00:11.930	ID:3	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:11.958	ID:5	Received ->  LBeacon(2) from Mote-2
+00:11.958	ID:1	Received ->  LBeacon(2) from Mote-2
+00:11.958	ID:3	Received ->  LBeacon(2) from Mote-2
+00:11.958	ID:4	Received ->  LBeacon(2) from Mote-2
+00:11.963	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:11.963	ID:3	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:11.963	ID:5	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:11.963	ID:4	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.088	ID:1	Received ->  LBeacon(2) from Mote-2
+00:12.088	ID:3	Received ->  LBeacon(2) from Mote-2
+00:12.088	ID:5	Received ->  LBeacon(2) from Mote-2
+00:12.088	ID:4	Received ->  LBeacon(2) from Mote-2
+00:12.093	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.093	ID:3	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.093	ID:5	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.093	ID:4	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.218	ID:5	Received ->  LBeacon(2) from Mote-2
+00:12.218	ID:1	Received ->  LBeacon(2) from Mote-2
+00:12.218	ID:3	Received ->  LBeacon(2) from Mote-2
+00:12.218	ID:4	Received ->  LBeacon(2) from Mote-2
+00:12.222	ID:5	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.222	ID:3	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.222	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.222	ID:4	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:12.348	ID:3	Received ->  LBeacon(2) from Mote-2
+00:12.348	ID:1	Received ->  LBeacon(2) from Mote-2
+00:12.349	ID:3	Received -> Why Am I Here? !
+00:12.350	ID:1	Received -> Why Am I Here? !
+00:12.376	ID:4	Received ->  LBeacon(2) from Mote-2
+00:12.378	ID:4	Received -> Why Am I Here? !
+00:12.477	ID:1	Received ->  LBeacon(1) from Mote-2
+00:12.477	ID:3	Received ->  LBeacon(1) from Mote-2
+00:12.477	ID:4	Received ->  LBeacon(1) from Mote-2
+00:12.482	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:12.482	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:12.486	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:12.486	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:12.491	ID:5	Received ->  LBeacon(1) from Mote-2
+00:12.496	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:12.500	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:12.625	ID:4	Received ->  LBeacon(1) from Mote-2
+00:12.629	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:12.658	ID:1	Received ->  LBeacon(1) from Mote-2
+00:12.675	ID:3	Received ->  LBeacon(1) from Mote-2
+00:12.679	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:12.743	ID:5	Received ->  LBeacon(1) from Mote-2
+00:12.747	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:12.784	ID:1	Received ->  LBeacon(1) from Mote-2
+00:12.801	ID:3	Received ->  LBeacon(1) from Mote-2
+00:12.806	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:12.866	ID:5	Received ->  LBeacon(1) from Mote-2
+00:12.870	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:12.874	ID:4	Received ->  LBeacon(1) from Mote-2
+00:12.878	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:12.888	ID:3	Received ->  LBeacon(1) from Mote-2
+00:12.888	ID:1	Received ->  LBeacon(1) from Mote-2
+00:12.888	ID:5	Received ->  LBeacon(1) from Mote-2
+00:12.892	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:12.892	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:12.893	ID:4	Received ->  LBeacon(1) from Mote-2
+00:12.897	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:12.905	ID:3	Sent -> Relay LBeacon(1)
+00:12.909	ID:3	Sent -> It is time to promote myself as the new leader
+00:12.913	ID:3	Sent -> I Declare Myself as the Next Leader
+00:13.033	ID:1	Received ->  LBeacon(1) from Mote-2
+00:13.052	ID:3	Received ->  LBeacon(1) from Mote-2
+00:13.055	ID:3	Received -> The Leader is set to 1
+00:13.118	ID:5	Received ->  LBeacon(1) from Mote-2
+00:13.122	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:13.126	ID:4	Received ->  LBeacon(1) from Mote-2
+00:13.129	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:13.177	ID:3	Received ->  LBeacon(1) from Mote-2
+00:13.242	ID:5	Received ->  LBeacon(1) from Mote-2
+00:13.246	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:13.250	ID:4	Received ->  LBeacon(1) from Mote-2
+00:13.254	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:13.284	ID:1	Received ->  LBeacon(1) from Mote-2
+00:13.368	ID:5	Received ->  LBeacon(1) from Mote-2
+00:13.372	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:13.375	ID:4	Received ->  LBeacon(1) from Mote-2
+00:13.379	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:13.409	ID:1	Received ->  LBeacon(1) from Mote-2
+00:13.427	ID:3	Received ->  LBeacon(1) from Mote-2
+00:13.433	ID:3	Received ->  LBeacon(2) from Mote-2
+00:13.434	ID:5	Received ->  LBeacon(2) from Mote-2
+00:13.434	ID:1	Received ->  LBeacon(2) from Mote-2
+00:13.434	ID:4	Received ->  LBeacon(2) from Mote-2
+00:13.438	ID:3	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:13.438	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:13.438	ID:5	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:13.438	ID:4	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:13.563	ID:1	Received ->  LBeacon(1) from Mote-2
+00:13.563	ID:3	Received ->  LBeacon(1) from Mote-2
+00:13.563	ID:4	Received ->  LBeacon(1) from Mote-2
+00:13.563	ID:5	Received ->  LBeacon(1) from Mote-2
+00:13.568	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:13.568	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:13.568	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:13.572	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:13.572	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:13.577	ID:5	Sent -> Relay LBeacon(1)
+00:13.581	ID:5	Sent -> It is time to promote myself as the new leader
+00:13.585	ID:5	Sent -> I Declare Myself as the Next Leader
+00:13.693	ID:5	Received ->  LBeacon(1) from Mote-2
+00:13.693	ID:3	Received ->  LBeacon(1) from Mote-2
+00:13.693	ID:4	Received ->  LBeacon(1) from Mote-2
+00:13.693	ID:1	Received ->  LBeacon(1) from Mote-2
+00:13.696	ID:5	Received -> The Leader is set to 1
+00:13.696	ID:3	Received -> Refreshed the leader 1
+00:13.697	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:13.865	ID:5	Received ->  LBeacon(1) from Mote-2
+00:13.868	ID:5	Received -> Refreshed the leader 1
+00:13.909	ID:1	Received ->  LBeacon(1) from Mote-2
+00:13.926	ID:3	Received ->  LBeacon(1) from Mote-2
+00:13.929	ID:3	Received -> Refreshed the leader 1
+00:13.955	ID:2	Sent -> Relay LBeacon(1)
+00:13.959	ID:2	Sent -> It is time to promote myself as the new leader
+00:13.962	ID:2	Sent -> I Declare Myself as the Next Leader
+00:13.993	ID:5	Received ->  LBeacon(1) from Mote-2
+00:13.996	ID:5	Received -> Refreshed the leader 1
+00:14.001	ID:4	Received ->  LBeacon(1) from Mote-2
+00:14.031	ID:1	Received ->  LBeacon(1) from Mote-2
+00:14.051	ID:3	Received ->  LBeacon(1) from Mote-2
+00:14.054	ID:3	Received -> Refreshed the leader 1
+00:14.109	ID:1	Received ->  LBeacon(2) from Mote-2
+00:14.109	ID:3	Received ->  LBeacon(2) from Mote-2
+00:14.109	ID:4	Received ->  LBeacon(2) from Mote-2
+00:14.109	ID:5	Received ->  LBeacon(2) from Mote-2
+00:14.113	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:14.113	ID:3	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:14.113	ID:4	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:14.114	ID:5	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:14.262	ID:2	Received ->  LBeacon(1) from Mote-5
+00:14.265	ID:2	Received -> The Leader is set to 1
+00:14.284	ID:1	Received ->  LBeacon(1) from Mote-5
+00:14.300	ID:3	Received ->  LBeacon(1) from Mote-5
+00:14.375	ID:1	Received ->  LBeacon(1) from Mote-5
+00:14.375	ID:2	Received ->  LBeacon(1) from Mote-5
+00:14.375	ID:3	Received ->  LBeacon(1) from Mote-5
+00:14.376	ID:4	Received ->  LBeacon(1) from Mote-5
+00:14.468	ID:1	Sent -> Still I'm LBeacon(1)
+00:14.472	ID:1	Sent -> It is time to promote myself as the new leader
+00:14.476	ID:1	Sent -> I Declare Myself as the Next Leader
+00:14.480	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 2 from Mote-2
+00:14.485	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:14.489	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:14.494	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:14.505	ID:1	Received ->  LBeacon(1) from Mote-5
+00:14.505	ID:3	Received ->  LBeacon(1) from Mote-5
+00:14.505	ID:2	Received ->  LBeacon(1) from Mote-5
+00:14.505	ID:4	Received ->  LBeacon(1) from Mote-5
+00:14.635	ID:2	Received ->  LBeacon(1) from Mote-5
+00:14.635	ID:1	Received ->  LBeacon(1) from Mote-5
+00:14.635	ID:3	Received ->  LBeacon(1) from Mote-5
+00:14.635	ID:4	Received ->  LBeacon(1) from Mote-5
+00:14.784	ID:1	Received ->  LBeacon(1) from Mote-5
+00:14.800	ID:3	Received ->  LBeacon(1) from Mote-5
+00:14.876	ID:4	Received ->  LBeacon(1) from Mote-5
+00:14.887	ID:2	Received ->  LBeacon(1) from Mote-5
+00:14.930	ID:3	Received ->  LBeacon(1) from Mote-5
+00:14.932	ID:4	Sent -> Relay LBeacon(1)
+00:14.936	ID:4	Sent -> It is time to promote myself as the new leader
+00:14.939	ID:4	Sent -> I Declare Myself as the Next Leader
+00:15.000	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.003	ID:4	Received -> The Leader is set to 1
+00:15.014	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.033	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.127	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.138	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.156	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.176	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.185	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.185	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.185	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.185	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.280	ID:3	Sent -> Relay LBeacon(1)
+00:15.284	ID:3	Sent -> It is time to promote myself as the new leader
+00:15.287	ID:3	Sent -> I Declare Myself as the Next Leader
+00:15.380	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.387	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.409	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.425	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.428	ID:3	Received -> The Leader is set to 1
+00:15.453	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.453	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.453	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.453	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.626	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.639	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.658	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.677	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.722	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.722	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.722	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.722	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.851	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.852	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.852	ID:4	Received ->  LBeacon(1) from Mote-5
+00:15.852	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.981	ID:1	Received ->  LBeacon(1) from Mote-5
+00:15.981	ID:2	Received ->  LBeacon(1) from Mote-5
+00:15.981	ID:3	Received ->  LBeacon(1) from Mote-5
+00:15.981	ID:4	Received ->  LBeacon(1) from Mote-5
+00:16.086	ID:2	Sent -> Relay LBeacon(1)
+00:16.090	ID:2	Sent -> It is time to promote myself as the new leader
+00:16.093	ID:2	Sent -> I Declare Myself as the Next Leader
+00:16.111	ID:3	Received ->  LBeacon(5) from Mote-5
+00:16.111	ID:4	Received ->  LBeacon(5) from Mote-5
+00:16.111	ID:1	Received ->  LBeacon(5) from Mote-5
+00:16.111	ID:2	Received ->  LBeacon(5) from Mote-5
+00:16.116	ID:3	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:16.116	ID:4	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:16.116	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:16.116	ID:2	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:16.242	ID:1	Received ->  LBeacon(1) from Mote-5
+00:16.242	ID:2	Received ->  LBeacon(1) from Mote-5
+00:16.242	ID:3	Received ->  LBeacon(1) from Mote-5
+00:16.243	ID:4	Received ->  LBeacon(1) from Mote-5
+00:16.245	ID:2	Received -> The Leader is set to 1
+00:16.247	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:16.248	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:16.251	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:16.252	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:16.387	ID:2	Received ->  LBeacon(1) from Mote-1
+00:16.390	ID:2	Received -> Refreshed the leader 1
+00:16.409	ID:5	Sent -> Relay LBeacon(1)
+00:16.413	ID:5	Sent -> It is time to promote myself as the new leader
+00:16.416	ID:5	Sent -> I Declare Myself as the Next Leader
+00:16.491	ID:5	Received ->  LBeacon(1) from Mote-1
+00:16.494	ID:5	Received -> The Leader is set to 1
+00:16.499	ID:4	Received ->  LBeacon(1) from Mote-1
+00:16.550	ID:3	Received ->  LBeacon(1) from Mote-1
+00:16.618	ID:5	Received ->  LBeacon(1) from Mote-1
+00:16.626	ID:4	Received ->  LBeacon(1) from Mote-1
+00:16.637	ID:2	Received ->  LBeacon(1) from Mote-1
+00:16.677	ID:3	Received ->  LBeacon(1) from Mote-1
+00:16.680	ID:3	Received -> Refreshed the leader 1
+00:16.743	ID:5	Received ->  LBeacon(1) from Mote-1
+00:16.747	ID:5	Received -> Refreshed the leader 1
+00:16.752	ID:4	Received ->  LBeacon(1) from Mote-1
+00:16.755	ID:4	Received -> Refreshed the leader 1
+00:16.763	ID:2	Received ->  LBeacon(1) from Mote-1
+00:16.766	ID:2	Received -> Refreshed the leader 1
+00:16.792	ID:2	Received ->  LBeacon(1) from Mote-1
+00:16.793	ID:4	Received ->  LBeacon(1) from Mote-1
+00:16.793	ID:5	Received ->  LBeacon(1) from Mote-1
+00:16.793	ID:3	Received ->  LBeacon(1) from Mote-1
+00:16.922	ID:4	Received ->  LBeacon(1) from Mote-1
+00:16.922	ID:5	Received ->  LBeacon(1) from Mote-1
+00:16.923	ID:2	Received ->  LBeacon(1) from Mote-1
+00:16.923	ID:3	Received ->  LBeacon(1) from Mote-1
+00:16.924	ID:4	Received -> Why Am I Here? !
+00:16.924	ID:5	Received -> Why Am I Here? !
+00:16.924	ID:2	Received -> Why Am I Here? !
+00:16.925	ID:3	Received -> Why Am I Here? !
+00:17.052	ID:4	Received ->  LBeacon(1) from Mote-1
+00:17.052	ID:2	Received ->  LBeacon(1) from Mote-1
+00:17.052	ID:5	Received ->  LBeacon(1) from Mote-1
+00:17.052	ID:3	Received ->  LBeacon(1) from Mote-1
+00:17.054	ID:4	Received -> Why Am I Here? !
+00:17.054	ID:2	Received -> Why Am I Here? !
+00:17.054	ID:5	Received -> Why Am I Here? !
+00:17.054	ID:3	Received -> Why Am I Here? !
+00:17.167	ID:4	Sent -> Relay LBeacon(1)
+00:17.171	ID:4	Sent -> It is time to promote myself as the new leader
+00:17.174	ID:4	Sent -> I Declare Myself as the Next Leader
+00:17.182	ID:3	Received ->  LBeacon(1) from Mote-1
+00:17.182	ID:4	Received ->  LBeacon(1) from Mote-1
+00:17.182	ID:2	Received ->  LBeacon(1) from Mote-1
+00:17.182	ID:5	Received ->  LBeacon(1) from Mote-1
+00:17.184	ID:3	Received -> Why Am I Here? !
+00:17.184	ID:4	Received -> Why Am I Here? !
+00:17.184	ID:2	Received -> Why Am I Here? !
+00:17.184	ID:5	Received -> Why Am I Here? !
+00:17.368	ID:5	Received ->  LBeacon(1) from Mote-2
+00:17.373	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:17.377	ID:4	Received ->  LBeacon(1) from Mote-2
+00:17.377	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:17.379	ID:4	Received -> The Leader is set to 1
+00:17.406	ID:1	Received ->  LBeacon(1) from Mote-2
+00:17.426	ID:3	Received ->  LBeacon(1) from Mote-2
+00:17.430	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:17.434	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:17.493	ID:5	Received ->  LBeacon(1) from Mote-2
+00:17.497	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:17.502	ID:4	Received ->  LBeacon(1) from Mote-2
+00:17.506	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:17.530	ID:3	Sent -> Relay LBeacon(1)
+00:17.534	ID:3	Sent -> It is time to promote myself as the new leader
+00:17.534	ID:1	Received ->  LBeacon(1) from Mote-2
+00:17.537	ID:3	Sent -> I Declare Myself as the Next Leader
+00:17.550	ID:3	Received ->  LBeacon(1) from Mote-2
+00:17.553	ID:3	Received -> The Leader is set to 1
+00:17.561	ID:1	Sent -> Still I'm LBeacon(1)
+00:17.565	ID:1	Sent -> It is time to promote myself as the new leader
+00:17.569	ID:1	Sent -> I Declare Myself as the Next Leader
+00:17.573	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 2 from Mote-2
+00:17.578	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:17.583	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:17.586	ID:5	Received ->  LBeacon(2) from Mote-2
+00:17.587	ID:3	Received ->  LBeacon(2) from Mote-2
+00:17.587	ID:4	Received ->  LBeacon(2) from Mote-2
+00:17.588	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:17.591	ID:5	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:17.591	ID:4	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:17.591	ID:3	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:17.597	ID:1	Received ->  LBeacon(2) from Mote-2
+00:17.602	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:17.716	ID:5	Received ->  LBeacon(2) from Mote-2
+00:17.716	ID:1	Received ->  LBeacon(2) from Mote-2
+00:17.716	ID:3	Received ->  LBeacon(2) from Mote-2
+00:17.716	ID:4	Received ->  LBeacon(2) from Mote-2
+00:17.721	ID:5	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:17.721	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:17.721	ID:3	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:17.721	ID:4	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:17.846	ID:1	Received ->  LBeacon(1) from Mote-2
+00:17.846	ID:3	Received ->  LBeacon(1) from Mote-2
+00:17.846	ID:4	Received ->  LBeacon(1) from Mote-2
+00:17.846	ID:5	Received ->  LBeacon(1) from Mote-2
+00:17.851	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:17.851	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:17.851	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:17.854	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:17.854	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:17.855	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:17.976	ID:4	Received ->  LBeacon(1) from Mote-2
+00:17.976	ID:5	Received ->  LBeacon(1) from Mote-2
+00:17.976	ID:1	Received ->  LBeacon(1) from Mote-2
+00:17.976	ID:3	Received ->  LBeacon(1) from Mote-2
+00:17.980	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:18.116	ID:5	Received ->  LBeacon(1) from Mote-2
+00:18.159	ID:1	Received ->  LBeacon(1) from Mote-2
+00:18.176	ID:3	Received ->  LBeacon(1) from Mote-2
+00:18.179	ID:3	Received -> Refreshed the leader 1
+00:18.262	ID:2	Received ->  LBeacon(1) from Mote-5
+00:18.267	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:18.271	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:18.284	ID:1	Received ->  LBeacon(1) from Mote-5
+00:18.300	ID:3	Received ->  LBeacon(1) from Mote-5
+00:18.304	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:18.374	ID:4	Received ->  LBeacon(1) from Mote-5
+00:18.389	ID:3	Received ->  LBeacon(5) from Mote-5
+00:18.389	ID:2	Received ->  LBeacon(5) from Mote-5
+00:18.389	ID:4	Received ->  LBeacon(5) from Mote-5
+00:18.389	ID:1	Received ->  LBeacon(5) from Mote-5
+00:18.393	ID:3	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:18.393	ID:2	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:18.393	ID:4	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:18.393	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:18.398	ID:2	Sent -> Relay LBeacon(1)
+00:18.402	ID:2	Sent -> It is time to promote myself as the new leader
+00:18.406	ID:2	Sent -> I Declare Myself as the Next Leader
+00:18.533	ID:1	Received ->  LBeacon(1) from Mote-5
+00:18.552	ID:3	Received ->  LBeacon(1) from Mote-5
+00:18.557	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:18.561	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:18.626	ID:4	Received ->  LBeacon(1) from Mote-5
+00:18.631	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:18.637	ID:2	Received ->  LBeacon(1) from Mote-5
+00:18.640	ID:2	Received -> The Leader is set to 1
+00:18.677	ID:3	Received ->  LBeacon(1) from Mote-5
+00:18.751	ID:4	Received ->  LBeacon(1) from Mote-5
+00:18.754	ID:4	Received -> Refreshed the leader 1
+00:18.762	ID:2	Received ->  LBeacon(1) from Mote-5
+00:18.767	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:18.770	ID:2	Received -> Refreshed the leader 1
+00:18.784	ID:1	Received ->  LBeacon(1) from Mote-5
+00:18.876	ID:4	Received ->  LBeacon(1) from Mote-5
+00:18.886	ID:2	Received ->  LBeacon(1) from Mote-5
+00:18.908	ID:1	Received ->  LBeacon(1) from Mote-5
+00:18.925	ID:3	Received ->  LBeacon(1) from Mote-5
+00:19.000	ID:4	Received ->  LBeacon(1) from Mote-5
+00:19.014	ID:2	Received ->  LBeacon(1) from Mote-5
+00:19.033	ID:1	Received ->  LBeacon(1) from Mote-5
+00:19.052	ID:3	Received ->  LBeacon(1) from Mote-5
+00:19.072	ID:3	Received ->  LBeacon(1) from Mote-5
+00:19.072	ID:1	Received ->  LBeacon(1) from Mote-5
+00:19.072	ID:2	Received ->  LBeacon(1) from Mote-5
+00:19.072	ID:4	Received ->  LBeacon(1) from Mote-5
+00:19.201	ID:3	Received ->  LBeacon(1) from Mote-5
+00:19.201	ID:4	Received ->  LBeacon(1) from Mote-5
+00:19.201	ID:2	Received ->  LBeacon(1) from Mote-5
+00:19.202	ID:1	Received ->  LBeacon(1) from Mote-5
+00:19.331	ID:2	Received ->  LBeacon(1) from Mote-5
+00:19.331	ID:3	Received ->  LBeacon(1) from Mote-5
+00:19.331	ID:1	Received ->  LBeacon(1) from Mote-5
+00:19.331	ID:4	Received ->  LBeacon(1) from Mote-5
+00:19.461	ID:1	Received ->  LBeacon(1) from Mote-5
+00:19.461	ID:2	Received ->  LBeacon(1) from Mote-5
+00:19.461	ID:3	Received ->  LBeacon(1) from Mote-5
+00:19.461	ID:4	Received ->  LBeacon(1) from Mote-5
+00:19.586	ID:5	Sent -> Relay LBeacon(1)
+00:19.590	ID:5	Sent -> It is time to promote myself as the new leader
+00:19.593	ID:5	Sent -> I Declare Myself as the Next Leader
+00:19.625	ID:4	Received ->  LBeacon(1) from Mote-5
+00:19.635	ID:2	Received ->  LBeacon(1) from Mote-5
+00:19.660	ID:1	Received ->  LBeacon(1) from Mote-5
+00:19.676	ID:3	Received ->  LBeacon(1) from Mote-5
+00:19.742	ID:2	Received ->  LBeacon(5) from Mote-5
+00:19.742	ID:3	Received ->  LBeacon(5) from Mote-5
+00:19.742	ID:1	Received ->  LBeacon(5) from Mote-5
+00:19.742	ID:4	Received ->  LBeacon(5) from Mote-5
+00:19.746	ID:2	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:19.746	ID:3	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:19.747	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:19.748	ID:4	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:19.926	ID:3	Received ->  LBeacon(1) from Mote-1
+00:19.992	ID:5	Received ->  LBeacon(1) from Mote-1
+00:19.995	ID:5	Received -> The Leader is set to 1
+00:20.000	ID:4	Received ->  LBeacon(1) from Mote-1
+00:20.014	ID:2	Received ->  LBeacon(1) from Mote-1
+00:20.051	ID:3	Received ->  LBeacon(1) from Mote-1
+00:20.117	ID:5	Received ->  LBeacon(1) from Mote-1
+00:20.125	ID:4	Received ->  LBeacon(1) from Mote-1
+00:20.138	ID:2	Received ->  LBeacon(1) from Mote-1
+00:20.175	ID:3	Received ->  LBeacon(1) from Mote-1
+00:20.175	ID:2	Received ->  LBeacon(1) from Mote-1
+00:20.175	ID:5	Received ->  LBeacon(1) from Mote-1
+00:20.175	ID:4	Received ->  LBeacon(1) from Mote-1
+00:20.305	ID:4	Received ->  LBeacon(1) from Mote-1
+00:20.305	ID:5	Received ->  LBeacon(1) from Mote-1
+00:20.305	ID:2	Received ->  LBeacon(1) from Mote-1
+00:20.305	ID:3	Received ->  LBeacon(1) from Mote-1
+00:20.434	ID:3	Received ->  LBeacon(1) from Mote-1
+00:20.434	ID:2	Received ->  LBeacon(1) from Mote-1
+00:20.434	ID:4	Received ->  LBeacon(1) from Mote-1
+00:20.434	ID:5	Received ->  LBeacon(1) from Mote-1
+00:20.604	ID:4	Sent -> Relay LBeacon(1)
+00:20.608	ID:4	Sent -> It is time to promote myself as the new leader
+00:20.611	ID:4	Sent -> I Declare Myself as the Next Leader
+00:20.615	ID:5	Received ->  LBeacon(1) from Mote-1
+00:20.624	ID:4	Received ->  LBeacon(1) from Mote-1
+00:20.627	ID:4	Received -> The Leader is set to 1
+00:20.638	ID:2	Received ->  LBeacon(1) from Mote-1
+00:20.680	ID:3	Received ->  LBeacon(1) from Mote-1
+00:20.742	ID:5	Received ->  LBeacon(1) from Mote-1
+00:20.750	ID:4	Received ->  LBeacon(1) from Mote-1
+00:20.764	ID:2	Received ->  LBeacon(1) from Mote-1
+00:20.802	ID:3	Received ->  LBeacon(1) from Mote-1
+00:20.820	ID:2	Sent -> Relay LBeacon(1)
+00:20.824	ID:2	Sent -> It is time to promote myself as the new leader
+00:20.828	ID:2	Sent -> I Declare Myself as the Next Leader
+00:20.868	ID:5	Received ->  LBeacon(1) from Mote-3
+00:20.873	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:20.876	ID:4	Received ->  LBeacon(1) from Mote-3
+00:20.877	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:20.881	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:20.885	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:20.887	ID:2	Received ->  LBeacon(1) from Mote-3
+00:20.891	ID:2	Received -> The Leader is set to 1
+00:20.909	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.001	ID:4	Received ->  LBeacon(1) from Mote-3
+00:21.005	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:21.012	ID:2	Received ->  LBeacon(1) from Mote-3
+00:21.017	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:21.034	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.116	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.120	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.139	ID:2	Received ->  LBeacon(1) from Mote-3
+00:21.158	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.243	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.247	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.251	ID:4	Received ->  LBeacon(1) from Mote-3
+00:21.255	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:21.286	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.367	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.372	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.373	ID:4	Received ->  LBeacon(1) from Mote-3
+00:21.377	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:21.390	ID:2	Received ->  LBeacon(1) from Mote-3
+00:21.404	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.404	ID:4	Received ->  LBeacon(1) from Mote-3
+00:21.404	ID:2	Received ->  LBeacon(1) from Mote-3
+00:21.404	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.407	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:21.408	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.533	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.533	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.533	ID:4	Received ->  LBeacon(1) from Mote-3
+00:21.533	ID:2	Received ->  LBeacon(1) from Mote-3
+00:21.537	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:21.537	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.561	ID:1	Sent -> Still I'm LBeacon(1)
+00:21.565	ID:1	Sent -> It is time to promote myself as the new leader
+00:21.569	ID:1	Sent -> I Declare Myself as the Next Leader
+00:21.573	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 2 from Mote-2
+00:21.578	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:21.583	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:21.588	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:21.663	ID:2	Received ->  LBeacon(1) from Mote-3
+00:21.663	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.663	ID:4	Received ->  LBeacon(1) from Mote-3
+00:21.663	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.667	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:21.667	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.793	ID:2	Received ->  LBeacon(1) from Mote-3
+00:21.793	ID:1	Received ->  LBeacon(1) from Mote-3
+00:21.793	ID:4	Received ->  LBeacon(1) from Mote-3
+00:21.793	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.797	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:21.797	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.991	ID:5	Received ->  LBeacon(1) from Mote-3
+00:21.995	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:21.999	ID:4	Received ->  LBeacon(1) from Mote-3
+00:22.003	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:22.013	ID:2	Received ->  LBeacon(1) from Mote-3
+00:22.035	ID:1	Received ->  LBeacon(1) from Mote-3
+00:22.059	ID:3	Sent -> Relay LBeacon(1)
+00:22.063	ID:3	Sent -> It is time to promote myself as the new leader
+00:22.066	ID:3	Sent -> I Declare Myself as the Next Leader
+00:22.183	ID:5	Sent -> Relay LBeacon(1)
+00:22.186	ID:5	Sent -> It is time to promote myself as the new leader
+00:22.190	ID:5	Sent -> I Declare Myself as the Next Leader
+00:22.281	ID:1	Received ->  LBeacon(1) from Mote-3
+00:22.286	ID:1	Received ->  LBeacon(1) from Mote-4
+00:22.298	ID:3	Received ->  LBeacon(1) from Mote-1
+00:22.302	ID:3	Received -> The Leader is set to 1
+00:22.306	ID:3	Received ->  LBeacon(1) from Mote-4
+00:22.311	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:22.371	ID:5	Received ->  LBeacon(1) from Mote-4
+00:22.374	ID:5	Received -> The Leader is set to 1
+00:22.389	ID:2	Received ->  LBeacon(1) from Mote-4
+00:22.393	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:22.430	ID:3	Received ->  LBeacon(1) from Mote-4
+00:22.434	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:22.492	ID:5	Received ->  LBeacon(1) from Mote-4
+00:22.514	ID:2	Received ->  LBeacon(1) from Mote-4
+00:22.518	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:22.533	ID:1	Received ->  LBeacon(1) from Mote-4
+00:22.616	ID:5	Received ->  LBeacon(1) from Mote-4
+00:22.638	ID:2	Received ->  LBeacon(1) from Mote-4
+00:22.643	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:22.660	ID:1	Received ->  LBeacon(1) from Mote-4
+00:22.674	ID:3	Received ->  LBeacon(1) from Mote-4
+00:22.678	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:22.688	ID:1	Received ->  LBeacon(4) from Mote-4
+00:22.688	ID:5	Received ->  LBeacon(4) from Mote-4
+00:22.688	ID:2	Received ->  LBeacon(4) from Mote-4
+00:22.691	ID:3	Received ->  LBeacon(4) from Mote-4
+00:22.693	ID:1	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:22.693	ID:5	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:22.693	ID:2	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:22.696	ID:3	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:22.867	ID:5	Received ->  LBeacon(1) from Mote-4
+00:22.872	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:22.889	ID:2	Received ->  LBeacon(1) from Mote-4
+00:22.894	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:22.898	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:22.908	ID:1	Received ->  LBeacon(1) from Mote-4
+00:22.927	ID:3	Received ->  LBeacon(1) from Mote-4
+00:22.932	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:22.936	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:22.991	ID:5	Received ->  LBeacon(1) from Mote-4
+00:22.995	ID:5	Received -> Refreshed the leader 1
+00:23.013	ID:2	Received ->  LBeacon(1) from Mote-4
+00:23.017	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:23.035	ID:1	Received ->  LBeacon(1) from Mote-4
+00:23.051	ID:3	Received ->  LBeacon(1) from Mote-4
+00:23.055	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:23.104	ID:4	Sent -> Relay LBeacon(1)
+00:23.108	ID:4	Sent -> It is time to promote myself as the new leader
+00:23.112	ID:4	Sent -> I Declare Myself as the Next Leader
+00:23.125	ID:4	Received ->  LBeacon(1) from Mote-5
+00:23.128	ID:4	Received -> The Leader is set to 1
+00:23.138	ID:2	Received ->  LBeacon(1) from Mote-5
+00:23.143	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:23.146	ID:2	Received -> Refreshed the leader 1
+00:23.160	ID:1	Received ->  LBeacon(1) from Mote-5
+00:23.176	ID:3	Received ->  LBeacon(1) from Mote-5
+00:23.181	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:23.185	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:23.250	ID:4	Received ->  LBeacon(1) from Mote-2
+00:23.285	ID:1	Received ->  LBeacon(1) from Mote-2
+00:23.301	ID:3	Received ->  LBeacon(1) from Mote-2
+00:23.305	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:23.367	ID:5	Received ->  LBeacon(1) from Mote-2
+00:23.370	ID:5	Received -> Refreshed the leader 1
+00:23.373	ID:3	Received ->  LBeacon(1) from Mote-2
+00:23.373	ID:1	Received ->  LBeacon(1) from Mote-2
+00:23.373	ID:4	Received ->  LBeacon(1) from Mote-2
+00:23.375	ID:5	Received ->  LBeacon(1) from Mote-2
+00:23.377	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:23.502	ID:3	Received ->  LBeacon(1) from Mote-2
+00:23.502	ID:1	Received ->  LBeacon(1) from Mote-2
+00:23.503	ID:4	Received ->  LBeacon(1) from Mote-2
+00:23.503	ID:5	Received ->  LBeacon(1) from Mote-2
+00:23.506	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:23.632	ID:5	Received ->  LBeacon(2) from Mote-2
+00:23.632	ID:4	Received ->  LBeacon(2) from Mote-2
+00:23.632	ID:3	Received ->  LBeacon(2) from Mote-2
+00:23.633	ID:1	Received ->  LBeacon(2) from Mote-2
+00:23.637	ID:4	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:23.637	ID:5	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:23.637	ID:3	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:23.637	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:23.784	ID:1	Received ->  LBeacon(1) from Mote-2
+00:23.800	ID:3	Received ->  LBeacon(1) from Mote-2
+00:23.805	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:23.809	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:23.866	ID:5	Received ->  LBeacon(1) from Mote-2
+00:23.871	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:23.874	ID:4	Received ->  LBeacon(1) from Mote-2
+00:23.874	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:23.878	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:23.883	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:23.926	ID:3	Received ->  LBeacon(1) from Mote-2
+00:23.930	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:23.992	ID:5	Received ->  LBeacon(1) from Mote-2
+00:24.000	ID:4	Received ->  LBeacon(1) from Mote-2
+00:24.034	ID:1	Received ->  LBeacon(1) from Mote-2
+00:24.116	ID:5	Received ->  LBeacon(1) from Mote-2
+00:24.124	ID:4	Received ->  LBeacon(1) from Mote-2
+00:24.159	ID:1	Received ->  LBeacon(1) from Mote-2
+00:24.176	ID:3	Received ->  LBeacon(1) from Mote-2
+00:24.180	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:24.242	ID:5	Received ->  LBeacon(1) from Mote-2
+00:24.250	ID:4	Received ->  LBeacon(1) from Mote-2
+00:24.286	ID:1	Received ->  LBeacon(1) from Mote-2
+00:24.302	ID:3	Received ->  LBeacon(1) from Mote-2
+00:24.306	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:24.322	ID:1	Received ->  LBeacon(2) from Mote-2
+00:24.322	ID:5	Received ->  LBeacon(2) from Mote-2
+00:24.322	ID:3	Received ->  LBeacon(2) from Mote-2
+00:24.322	ID:4	Received ->  LBeacon(2) from Mote-2
+00:24.324	ID:5	This message is 10 Seconds Old
+00:24.324	ID:4	This message is 10 Seconds Old
+00:24.326	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:24.326	ID:3	Received -> Start a Conflicting Leader Timer w/ 2 from Mote-2
+00:24.327	ID:5	Received -> I (5) might be Leader Again!
+00:24.327	ID:4	Received -> I (4) might be Leader Again!
+00:24.389	ID:3	Sent -> Relay LBeacon(1)
+00:24.393	ID:3	Sent -> It is time to promote myself as the new leader
+00:24.396	ID:3	Sent -> I Declare Myself as the Next Leader
+00:24.447	ID:2	Sent -> Relay LBeacon(1)
+00:24.450	ID:2	Sent -> It is time to promote myself as the new leader
+00:24.454	ID:2	Sent -> I Declare Myself as the Next Leader
+00:24.489	ID:5	Received ->  LBeacon(1) from Mote-2
+00:24.492	ID:5	Received -> The Leader is set to 1
+00:24.604	ID:5	Sent -> Relay LBeacon(1)
+00:24.608	ID:5	Sent -> It is time to promote myself as the new leader
+00:24.612	ID:5	Sent -> I Declare Myself as the Next Leader
+00:24.742	ID:5	Received ->  LBeacon(1) from Mote-3
+00:24.745	ID:5	Received -> The Leader is set to 1
+00:24.746	ID:4	Received ->  LBeacon(1) from Mote-2
+00:24.750	ID:4	Received -> The Leader is set to 1
+00:24.760	ID:2	Received ->  LBeacon(1) from Mote-4
+00:24.763	ID:2	Received -> The Leader is set to 1
+00:24.768	ID:2	Received ->  LBeacon(1) from Mote-3
+00:24.771	ID:2	Received -> Refreshed the leader 1
+00:24.783	ID:1	Received ->  LBeacon(1) from Mote-3
+00:24.857	ID:1	Sent -> Still I'm LBeacon(1)
+00:24.861	ID:1	Sent -> It is time to promote myself as the new leader
+00:24.864	ID:1	Sent -> I Declare Myself as the Next Leader
+00:24.866	ID:5	Received ->  LBeacon(1) from Mote-4
+00:24.868	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 2 from Mote-2
+00:24.873	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:24.877	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:24.888	ID:2	Received ->  LBeacon(1) from Mote-4
+00:24.910	ID:1	Received ->  LBeacon(1) from Mote-4
+00:24.926	ID:3	Received ->  LBeacon(1) from Mote-4
+00:24.929	ID:3	Received -> The Leader is set to 1
+00:24.994	ID:5	Received ->  LBeacon(1) from Mote-4
+00:25.013	ID:2	Received ->  LBeacon(1) from Mote-4
+00:25.031	ID:1	Received ->  LBeacon(1) from Mote-4
+00:25.051	ID:3	Received ->  LBeacon(1) from Mote-4
+00:25.103	ID:1	Received ->  LBeacon(1) from Mote-4
+00:25.103	ID:2	Received ->  LBeacon(1) from Mote-4
+00:25.103	ID:5	Received ->  LBeacon(1) from Mote-4
+00:25.103	ID:3	Received ->  LBeacon(1) from Mote-4
+00:25.233	ID:5	Received ->  LBeacon(4) from Mote-4
+00:25.233	ID:1	Received ->  LBeacon(4) from Mote-4
+00:25.233	ID:2	Received ->  LBeacon(4) from Mote-4
+00:25.233	ID:3	Received ->  LBeacon(4) from Mote-4
+00:25.238	ID:2	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:25.238	ID:1	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:25.238	ID:3	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:25.239	ID:5	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:25.388	ID:2	Received ->  LBeacon(1) from Mote-4
+00:25.393	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:25.397	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:25.409	ID:1	Received ->  LBeacon(1) from Mote-4
+00:25.426	ID:3	Received ->  LBeacon(1) from Mote-4
+00:25.431	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:25.435	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:25.496	ID:5	Received ->  LBeacon(1) from Mote-4
+00:25.501	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:25.503	ID:2	Received ->  LBeacon(1) from Mote-4
+00:25.503	ID:1	Received ->  LBeacon(1) from Mote-4
+00:25.503	ID:3	Received ->  LBeacon(1) from Mote-4
+00:25.505	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:25.514	ID:5	Received ->  LBeacon(1) from Mote-4
+00:25.633	ID:1	Received ->  LBeacon(1) from Mote-4
+00:25.633	ID:5	Received ->  LBeacon(1) from Mote-4
+00:25.633	ID:3	Received ->  LBeacon(1) from Mote-4
+00:25.633	ID:2	Received ->  LBeacon(1) from Mote-4
+00:25.783	ID:1	Received ->  LBeacon(1) from Mote-4
+00:25.802	ID:3	Received ->  LBeacon(1) from Mote-4
+00:25.868	ID:5	Received ->  LBeacon(1) from Mote-4
+00:25.887	ID:2	Received ->  LBeacon(1) from Mote-4
+00:25.925	ID:3	Received ->  LBeacon(1) from Mote-4
+00:25.993	ID:5	Received ->  LBeacon(1) from Mote-4
+00:26.013	ID:2	Received ->  LBeacon(1) from Mote-4
+00:26.031	ID:1	Received ->  LBeacon(1) from Mote-4
+00:26.119	ID:5	Received ->  LBeacon(1) from Mote-4
+00:26.122	ID:5	Received -> Refreshed the leader 1
+00:26.137	ID:2	Received ->  LBeacon(1) from Mote-4
+00:26.141	ID:2	Received -> Refreshed the leader 1
+00:26.156	ID:1	Received ->  LBeacon(1) from Mote-4
+00:26.176	ID:3	Received ->  LBeacon(1) from Mote-4
+00:26.179	ID:1	Received ->  LBeacon(4) from Mote-4
+00:26.179	ID:2	Received ->  LBeacon(4) from Mote-4
+00:26.179	ID:5	Received ->  LBeacon(4) from Mote-4
+00:26.179	ID:3	Received -> Refreshed the leader 1
+00:26.181	ID:2	This message is 12 Seconds Old
+00:26.182	ID:5	This message is 12 Seconds Old
+00:26.184	ID:1	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:26.184	ID:3	Received ->  LBeacon(4) from Mote-4
+00:26.184	ID:2	Received -> I (2) might be Leader Again!
+00:26.184	ID:5	Received -> I (5) might be Leader Again!
+00:26.186	ID:3	This message is 12 Seconds Old
+00:26.189	ID:3	Received -> I (3) might be Leader Again!
+00:26.309	ID:1	Received ->  LBeacon(1) from Mote-4
+00:26.309	ID:2	Received ->  LBeacon(1) from Mote-4
+00:26.309	ID:3	Received ->  LBeacon(1) from Mote-4
+00:26.309	ID:5	Received ->  LBeacon(1) from Mote-4
+00:26.312	ID:5	Received -> The Leader is set to 1
+00:26.312	ID:3	Received -> The Leader is set to 1
+00:26.312	ID:2	Received -> The Leader is set to 1
+00:26.439	ID:1	Received ->  LBeacon(1) from Mote-4
+00:26.439	ID:5	Received ->  LBeacon(1) from Mote-4
+00:26.439	ID:2	Received ->  LBeacon(1) from Mote-4
+00:26.439	ID:3	Received ->  LBeacon(1) from Mote-4
+00:26.616	ID:5	Received ->  LBeacon(1) from Mote-1
+00:26.618	ID:5	Received -> Refreshed the leader 1
+00:26.638	ID:2	Received ->  LBeacon(1) from Mote-1
+00:26.642	ID:2	Received -> Refreshed the leader 1
+00:26.702	ID:4	Sent -> Relay LBeacon(1)
+00:26.706	ID:4	Sent -> It is time to promote myself as the new leader
+00:26.709	ID:4	Sent -> I Declare Myself as the Next Leader
+00:26.742	ID:5	Received ->  LBeacon(1) from Mote-2
+00:26.746	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:26.747	ID:4	Received ->  LBeacon(1) from Mote-1
+00:26.751	ID:4	Received -> The Leader is set to 1
+00:26.780	ID:1	Received ->  LBeacon(1) from Mote-4
+00:26.800	ID:3	Received ->  LBeacon(1) from Mote-2
+00:26.804	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 2 on Mote-2
+00:26.808	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:26.871	ID:5	Received ->  LBeacon(1) from Mote-2
+00:26.875	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:26.876	ID:4	Received ->  LBeacon(1) from Mote-2
+00:26.880	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:26.909	ID:1	Received ->  LBeacon(1) from Mote-2
+00:26.925	ID:3	Received ->  LBeacon(1) from Mote-2
+00:26.929	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:26.983	ID:5	Received ->  LBeacon(1) from Mote-2
+00:26.983	ID:3	Received ->  LBeacon(1) from Mote-2
+00:26.983	ID:4	Received ->  LBeacon(1) from Mote-2
+00:26.983	ID:1	Received ->  LBeacon(1) from Mote-2
+00:26.987	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:26.987	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:26.987	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:27.113	ID:3	Received ->  LBeacon(1) from Mote-2
+00:27.113	ID:1	Received ->  LBeacon(1) from Mote-2
+00:27.113	ID:4	Received ->  LBeacon(1) from Mote-2
+00:27.113	ID:5	Received ->  LBeacon(1) from Mote-2
+00:27.117	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:27.117	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:27.118	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:27.131	ID:1	Sent -> Still I'm LBeacon(1)
+00:27.135	ID:1	Sent -> It is time to promote myself as the new leader
+00:27.138	ID:1	Sent -> I Declare Myself as the Next Leader
+00:27.142	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 2 from Mote-2
+00:27.147	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:27.153	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:27.158	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:27.283	ID:1	Received ->  LBeacon(1) from Mote-2
+00:27.300	ID:3	Received ->  LBeacon(1) from Mote-2
+00:27.304	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:27.365	ID:5	Received ->  LBeacon(1) from Mote-2
+00:27.369	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:27.374	ID:4	Received ->  LBeacon(1) from Mote-2
+00:27.378	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:27.409	ID:1	Received ->  LBeacon(1) from Mote-2
+00:27.425	ID:3	Received ->  LBeacon(1) from Mote-2
+00:27.429	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:27.491	ID:5	Received ->  LBeacon(1) from Mote-2
+00:27.495	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:27.499	ID:4	Received ->  LBeacon(1) from Mote-2
+00:27.503	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:27.549	ID:3	Received ->  LBeacon(1) from Mote-2
+00:27.617	ID:5	Received ->  LBeacon(1) from Mote-2
+00:27.621	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:27.625	ID:4	Received ->  LBeacon(1) from Mote-2
+00:27.630	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:27.659	ID:1	Received ->  LBeacon(1) from Mote-2
+00:27.664	ID:5	Received ->  LBeacon(2) from Mote-2
+00:27.664	ID:1	Received ->  LBeacon(2) from Mote-2
+00:27.664	ID:3	Received ->  LBeacon(2) from Mote-2
+00:27.664	ID:4	Received ->  LBeacon(2) from Mote-2
+00:27.666	ID:5	This message is 10 Seconds Old
+00:27.666	ID:3	This message is 13 Seconds Old
+00:27.667	ID:4	This message is 10 Seconds Old
+00:27.669	ID:1	Received -> Refresh a Conflicting Leader Event w/ 2 from Mote-2
+00:27.669	ID:5	Received -> I (5) might be Leader Again!
+00:27.669	ID:4	Received -> I (4) might be Leader Again!
+00:27.670	ID:3	Received -> I (3) might be Leader Again!
+00:27.830	ID:5	Sent -> Still I'm LBeacon(5)
+00:27.834	ID:5	Sent -> It is time to promote myself as the new leader
+00:27.838	ID:5	Sent -> I Declare Myself as the Next Leader
+00:27.866	ID:5	Received ->  LBeacon(1) from Mote-2
+00:27.869	ID:5	Received -> The Leader is set to 1
+00:27.874	ID:4	Received ->  LBeacon(1) from Mote-2
+00:27.878	ID:4	Received -> The Leader is set to 1
+00:27.910	ID:1	Received ->  LBeacon(1) from Mote-2
+00:27.927	ID:3	Received ->  LBeacon(1) from Mote-2
+00:27.930	ID:3	Received -> The Leader is set to 1
+00:27.933	ID:1	Received ->  LBeacon(1) from Mote-2
+00:27.933	ID:5	Received ->  LBeacon(1) from Mote-2
+00:27.933	ID:4	Received ->  LBeacon(1) from Mote-2
+00:27.934	ID:3	Received ->  LBeacon(1) from Mote-2
+00:27.936	ID:5	Received -> Refreshed the leader 1
+00:27.936	ID:4	Received -> Refreshed the leader 1
+00:27.937	ID:3	Received -> Refreshed the leader 1
+00:28.101	ID:3	Sent -> Relay LBeacon(1)
+00:28.104	ID:3	Sent -> It is time to promote myself as the new leader
+00:28.108	ID:3	Sent -> I Declare Myself as the Next Leader
+00:28.119	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.121	ID:5	This message is 10 Seconds Old
+00:28.124	ID:5	Received -> I (5) might be Leader Again!
+00:28.126	ID:4	Received ->  LBeacon(1) from Mote-1
+00:28.129	ID:4	This message is 10 Seconds Old
+00:28.131	ID:4	Received -> I (4) might be Leader Again!
+00:28.137	ID:2	Received ->  LBeacon(1) from Mote-1
+00:28.140	ID:2	Received -> Refreshed the leader 1
+00:28.176	ID:3	Received ->  LBeacon(1) from Mote-1
+00:28.179	ID:3	Received -> The Leader is set to 1
+00:28.198	ID:3	Received ->  LBeacon(1) from Mote-1
+00:28.198	ID:2	Received ->  LBeacon(1) from Mote-1
+00:28.198	ID:4	Received ->  LBeacon(1) from Mote-1
+00:28.198	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.201	ID:5	Received -> The Leader is set to 1
+00:28.202	ID:4	Received -> The Leader is set to 1
+00:28.328	ID:4	Received ->  LBeacon(1) from Mote-1
+00:28.328	ID:2	Received ->  LBeacon(1) from Mote-1
+00:28.328	ID:3	Received ->  LBeacon(1) from Mote-1
+00:28.328	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.330	ID:4	Received -> Why Am I Here? !
+00:28.330	ID:2	Received -> Why Am I Here? !
+00:28.330	ID:3	Received -> Why Am I Here? !
+00:28.330	ID:5	Received -> Why Am I Here? !
+00:28.446	ID:2	Sent -> Relay LBeacon(1)
+00:28.449	ID:2	Sent -> It is time to promote myself as the new leader
+00:28.453	ID:2	Sent -> I Declare Myself as the Next Leader
+00:28.458	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.458	ID:3	Received ->  LBeacon(1) from Mote-1
+00:28.458	ID:4	Received ->  LBeacon(1) from Mote-1
+00:28.460	ID:5	Received -> Why Am I Here? !
+00:28.460	ID:3	Received -> Why Am I Here? !
+00:28.460	ID:4	Received -> Why Am I Here? !
+00:28.460	ID:2	Received ->  LBeacon(1) from Mote-1
+00:28.462	ID:2	Received -> Why Am I Here? !
+00:28.587	ID:3	Received ->  LBeacon(1) from Mote-1
+00:28.587	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.587	ID:4	Received ->  LBeacon(1) from Mote-1
+00:28.587	ID:2	Received ->  LBeacon(1) from Mote-1
+00:28.589	ID:3	Received -> Why Am I Here? !
+00:28.589	ID:5	Received -> Why Am I Here? !
+00:28.589	ID:4	Received -> Why Am I Here? !
+00:28.589	ID:2	Received -> Why Am I Here? !
+00:28.717	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.717	ID:3	Received ->  LBeacon(1) from Mote-1
+00:28.717	ID:4	Received ->  LBeacon(1) from Mote-1
+00:28.717	ID:2	Received ->  LBeacon(1) from Mote-1
+00:28.719	ID:5	Received -> Why Am I Here? !
+00:28.719	ID:3	Received -> Why Am I Here? !
+00:28.719	ID:4	Received -> Why Am I Here? !
+00:28.719	ID:2	Received -> Why Am I Here? !
+00:28.847	ID:2	Received ->  LBeacon(1) from Mote-1
+00:28.847	ID:3	Received ->  LBeacon(1) from Mote-1
+00:28.847	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.847	ID:4	Received ->  LBeacon(1) from Mote-1
+00:28.850	ID:2	Received -> The Leader is set to 1
+00:28.989	ID:5	Received ->  LBeacon(1) from Mote-1
+00:28.992	ID:5	Received -> Refreshed the leader 1
+00:28.995	ID:4	Sent -> Relay LBeacon(1)
+00:28.999	ID:4	Sent -> It is time to promote myself as the new leader
+00:29.003	ID:4	Sent -> I Declare Myself as the Next Leader
+00:29.007	ID:4	Received ->  LBeacon(1) from Mote-1
+00:29.010	ID:4	Received -> The Leader is set to 1
+00:29.014	ID:2	Received ->  LBeacon(1) from Mote-1
+00:29.017	ID:2	Received -> Refreshed the leader 1
+00:29.052	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.055	ID:3	Received -> Refreshed the leader 1
+00:29.116	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.116	ID:5	Received ->  LBeacon(1) from Mote-1
+00:29.116	ID:2	Received ->  LBeacon(1) from Mote-1
+00:29.116	ID:4	Received ->  LBeacon(1) from Mote-1
+00:29.245	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.245	ID:2	Received ->  LBeacon(1) from Mote-1
+00:29.246	ID:5	Received ->  LBeacon(1) from Mote-1
+00:29.246	ID:4	Received ->  LBeacon(1) from Mote-1
+00:29.247	ID:2	Received -> Why Am I Here? !
+00:29.247	ID:3	Received -> Why Am I Here? !
+00:29.247	ID:5	Received -> Why Am I Here? !
+00:29.248	ID:4	Received -> Why Am I Here? !
+00:29.375	ID:5	Received ->  LBeacon(1) from Mote-1
+00:29.375	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.375	ID:2	Received ->  LBeacon(1) from Mote-1
+00:29.375	ID:4	Received ->  LBeacon(1) from Mote-1
+00:29.377	ID:5	Received -> Why Am I Here? !
+00:29.377	ID:3	Received -> Why Am I Here? !
+00:29.377	ID:2	Received -> Why Am I Here? !
+00:29.377	ID:4	Received -> Why Am I Here? !
+00:29.505	ID:5	Received ->  LBeacon(1) from Mote-1
+00:29.505	ID:4	Received ->  LBeacon(1) from Mote-1
+00:29.505	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.505	ID:2	Received ->  LBeacon(1) from Mote-1
+00:29.507	ID:5	Received -> Why Am I Here? !
+00:29.507	ID:4	Received -> Why Am I Here? !
+00:29.507	ID:3	Received -> Why Am I Here? !
+00:29.507	ID:2	Received -> Why Am I Here? !
+00:29.635	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.635	ID:5	Received ->  LBeacon(1) from Mote-1
+00:29.635	ID:2	Received ->  LBeacon(1) from Mote-1
+00:29.635	ID:4	Received ->  LBeacon(1) from Mote-1
+00:29.637	ID:3	Received -> Why Am I Here? !
+00:29.637	ID:5	Received -> Why Am I Here? !
+00:29.637	ID:2	Received -> Why Am I Here? !
+00:29.637	ID:4	Received -> Why Am I Here? !
+00:29.800	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.865	ID:5	Received ->  LBeacon(1) from Mote-1
+00:29.874	ID:4	Received ->  LBeacon(1) from Mote-1
+00:29.887	ID:2	Received ->  LBeacon(1) from Mote-1
+00:29.926	ID:3	Received ->  LBeacon(1) from Mote-1
+00:29.989	ID:5	Received ->  LBeacon(1) from Mote-1
+00:30.000	ID:4	Received ->  LBeacon(1) from Mote-1
+00:30.014	ID:2	Received ->  LBeacon(1) from Mote-1
+00:30.049	ID:5	Sent -> Relay LBeacon(1)
+00:30.052	ID:3	Received ->  LBeacon(1) from Mote-1
+00:30.053	ID:5	Sent -> It is time to promote myself as the new leader
+00:30.055	ID:3	Received -> Refreshed the leader 1
+00:30.056	ID:5	Sent -> I Declare Myself as the Next Leader
+00:30.118	ID:5	Received ->  LBeacon(1) from Mote-1
+00:30.121	ID:5	Received -> The Leader is set to 1
+00:30.126	ID:4	Received ->  LBeacon(1) from Mote-1
+00:30.129	ID:4	Received -> Refreshed the leader 1
+00:30.137	ID:2	Received ->  LBeacon(1) from Mote-1
+00:30.140	ID:2	Received -> Refreshed the leader 1
+00:30.242	ID:5	Received ->  LBeacon(4) from Mote-4
+00:30.247	ID:5	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:30.261	ID:2	Received ->  LBeacon(4) from Mote-4
+00:30.266	ID:2	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:30.284	ID:1	Received ->  LBeacon(4) from Mote-4
+00:30.288	ID:1	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:30.300	ID:3	Received ->  LBeacon(4) from Mote-4
+00:30.305	ID:3	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:30.367	ID:5	Received ->  LBeacon(1) from Mote-4
+00:30.372	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:30.376	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:30.389	ID:2	Received ->  LBeacon(1) from Mote-4
+00:30.393	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:30.398	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:30.408	ID:1	Received ->  LBeacon(1) from Mote-4
+00:30.427	ID:3	Received ->  LBeacon(1) from Mote-4
+00:30.432	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:30.436	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:30.492	ID:5	Received ->  LBeacon(1) from Mote-4
+00:30.496	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:30.518	ID:2	Received ->  LBeacon(1) from Mote-4
+00:30.522	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:30.556	ID:3	Received ->  LBeacon(1) from Mote-4
+00:30.560	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:30.610	ID:3	Received ->  LBeacon(4) from Mote-4
+00:30.610	ID:2	Received ->  LBeacon(4) from Mote-4
+00:30.611	ID:5	Received ->  LBeacon(4) from Mote-4
+00:30.614	ID:3	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:30.615	ID:2	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:30.616	ID:5	Received -> Start a Conflicting Leader Timer w/ 4 from Mote-4
+00:30.659	ID:1	Received ->  LBeacon(4) from Mote-4
+00:30.664	ID:1	Received -> Refresh a Conflicting Leader Event w/ 4 from Mote-4
+00:30.764	ID:2	Received ->  LBeacon(1) from Mote-4
+00:30.769	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:30.773	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:30.783	ID:1	Received ->  LBeacon(1) from Mote-4
+00:30.802	ID:3	Received ->  LBeacon(1) from Mote-4
+00:30.807	ID:3	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:30.811	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:30.868	ID:5	Received ->  LBeacon(1) from Mote-4
+00:30.872	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 4 on Mote-4
+00:30.876	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:30.879	ID:1	Received ->  LBeacon(1) from Mote-4
+00:30.879	ID:2	Received ->  LBeacon(1) from Mote-4
+00:30.880	ID:3	Received ->  LBeacon(1) from Mote-4
+00:30.883	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:30.883	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:30.885	ID:5	Received ->  LBeacon(1) from Mote-4
+00:30.889	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:30.935	ID:1	Sent -> Still I'm LBeacon(1)
+00:30.939	ID:1	Sent -> It is time to promote myself as the new leader
+00:30.943	ID:1	Sent -> I Declare Myself as the Next Leader
+00:30.947	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 2 from Mote-2
+00:30.952	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:30.957	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:30.962	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:31.009	ID:1	Received ->  LBeacon(1) from Mote-4
+00:31.009	ID:5	Received ->  LBeacon(1) from Mote-4
+00:31.009	ID:3	Received ->  LBeacon(1) from Mote-4
+00:31.009	ID:2	Received ->  LBeacon(1) from Mote-4
+00:31.013	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:31.013	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:31.013	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:31.139	ID:2	Received ->  LBeacon(1) from Mote-4
+00:31.139	ID:5	Received ->  LBeacon(1) from Mote-4
+00:31.139	ID:1	Received ->  LBeacon(1) from Mote-4
+00:31.139	ID:3	Received ->  LBeacon(1) from Mote-4
+00:31.143	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:31.143	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:31.143	ID:3	Received -> My Leader Beacon is fresher. Take This!
+00:31.285	ID:1	Received ->  LBeacon(1) from Mote-3
+00:31.367	ID:5	Received ->  LBeacon(1) from Mote-3
+00:31.371	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:31.375	ID:4	Received ->  LBeacon(1) from Mote-3
+00:31.379	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:31.388	ID:2	Received ->  LBeacon(1) from Mote-3
+00:31.392	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:31.403	ID:4	Received ->  LBeacon(3) from Mote-3
+00:31.403	ID:1	Received ->  LBeacon(3) from Mote-3
+00:31.404	ID:5	Received ->  LBeacon(3) from Mote-3
+00:31.406	ID:2	Received ->  LBeacon(3) from Mote-3
+00:31.408	ID:4	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:31.408	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:31.409	ID:5	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:31.410	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:31.533	ID:1	Received ->  LBeacon(1) from Mote-3
+00:31.533	ID:4	Received ->  LBeacon(1) from Mote-3
+00:31.533	ID:5	Received ->  LBeacon(1) from Mote-3
+00:31.533	ID:2	Received ->  LBeacon(1) from Mote-3
+00:31.537	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:31.537	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:31.537	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:31.541	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:31.541	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:31.542	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:31.742	ID:5	Received ->  LBeacon(1) from Mote-3
+00:31.746	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:31.750	ID:4	Received ->  LBeacon(1) from Mote-3
+00:31.754	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:31.764	ID:2	Received ->  LBeacon(1) from Mote-3
+00:31.768	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:31.783	ID:1	Received ->  LBeacon(1) from Mote-3
+00:31.803	ID:5	Received ->  LBeacon(1) from Mote-3
+00:31.803	ID:4	Received ->  LBeacon(1) from Mote-3
+00:31.803	ID:2	Received ->  LBeacon(1) from Mote-3
+00:31.803	ID:1	Received ->  LBeacon(1) from Mote-3
+00:31.807	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:31.807	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:31.807	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:31.993	ID:5	Received ->  LBeacon(1) from Mote-3
+00:31.997	ID:4	Sent -> Relay LBeacon(1)
+00:31.997	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:32.000	ID:4	Sent -> It is time to promote myself as the new leader
+00:32.004	ID:4	Sent -> I Declare Myself as the Next Leader
+00:32.009	ID:4	Received ->  LBeacon(1) from Mote-3
+00:32.012	ID:4	Received -> The Leader is set to 1
+00:32.013	ID:2	Received ->  LBeacon(1) from Mote-3
+00:32.017	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:32.034	ID:1	Received ->  LBeacon(1) from Mote-3
+00:32.073	ID:1	Received ->  LBeacon(3) from Mote-3
+00:32.073	ID:2	Received ->  LBeacon(3) from Mote-3
+00:32.073	ID:5	Received ->  LBeacon(3) from Mote-3
+00:32.073	ID:4	Received ->  LBeacon(3) from Mote-3
+00:32.075	ID:4	This message is 10 Seconds Old
+00:32.077	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:32.077	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:32.077	ID:5	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:32.078	ID:4	Received -> I (4) might be Leader Again!
+00:32.198	ID:3	Sent -> Relay LBeacon(1)
+00:32.202	ID:3	Sent -> It is time to promote myself as the new leader
+00:32.206	ID:3	Sent -> I Declare Myself as the Next Leader
+00:32.242	ID:5	Received ->  LBeacon(1) from Mote-3
+00:32.247	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:32.250	ID:4	Received ->  LBeacon(1) from Mote-3
+00:32.251	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:32.253	ID:4	Received -> The Leader is set to 1
+00:32.264	ID:2	Received ->  LBeacon(1) from Mote-3
+00:32.269	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:32.273	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:32.284	ID:1	Received ->  LBeacon(1) from Mote-3
+00:32.320	ID:2	Sent -> Relay LBeacon(1)
+00:32.324	ID:2	Sent -> It is time to promote myself as the new leader
+00:32.327	ID:2	Sent -> I Declare Myself as the Next Leader
+00:32.355	ID:1	Received ->  LBeacon(1) from Mote-3
+00:32.355	ID:2	Received ->  LBeacon(1) from Mote-3
+00:32.355	ID:4	Received ->  LBeacon(1) from Mote-3
+00:32.355	ID:5	Received ->  LBeacon(1) from Mote-3
+00:32.358	ID:2	Received -> The Leader is set to 1
+00:32.359	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:32.500	ID:4	Received ->  LBeacon(1) from Mote-3
+00:32.513	ID:2	Received ->  LBeacon(1) from Mote-3
+00:32.535	ID:1	Received ->  LBeacon(1) from Mote-3
+00:32.617	ID:5	Received ->  LBeacon(1) from Mote-3
+00:32.621	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:32.639	ID:2	Received ->  LBeacon(1) from Mote-3
+00:32.659	ID:1	Received ->  LBeacon(1) from Mote-3
+00:32.742	ID:5	Received ->  LBeacon(1) from Mote-3
+00:32.746	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:32.751	ID:4	Received ->  LBeacon(1) from Mote-3
+00:32.762	ID:1	Received ->  LBeacon(1) from Mote-3
+00:32.762	ID:4	Received ->  LBeacon(1) from Mote-3
+00:32.763	ID:5	Received ->  LBeacon(1) from Mote-3
+00:32.763	ID:2	Received ->  LBeacon(1) from Mote-3
+00:32.766	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:32.910	ID:1	Received ->  LBeacon(1) from Mote-3
+00:32.992	ID:5	Received ->  LBeacon(1) from Mote-3
+00:32.996	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:32.998	ID:1	Sent -> Still I'm LBeacon(1)
+00:33.000	ID:4	Received ->  LBeacon(1) from Mote-3
+00:33.002	ID:1	Sent -> It is time to promote myself as the new leader
+00:33.005	ID:1	Sent -> I Declare Myself as the Next Leader
+00:33.010	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 2 from Mote-2
+00:33.013	ID:2	Received ->  LBeacon(1) from Mote-3
+00:33.015	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 3 from Mote-3
+00:33.020	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 4 from Mote-4
+00:33.025	ID:1	Sent -> Trigger a Conflicting Leader Event w/ 5 from Mote-5
+00:33.115	ID:5	Received ->  LBeacon(1) from Mote-3
+00:33.119	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:33.124	ID:4	Received ->  LBeacon(1) from Mote-3
+00:33.138	ID:2	Received ->  LBeacon(1) from Mote-3
+00:33.159	ID:1	Received ->  LBeacon(1) from Mote-3
+00:33.243	ID:5	Received ->  LBeacon(1) from Mote-3
+00:33.247	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:33.251	ID:4	Received ->  LBeacon(1) from Mote-3
+00:33.262	ID:2	Received ->  LBeacon(1) from Mote-3
+00:33.284	ID:1	Received ->  LBeacon(1) from Mote-3
+00:33.367	ID:5	Received ->  LBeacon(1) from Mote-3
+00:33.371	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:33.375	ID:4	Received ->  LBeacon(1) from Mote-3
+00:33.379	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:33.388	ID:2	Received ->  LBeacon(1) from Mote-3
+00:33.392	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:33.410	ID:1	Received ->  LBeacon(1) from Mote-3
+00:33.501	ID:4	Received ->  LBeacon(1) from Mote-5
+00:33.506	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 5 on Mote-5
+00:33.510	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:33.512	ID:2	Received ->  LBeacon(1) from Mote-5
+00:33.515	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:33.534	ID:1	Received ->  LBeacon(1) from Mote-5
+00:33.550	ID:3	Received ->  LBeacon(1) from Mote-5
+00:33.553	ID:3	Received -> The Leader is set to 1
+00:33.617	ID:5	Received ->  LBeacon(1) from Mote-3
+00:33.629	ID:4	Received ->  LBeacon(1) from Mote-3
+00:33.631	ID:4	This message is 12 Seconds Old
+00:33.634	ID:4	Received -> I (4) might be Leader Again!
+00:33.638	ID:2	Received ->  LBeacon(1) from Mote-3
+00:33.640	ID:2	This message is 12 Seconds Old
+00:33.643	ID:2	Received -> I (2) might be Leader Again!
+00:33.659	ID:1	Received ->  LBeacon(1) from Mote-3
+00:33.712	ID:1	Received ->  LBeacon(3) from Mote-3
+00:33.712	ID:5	Received ->  LBeacon(3) from Mote-3
+00:33.712	ID:2	Received ->  LBeacon(3) from Mote-3
+00:33.712	ID:4	Received ->  LBeacon(3) from Mote-3
+00:33.715	ID:4	Received -> The Leader is set to 3
+00:33.717	ID:5	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:33.717	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:33.717	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:33.868	ID:5	Received ->  LBeacon(1) from Mote-3
+00:33.873	ID:5	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:33.876	ID:4	Received ->  LBeacon(1) from Mote-3
+00:33.877	ID:5	Received -> My Leader Beacon is fresher. Take This!
+00:33.879	ID:4	Received -> The Leader is set to 1
+00:33.887	ID:2	Received ->  LBeacon(1) from Mote-3
+00:33.890	ID:2	Received -> The Leader is set to 1
+00:33.909	ID:1	Received ->  LBeacon(1) from Mote-3
+00:34.012	ID:2	Received ->  LBeacon(1) from Mote-5
+00:34.034	ID:1	Received ->  LBeacon(1) from Mote-5
+00:34.050	ID:3	Received ->  LBeacon(1) from Mote-5
+00:34.159	ID:1	Received ->  LBeacon(1) from Mote-5
+00:34.175	ID:3	Received ->  LBeacon(1) from Mote-5
+00:34.252	ID:4	Received ->  LBeacon(1) from Mote-5
+00:34.262	ID:2	Received ->  LBeacon(1) from Mote-5
+00:34.270	ID:5	Sent -> Relay LBeacon(1)
+00:34.274	ID:5	Sent -> It is time to promote myself as the new leader
+00:34.277	ID:5	Sent -> I Declare Myself as the Next Leader
+00:34.301	ID:3	Received ->  LBeacon(1) from Mote-5
+00:34.375	ID:4	Received ->  LBeacon(1) from Mote-5
+00:34.388	ID:2	Received ->  LBeacon(1) from Mote-5
+00:34.411	ID:1	Received ->  LBeacon(1) from Mote-5
+00:34.427	ID:4	Received ->  LBeacon(1) from Mote-5
+00:34.427	ID:3	Received ->  LBeacon(1) from Mote-5
+00:34.427	ID:2	Received ->  LBeacon(1) from Mote-5
+00:34.427	ID:1	Received ->  LBeacon(1) from Mote-5
+00:34.557	ID:3	Received ->  LBeacon(1) from Mote-5
+00:34.557	ID:4	Received ->  LBeacon(1) from Mote-5
+00:34.557	ID:2	Received ->  LBeacon(1) from Mote-5
+00:34.557	ID:1	Received ->  LBeacon(1) from Mote-5
+00:34.628	ID:4	Sent -> Relay LBeacon(1)
+00:34.632	ID:4	Sent -> It is time to promote myself as the new leader
+00:34.635	ID:4	Sent -> I Declare Myself as the Next Leader
+00:34.686	ID:2	Received ->  LBeacon(1) from Mote-5
+00:34.686	ID:3	Received ->  LBeacon(1) from Mote-5
+00:34.686	ID:4	Received ->  LBeacon(1) from Mote-5
+00:34.686	ID:1	Received ->  LBeacon(1) from Mote-5
+00:34.689	ID:4	Received -> The Leader is set to 1
+00:34.816	ID:3	Received ->  LBeacon(1) from Mote-5
+00:34.816	ID:2	Received ->  LBeacon(1) from Mote-5
+00:34.816	ID:4	Received ->  LBeacon(1) from Mote-5
+00:34.816	ID:1	Received ->  LBeacon(1) from Mote-5
+00:34.976	ID:3	Sent -> Relay LBeacon(1)
+00:34.980	ID:3	Sent -> It is time to promote myself as the new leader
+00:34.983	ID:3	Sent -> I Declare Myself as the Next Leader
+00:35.000	ID:4	Received ->  LBeacon(1) from Mote-5
+00:35.014	ID:2	Received ->  LBeacon(1) from Mote-5
+00:35.033	ID:1	Received ->  LBeacon(1) from Mote-5
+00:35.052	ID:3	Received ->  LBeacon(1) from Mote-5
+00:35.055	ID:3	Received -> The Leader is set to 1
+00:35.127	ID:4	Received ->  LBeacon(1) from Mote-5
+00:35.138	ID:2	Received ->  LBeacon(1) from Mote-5
+00:35.156	ID:1	Received ->  LBeacon(1) from Mote-5
+00:35.176	ID:3	Received ->  LBeacon(1) from Mote-5
+00:35.226	ID:2	Received ->  LBeacon(5) from Mote-5
+00:35.226	ID:4	Received ->  LBeacon(5) from Mote-5
+00:35.226	ID:3	Received ->  LBeacon(5) from Mote-5
+00:35.226	ID:1	Received ->  LBeacon(5) from Mote-5
+00:35.228	ID:2	This message is 10 Seconds Old
+00:35.228	ID:4	This message is 10 Seconds Old
+00:35.228	ID:3	This message is 10 Seconds Old
+00:35.230	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:35.231	ID:2	Received -> I (2) might be Leader Again!
+00:35.231	ID:4	Received -> I (4) might be Leader Again!
+00:35.231	ID:3	Received -> I (3) might be Leader Again!
+00:35.377	ID:4	Received ->  LBeacon(1) from Mote-5
+00:35.379	ID:4	Received -> The Leader is set to 1
+00:35.387	ID:2	Received ->  LBeacon(1) from Mote-5
+00:35.390	ID:2	Received -> The Leader is set to 1
+00:35.406	ID:1	Received ->  LBeacon(1) from Mote-5
+00:35.426	ID:3	Received ->  LBeacon(1) from Mote-5
+00:35.429	ID:3	Received -> The Leader is set to 1
+00:35.517	ID:2	Received ->  LBeacon(1) from Mote-5
+00:35.534	ID:1	Received ->  LBeacon(1) from Mote-5
+00:35.551	ID:3	Received ->  LBeacon(1) from Mote-5
+00:35.625	ID:4	Received ->  LBeacon(1) from Mote-5
+00:35.659	ID:1	Received ->  LBeacon(1) from Mote-5
+00:35.675	ID:3	Received ->  LBeacon(1) from Mote-5
+00:35.679	ID:3	Received -> Refreshed the leader 1
+00:35.679	ID:2	Sent -> Relay LBeacon(1)
+00:35.683	ID:2	Sent -> It is time to promote myself as the new leader
+00:35.686	ID:2	Sent -> I Declare Myself as the Next Leader
+00:35.749	ID:4	Received ->  LBeacon(1) from Mote-5
+00:35.752	ID:4	Received -> Refreshed the leader 1
+00:35.760	ID:2	Received ->  LBeacon(1) from Mote-5
+00:35.763	ID:2	Received -> The Leader is set to 1
+00:35.784	ID:1	Received ->  LBeacon(1) from Mote-5
+00:35.800	ID:3	Received ->  LBeacon(1) from Mote-5
+00:35.804	ID:3	Received -> Refreshed the leader 1
+00:35.888	ID:2	Received ->  LBeacon(1) from Mote-5
+00:35.891	ID:2	Received -> Refreshed the leader 1
+00:35.910	ID:2	Received ->  LBeacon(1) from Mote-5
+00:35.910	ID:1	Received ->  LBeacon(1) from Mote-5
+00:35.910	ID:3	Received ->  LBeacon(1) from Mote-5
+00:36.001	ID:4	Received ->  LBeacon(1) from Mote-5
+00:36.004	ID:4	Received -> Refreshed the leader 1
+00:36.048	ID:3	Received ->  LBeacon(1) from Mote-5
+00:36.051	ID:3	This message is 16 Seconds Old
+00:36.054	ID:3	Received -> I (3) might be Leader Again!
+00:36.125	ID:4	Received ->  LBeacon(1) from Mote-5
+00:36.127	ID:4	This message is 16 Seconds Old
+00:36.130	ID:4	Received -> I (4) might be Leader Again!
+00:36.139	ID:2	Received ->  LBeacon(1) from Mote-5
+00:36.141	ID:2	This message is 16 Seconds Old
+00:36.144	ID:2	Received -> I (2) might be Leader Again!
+00:36.158	ID:1	Received ->  LBeacon(1) from Mote-5
+00:36.255	ID:4	Received ->  LBeacon(1) from Mote-5
+00:36.258	ID:4	Received -> The Leader is set to 1
+00:36.263	ID:2	Received ->  LBeacon(1) from Mote-5
+00:36.266	ID:2	Received -> The Leader is set to 1
+00:36.281	ID:1	Received ->  LBeacon(1) from Mote-5
+00:36.300	ID:3	Received ->  LBeacon(1) from Mote-5
+00:36.304	ID:3	Received -> The Leader is set to 1
+00:36.315	ID:1	Received ->  LBeacon(5) from Mote-5
+00:36.315	ID:2	Received ->  LBeacon(5) from Mote-5
+00:36.315	ID:4	Received ->  LBeacon(5) from Mote-5
+00:36.318	ID:3	Received ->  LBeacon(5) from Mote-5
+00:36.320	ID:2	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:36.320	ID:1	Received -> Refresh a Conflicting Leader Event w/ 5 from Mote-5
+00:36.320	ID:4	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:36.322	ID:3	Received -> Start a Conflicting Leader Timer w/ 5 from Mote-5
+00:36.493	ID:5	Received ->  LBeacon(1) from Mote-3
+00:36.496	ID:5	Received -> The Leader is set to 1
+00:36.501	ID:4	Received ->  LBeacon(1) from Mote-3
+00:36.505	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:36.512	ID:2	Received ->  LBeacon(1) from Mote-3
+00:36.517	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:36.521	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:36.535	ID:1	Received ->  LBeacon(1) from Mote-3
+00:36.606	ID:1	Received ->  LBeacon(3) from Mote-3
+00:36.606	ID:2	Received ->  LBeacon(3) from Mote-3
+00:36.606	ID:5	Received ->  LBeacon(3) from Mote-3
+00:36.607	ID:4	Received ->  LBeacon(3) from Mote-3
+00:36.609	ID:5	This message is 23 Seconds Old
+00:36.611	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:36.611	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:36.612	ID:4	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:36.612	ID:5	Received -> I (5) might be Leader Again!
+00:36.751	ID:4	Received ->  LBeacon(1) from Mote-3
+00:36.755	ID:4	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:36.759	ID:4	Received -> My Leader Beacon is fresher. Take This!
+00:36.765	ID:2	Received ->  LBeacon(1) from Mote-3
+00:36.769	ID:2	Received -> Stopped Conflicting Timer for Conf Leader 3 on Mote-3
+00:36.773	ID:2	Received -> My Leader Beacon is fresher. Take This!
+00:36.783	ID:1	Received ->  LBeacon(1) from Mote-3
+00:36.868	ID:5	Received ->  LBeacon(1) from Mote-3
+00:36.871	ID:5	Received -> The Leader is set to 1
+00:36.874	ID:1	Received ->  LBeacon(3) from Mote-3
+00:36.874	ID:2	Received ->  LBeacon(3) from Mote-3
+00:36.874	ID:4	Received ->  LBeacon(3) from Mote-3
+00:36.876	ID:5	Received ->  LBeacon(3) from Mote-3
+00:36.878	ID:5	This message is 23 Seconds Old
+00:36.879	ID:2	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:36.879	ID:1	Received -> Refresh a Conflicting Leader Event w/ 3 from Mote-3
+00:36.879	ID:4	Received -> Start a Conflicting Leader Timer w/ 3 from Mote-3
+00:36.881	ID:5	Received -> I (5) might be Leader Again!
