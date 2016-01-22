@@ -58,7 +58,7 @@
    require more memory. */
 /* For projects, optimize memory and enable RDC and CSMA again. */
 #undef NETSTACK_CONF_RDC
-#define NETSTACK_CONF_RDC              nullrdc_driver
+//#define NETSTACK_CONF_RDC              nullrdc_driver
 
 /* Disabling TCP on CoAP nodes. */
 #undef UIP_CONF_TCP
@@ -69,7 +69,8 @@
 
 /* Increase rpl-border-router IP-buffer when using more than 64. */
 #undef REST_MAX_CHUNK_SIZE
-#define REST_MAX_CHUNK_SIZE            48
+//#define REST_MAX_CHUNK_SIZE            48
+#define REST_MAX_CHUNK_SIZE      24 // FOR Z1 ONLY
 
 /* Estimate your header size, especially when using Proxy-Uri. */
 /*
@@ -96,3 +97,12 @@
 /* Enable client-side support for COAP observe */
 #define COAP_OBSERVE_CLIENT 1
 #endif /* __PROJECT_ERBIUM_CONF_H__ */
+
+/* Enable Light Sensor for Example */
+#define PLATFORM_HAS_LIGHT 1
+
+/* Enable LEDS on the Server */
+#define PLATFORM_HAS_LEDS 1
+
+/* Enable Temperature Resource on the Server */
+#define  PLATFORM_HAS_TEMPERATURE 1

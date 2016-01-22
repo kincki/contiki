@@ -74,10 +74,15 @@ res_post_put_handler(void *request, void *response, uint8_t *buffer, uint16_t pr
   const char *mode = NULL;
   uint8_t led = 0;
   int success = 1;
+  
+  printf("ER-REST-> request is %s\n",((char*) request));
+  len = REST.get_query_variable(request, "color", &color);
+
+  printf("ER-REST-> request len is %d\n", len);
 
   if((len = REST.get_query_variable(request, "color", &color))) {
     PRINTF("color %.*s\n", len, color);
-
+    
     if(strncmp(color, "r", len) == 0) {
       led = LEDS_RED;
     } else if(strncmp(color, "g", len) == 0) {
@@ -89,7 +94,9 @@ res_post_put_handler(void *request, void *response, uint8_t *buffer, uint16_t pr
     }
   } else {
     success = 0;
-  } if(success && (len = REST.get_post_variable(request, "mode", &mode))) {
+  }
+  
+  if(success && (len = REST.get_post_variable(request, "mode", &mode))) {
     PRINTF("mode %s\n", mode);
 
     if(strncmp(mode, "on", len) == 0) {
@@ -101,7 +108,9 @@ res_post_put_handler(void *request, void *response, uint8_t *buffer, uint16_t pr
     }
   } else {
     success = 0;
-  } if(!success) {
+  } 
+
+  if(!success) {
     REST.set_response_status(response, REST.status.BAD_REQUEST);
   }
 }
