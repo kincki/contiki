@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Institute for Pervasive Computing, ETH Zurich
+ * Copyright (c) 2014, Nimbus Centre for Embedded Systems Research, Cork Institute of Technology.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,60 +31,60 @@
 
 /**
  * \file
- *      Example resource
+ *      SHT11 Sensor Resource
+ *
+ *      This is a simple GET resource that returns the temperature in Celsius
+ *      and the humidity reading from the SHT11.
  * \author
- *      Matthias Kovatsch <kovatsch@inf.ethz.ch>
+ *      Pablo Corbalan <paul.corbalan@gmail.com>
  */
 
 #include "contiki.h"
 
-#if PLATFORM_HAS_LIGHT
+#if PLATFORM_HAS_SHT11
 
 #include <string.h>
 #include "rest-engine.h"
-#include "dev/light-sensor.h"
-
-#include "sys/node-id.h"
+#include "dev/sht11/sht11-sensor.h"
 
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
-static void res_periodic_handler(void);
 
-#define MAX_AGE      60
-
-PERIODIC_RESOURCE(res_light,
-         "title=\"Photosynthetic and solar light (supports JSON)\";rt=\"LightSensor\";obs",
+/* Get Method Example. Returns the reading from temperature and humidity sensors. */
+RESOURCE(res_sht11,
+         "title=\"Temperature and Humidity\";rt=\"Sht11\"",
          res_get_handler,
          NULL,
          NULL,
-         NULL,
-         CLOCK_SECOND,
-         res_periodic_handler);
+         NULL);
 
 static void
 res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-  uint16_t light_photosynthetic = light_sensor.value(LIGHT_SENSOR_PHOTOSYNTHETIC);
-  uint16_t light_solar = light_sensor.value(LIGHT_SENSOR_TOTAL_SOLAR);
+  /* Temperature in Celsius (t in 14 bits resolution at 3 Volts)
+   * T = -39.60 + 0.01*t
+   */
+  uint16_t temperature = ((sht11_sensor.value(SHT11_SENSOR_TEMP) / 10) - 396) / 10;
+  /* Relative Humidity in percent (h in 12 bits resolution)
+   * RH = -4 + 0.0405*h - 2.8e-6*(h*h)
+   */
+  uint16_t rh = sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
 
   unsigned int accept = -1;
   REST.get_header_accept(request, &accept);
 
   if(accept == -1 || accept == REST.type.TEXT_PLAIN) {
     REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", temperature, rh);
 
     REST.set_response_payload(response, (uint8_t *)buffer, strlen((char *)buffer));
   } else if(accept == REST.type.APPLICATION_XML) {
     REST.set_header_content_type(response, REST.type.APPLICATION_XML);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<Temperature =\"%u\" Humidity=\"%u\"/>", temperature, rh);
 
     REST.set_response_payload(response, buffer, strlen((char *)buffer));
   } else if(accept == REST.type.APPLICATION_JSON) {
     REST.set_header_content_type(response, REST.type.APPLICATION_JSON);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'Sht11':{'Temperature':%u,'Humidity':%u}}", temperature, rh);
 
     REST.set_response_payload(response, buffer, strlen((char *)buffer));
   } else {
@@ -93,17 +93,4 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
     REST.set_response_payload(response, msg, strlen(msg));
   }
 }
-
-
-/*
- * Additionally, a handler function named [resource name]_handler must be implemented for each PERIODIC_RESOURCE.
- * It will be called by the REST manager process with the defined period.
- */
-static void
-res_periodic_handler()
-{
-    /* Notify the registered observers which will trigger the res_get_handler to create the response. */
-    REST.notify_subscribers(&res_light);
-}
-
-#endif /* PLATFORM_HAS_LIGHT */
+#endif /* PLATFORM_HAS_SHT11 */

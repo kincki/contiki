@@ -116,6 +116,7 @@ PROCESS_THREAD(er_example_server, ev, data)
 
   PRINTF("Starting Erbium Example Server\n");
 
+
 #ifdef RF_CHANNEL
   PRINTF("RF channel: %u\n", RF_CHANNEL);
 #endif

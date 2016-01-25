@@ -1,4 +1,4 @@
-CONTIKI_PROJECT = cep-sensors udp-client udp-server
+CONTIKI_PROJECT = udp-client udp-server cep-sensors 
 all: $(CONTIKI_PROJECT)
 APPS=servreg-hack
 

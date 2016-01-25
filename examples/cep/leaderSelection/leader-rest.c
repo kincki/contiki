@@ -48,10 +48,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "contiki-net.h"
+#include "rest-engine.h"
+
 /*---------------------------------------------------------------------------*/
 PROCESS(leader_mote, "Leader Candidate");
 AUTOSTART_PROCESSES(&leader_mote);
 /*---------------------------------------------------------------------------*/
+
+extern resource_t res_leader;
 
 #define NUM_MOTES 5 // NUMBER OF NETWORKS PREDEFINED BEFORE THE SIMULATION
 
@@ -395,8 +400,19 @@ PROCESS_THREAD(leader_mote, ev, data)
 
   PROCESS_BEGIN();
 
+  PROCESS_PAUSE();
+
+  printf("Starting Erbium Example Server\n");
+
   int index = 0; // loop counter
   strLeader confLeader; // it is going to be used in case a conflict occurs
+
+  /*
+   * Bind the resources to their Uri-Path.
+   * WARNING: Activating twice only means alternate path, not two instances!
+   * All static variables are the same for each URI path.
+   */
+  rest_activate_resource(&res_leader, "test/leader");
 
   broadcast_open(&broadcast, 129, &broadcast_call);
 

@@ -42,9 +42,6 @@
 #include "contiki.h"
 #include "contiki-net.h"
 #include "rest-engine.h"
-#include <errno.h>
-#include <assert.h>
-
 
 #if PLATFORM_HAS_BUTTON
 #include "dev/button-sensor.h"
@@ -90,7 +87,6 @@ extern resource_t res_battery;
 #include "dev/temperature-sensor.h"
 extern resource_t res_temperature;
 #endif
-
 /*
 extern resource_t res_battery;
 #endif
@@ -109,7 +105,6 @@ AUTOSTART_PROCESSES(&er_example_server);
 
 PROCESS_THREAD(er_example_server, ev, data)
 {
-
   PROCESS_BEGIN();
 
   PROCESS_PAUSE();
@@ -164,7 +159,6 @@ PROCESS_THREAD(er_example_server, ev, data)
   rest_activate_resource(&res_temperature, "sensors/temperature");  
   SENSORS_ACTIVATE(temperature_sensor);  
 #endif
-
 /*
 #if PLATFORM_HAS_RADIO
   rest_activate_resource(&res_radio, "sensors/radio");  
@@ -178,8 +172,11 @@ PROCESS_THREAD(er_example_server, ev, data)
 
   /* Define application-specific events here. */
   while(1) {
+    printf("ERBUIM: Print This-0\n");
     PROCESS_WAIT_EVENT();
+    printf("ERBUIM: Print This-1\n");
 #if PLATFORM_HAS_BUTTON
+    printf("ERBUIM: Print This-2\n");
     if(ev == sensors_event && data == &button_sensor) {
       PRINTF("*******BUTTON*******\n");
 
@@ -190,8 +187,7 @@ PROCESS_THREAD(er_example_server, ev, data)
       res_separate.resume();
     }
 #endif /* PLATFORM_HAS_BUTTON */
-
-  } /* while (1) */
+  }                             /* while (1) */
 
   PROCESS_END();
 }

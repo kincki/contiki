@@ -36,65 +36,41 @@
  *      Matthias Kovatsch <kovatsch@inf.ethz.ch>
  */
 
-#include "contiki.h"
-
-#if PLATFORM_HAS_LIGHT
-
 #include <string.h>
 #include "rest-engine.h"
-#include "dev/light-sensor.h"
-
-#include "sys/node-id.h"
+#include "er-coap.h"
 
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_periodic_handler(void);
 
-#define MAX_AGE      60
+PERIODIC_RESOURCE(res_push,
+                  "title=\"Periodic demo\";obs",
+                  res_get_handler,
+                  NULL,
+                  NULL,
+                  NULL,
+                  5 * CLOCK_SECOND,
+                  res_periodic_handler);
 
-PERIODIC_RESOURCE(res_light,
-         "title=\"Photosynthetic and solar light (supports JSON)\";rt=\"LightSensor\";obs",
-         res_get_handler,
-         NULL,
-         NULL,
-         NULL,
-         CLOCK_SECOND,
-         res_periodic_handler);
+/*
+ * Use local resource state that is accessed by res_get_handler() and altered by res_periodic_handler() or PUT or POST.
+ */
+static int32_t event_counter = 0;
 
 static void
 res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-  uint16_t light_photosynthetic = light_sensor.value(LIGHT_SENSOR_PHOTOSYNTHETIC);
-  uint16_t light_solar = light_sensor.value(LIGHT_SENSOR_TOTAL_SOLAR);
+  /*
+   * For minimal complexity, request query and options should be ignored for GET on observable resources.
+   * Otherwise the requests must be stored with the observer list and passed by REST.notify_subscribers().
+   * This would be a TODO in the corresponding files in contiki/apps/erbium/!
+   */
+  REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+  REST.set_header_max_age(response, res_push.periodic->period / CLOCK_SECOND);
+  REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "VERY LONG EVENT %lu", event_counter));
 
-  unsigned int accept = -1;
-  REST.get_header_accept(request, &accept);
-
-  if(accept == -1 || accept == REST.type.TEXT_PLAIN) {
-    REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", node_id, light_solar);
-
-    REST.set_response_payload(response, (uint8_t *)buffer, strlen((char *)buffer));
-  } else if(accept == REST.type.APPLICATION_XML) {
-    REST.set_header_content_type(response, REST.type.APPLICATION_XML);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", node_id, light_solar);
-
-    REST.set_response_payload(response, buffer, strlen((char *)buffer));
-  } else if(accept == REST.type.APPLICATION_JSON) {
-    REST.set_header_content_type(response, REST.type.APPLICATION_JSON);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", node_id, light_solar);
-
-    REST.set_response_payload(response, buffer, strlen((char *)buffer));
-  } else {
-    REST.set_response_status(response, REST.status.NOT_ACCEPTABLE);
-    const char *msg = "Supporting content-types text/plain, application/xml, and application/json";
-    REST.set_response_payload(response, msg, strlen(msg));
-  }
+  /* The REST.subscription_handler() will be called for observable resources by the REST framework. */
 }
-
-
 /*
  * Additionally, a handler function named [resource name]_handler must be implemented for each PERIODIC_RESOURCE.
  * It will be called by the REST manager process with the defined period.
@@ -102,8 +78,12 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
 static void
 res_periodic_handler()
 {
-    /* Notify the registered observers which will trigger the res_get_handler to create the response. */
-    REST.notify_subscribers(&res_light);
-}
+  /* Do a periodic task here, e.g., sampling a sensor. */
+  ++event_counter;
 
-#endif /* PLATFORM_HAS_LIGHT */
+  /* Usually a condition is defined under with subscribers are notified, e.g., large enough delta in sensor reading. */
+  if(1) {
+    /* Notify the registered observers which will trigger the res_get_handler to create the response. */
+    REST.notify_subscribers(&res_push);
+  }
+}

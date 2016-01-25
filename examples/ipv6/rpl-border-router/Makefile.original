@@ -45,17 +45,5 @@ $(CONTIKI)/tools/tunslip6:	$(CONTIKI)/tools/tunslip6.c
 connect-router:	$(CONTIKI)/tools/tunslip6
 	sudo $(CONTIKI)/tools/tunslip6 $(PREFIX)
 
-#connect to the first border router that listens to port 60001
-connect-router-cooja-1:	$(CONTIKI)/tools/tunslip6
-#	sudo $(CONTIKI)/tools/tunslip6 -a 127.0.0.1 $(PREFIX)
-	sudo $(CONTIKI)/tools/tunslip6 -a 127.0.0.1 -p 60001 aaaa::1/64
-
-#connect to the second first border router that listens to port 60002
-connect-router-cooja-2:	$(CONTIKI)/tools/tunslip6
-#	sudo $(CONTIKI)/tools/tunslip6 -a 127.0.0.1 $(PREFIX)
-	sudo $(CONTIKI)/tools/tunslip6 -a 127.0.0.1 -p 60002 aaaa::1/64
-
-#connect to the second third first border router that listens to port 60002
-connect-router-cooja-3:	$(CONTIKI)/tools/tunslip6
-#	sudo $(CONTIKI)/tools/tunslip6 -a 127.0.0.1 $(PREFIX)
-	sudo $(CONTIKI)/tools/tunslip6 -a 127.0.0.1 -p 60003 aaaa::1/64
+connect-router-cooja:	$(CONTIKI)/tools/tunslip6
+	sudo $(CONTIKI)/tools/tunslip6 -a 127.0.0.1 $(PREFIX)

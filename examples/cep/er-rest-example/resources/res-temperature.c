@@ -31,28 +31,36 @@
 
 /**
  * \file
- *      Example resource
+ *      Example of an observable "on-change" temperature resource
  * \author
  *      Matthias Kovatsch <kovatsch@inf.ethz.ch>
+ * \author
+ *      Cristiano De Alti <cristiano_dealti@hotmail.com>
  */
 
 #include "contiki.h"
 
-#if PLATFORM_HAS_LIGHT
+#if PLATFORM_HAS_TEMPERATURE
 
+#include <limits.h>
+#include <stdlib.h>
 #include <string.h>
 #include "rest-engine.h"
-#include "dev/light-sensor.h"
-
-#include "sys/node-id.h"
+#include "dev/temperature-sensor.h"
 
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_periodic_handler(void);
 
 #define MAX_AGE      60
+#define INTERVAL_MIN 5
+#define INTERVAL_MAX (MAX_AGE - 1)
+#define CHANGE       1 
 
-PERIODIC_RESOURCE(res_light,
-         "title=\"Photosynthetic and solar light (supports JSON)\";rt=\"LightSensor\";obs",
+static int32_t interval_counter = INTERVAL_MIN;
+static int temperature_old = INT_MIN;
+
+PERIODIC_RESOURCE(res_temperature,
+         "title=\"Temperature\";rt=\"Temperature\";obs",
          res_get_handler,
          NULL,
          NULL,
@@ -63,37 +71,37 @@ PERIODIC_RESOURCE(res_light,
 static void
 res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-  uint16_t light_photosynthetic = light_sensor.value(LIGHT_SENSOR_PHOTOSYNTHETIC);
-  uint16_t light_solar = light_sensor.value(LIGHT_SENSOR_TOTAL_SOLAR);
+  /*
+   * For minimal complexity, request query and options should be ignored for GET on observable resources.
+   * Otherwise the requests must be stored with the observer list and passed by REST.notify_subscribers().
+   * This would be a TODO in the corresponding files in contiki/apps/erbium/!
+   */
+
+  int temperature = temperature_sensor.value(0);
 
   unsigned int accept = -1;
   REST.get_header_accept(request, &accept);
 
   if(accept == -1 || accept == REST.type.TEXT_PLAIN) {
     REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%d", temperature);
 
     REST.set_response_payload(response, (uint8_t *)buffer, strlen((char *)buffer));
-  } else if(accept == REST.type.APPLICATION_XML) {
-    REST.set_header_content_type(response, REST.type.APPLICATION_XML);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", node_id, light_solar);
-
-    REST.set_response_payload(response, buffer, strlen((char *)buffer));
   } else if(accept == REST.type.APPLICATION_JSON) {
     REST.set_header_content_type(response, REST.type.APPLICATION_JSON);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'temperature':%d}", temperature);
 
     REST.set_response_payload(response, buffer, strlen((char *)buffer));
   } else {
     REST.set_response_status(response, REST.status.NOT_ACCEPTABLE);
-    const char *msg = "Supporting content-types text/plain, application/xml, and application/json";
+    const char *msg = "Supporting content-types text/plain and application/json";
     REST.set_response_payload(response, msg, strlen(msg));
   }
-}
 
+  REST.set_header_max_age(response, MAX_AGE);
+
+  /* The REST.subscription_handler() will be called for observable resources by the REST framework. */
+}
 
 /*
  * Additionally, a handler function named [resource name]_handler must be implemented for each PERIODIC_RESOURCE.
@@ -102,8 +110,16 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
 static void
 res_periodic_handler()
 {
-    /* Notify the registered observers which will trigger the res_get_handler to create the response. */
-    REST.notify_subscribers(&res_light);
-}
+  int temperature = temperature_sensor.value(0);
 
-#endif /* PLATFORM_HAS_LIGHT */
+  ++interval_counter;
+
+  if((abs(temperature - temperature_old) >= CHANGE && interval_counter >= INTERVAL_MIN) || 
+     interval_counter >= INTERVAL_MAX) {
+     interval_counter = 0;
+     temperature_old = temperature;
+    /* Notify the registered observers which will trigger the res_get_handler to create the response. */
+    REST.notify_subscribers(&res_temperature);
+  }
+}
+#endif /* PLATFORM_HAS_TEMPERATURE */

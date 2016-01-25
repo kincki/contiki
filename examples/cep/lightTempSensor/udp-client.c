@@ -76,7 +76,7 @@ static struct uip_udp_conn *client_conn;
 static uip_ipaddr_t server_ipaddr;
 
 //begin-Koray
-extern const struct sensors_sensor temperature_sensor;
+//extern const struct sensors_sensor temperature_sensor;
 //end-Koray
 
 /*---------------------------------------------------------------------------*/

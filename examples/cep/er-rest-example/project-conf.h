@@ -109,7 +109,3 @@
 
 /* Enable Button Sensor */
 #define PLATFORM_HAS_BUTTON 1
-
-/* Enable Dining Philosphers Events */
-#define TEST_CEP_DINERS 1
-

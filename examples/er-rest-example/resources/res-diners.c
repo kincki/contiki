@@ -33,26 +33,23 @@
  * \file
  *      Example resource
  * \author
- *      Matthias Kovatsch <kovatsch@inf.ethz.ch>
+ *      Koray INCKI <koray.incki@ozu.edu.tr>
  */
 
 #include "contiki.h"
 
-#if PLATFORM_HAS_LIGHT
+#if TEST_CEP_DINERS
 
 #include <string.h>
 #include "rest-engine.h"
-#include "dev/light-sensor.h"
-
-#include "sys/node-id.h"
 
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_periodic_handler(void);
 
 #define MAX_AGE      60
 
-PERIODIC_RESOURCE(res_light,
-         "title=\"Photosynthetic and solar light (supports JSON)\";rt=\"LightSensor\";obs",
+PERIODIC_RESOURCE(res_diners,
+         "title=\"Thread Concurrency Event Dispatcher (supports JSON)\";rt=\"ConcurEvent\";obs",
          res_get_handler,
          NULL,
          NULL,
@@ -63,28 +60,25 @@ PERIODIC_RESOURCE(res_light,
 static void
 res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-  uint16_t light_photosynthetic = light_sensor.value(LIGHT_SENSOR_PHOTOSYNTHETIC);
-  uint16_t light_solar = light_sensor.value(LIGHT_SENSOR_TOTAL_SOLAR);
+  uint16_t light_photosynthetic = 0;
+  uint16_t light_solar = 0;
 
   unsigned int accept = -1;
   REST.get_header_accept(request, &accept);
 
   if(accept == -1 || accept == REST.type.TEXT_PLAIN) {
     REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%u;%u", light_photosynthetic, light_solar);
 
     REST.set_response_payload(response, (uint8_t *)buffer, strlen((char *)buffer));
   } else if(accept == REST.type.APPLICATION_XML) {
     REST.set_header_content_type(response, REST.type.APPLICATION_XML);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "<light photosynthetic=\"%u\" solar=\"%u\"/>", light_photosynthetic, light_solar);
 
     REST.set_response_payload(response, buffer, strlen((char *)buffer));
   } else if(accept == REST.type.APPLICATION_JSON) {
     REST.set_header_content_type(response, REST.type.APPLICATION_JSON);
-    //snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", light_photosynthetic, light_solar);
-    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", node_id, light_solar);
+    snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "{'light':{'photosynthetic':%u,'solar':%u}}", light_photosynthetic, light_solar);
 
     REST.set_response_payload(response, buffer, strlen((char *)buffer));
   } else {
@@ -103,7 +97,7 @@ static void
 res_periodic_handler()
 {
     /* Notify the registered observers which will trigger the res_get_handler to create the response. */
-    REST.notify_subscribers(&res_light);
+    REST.notify_subscribers(&res_diners);
 }
 
 #endif /* PLATFORM_HAS_LIGHT */

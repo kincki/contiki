@@ -24,7 +24,7 @@
 PROCESS(sky_sensor_process, "Light & Temp Sensor Demo");
 AUTOSTART_PROCESSES(&sky_sensor_process);
 
-extern const struct sensors_sensor temperature_sensor;
+//extern const struct sensors_sensor temperature_sensor;
 
 /*---------------------------------------------------------------------------*/
 static int
