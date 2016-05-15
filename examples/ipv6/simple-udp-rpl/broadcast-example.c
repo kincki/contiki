@@ -48,10 +48,19 @@
 #include "rest-engine.h"
 #include <stdbool.h>
 
+#if RANDOM_TOKEN_ERROR
+#include "lib/random.h"
+#include "sys/clock.h"
+
+#define RANDOM_ERROR 14
+#endif //  RANDOM_TOKEN_ERROR
+
 #define UDP_PORT 1234
 
 #define SEND_INTERVAL		(20 * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
+
+#define NUM_MOTES 5
 
 #if PLATFORM_HAS_BUTTON
 #include "dev/button-sensor.h"
@@ -68,6 +77,15 @@
 #define PRINT6ADDR(addr)
 #define PRINTLLADDR(addr)
 #endif
+
+/*
+ * Token Passing Communication Paradigm:
+ * Any mote that has something to say must possess the communication token.
+ * Otherwise, it cannot transmit any data.
+ * Token is initialized from mote-1, and transferred to other motes.
+ * If a mote sends a message out of token order, this is a system failure
+ */
+static uint8_t token;
 
 /*
  * Resources to be activated need to be imported through the extern keyword.
@@ -111,10 +129,19 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  printf("Data received on port %d from port %d with length %d\n",
-         receiver_port, sender_port, datalen);
-  
-  
+  printf("Data (%d) received on port %d from port %d with length %d\n", 
+	 *data, receiver_port, sender_port, datalen);
+
+#if RANDOM_TOKEN_ERROR
+  if (0 == random_rand() % RANDOM_ERROR) {
+    // this is written just to introduce random error to the algorithm
+    printf("RANDOM Error Occurred\n");
+    token = 1;
+  }
+#endif
+
+  if ( (node_id - ((*data) % NUM_MOTES)) == 1)
+    token = 1;
 }
 
 /*--------------------------------PROCESS BROADCAST----------------------------------*/
@@ -123,6 +150,11 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   static struct etimer periodic_timer;
   static struct etimer send_timer;
   uip_ipaddr_t addr;
+
+  static uint8_t initialize = 1; //this is used for mote-1 only for intialization
+#if RANDOM_TOKEN_ERROR
+  random_init(clock_time() % 100);
+#endif
 
   PROCESS_BEGIN();
 
@@ -137,9 +169,24 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     etimer_set(&send_timer, SEND_TIME);
 
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&send_timer));
-    printf("Sending broadcast\n");
+    //printf("Sending broadcast\n");
     uip_create_linklocal_allnodes_mcast(&addr);
-    simple_udp_sendto(&broadcast_connection, "Test", 4, &addr);
+
+    // initialize transmission by mote-1
+    if (1 == node_id && 1 == initialize) {
+      token = 1;
+      initialize = 0; // this statement will never execute again
+    }
+
+    if (token) { 
+      printf("I got the token, it's my turn\n");
+      simple_udp_sendto(&broadcast_connection, (uint8_t *) &node_id, 4, &addr);
+      token = 0;
+      
+      //trigger an event to all service subscribers
+      printf("RES-Event Process\n");
+      res_event.trigger();
+    }
   }
 
   PROCESS_END();
@@ -176,7 +223,7 @@ PROCESS_THREAD(coap_server, ev, data)
    * All static variables are the same for each URI path.
    */
 
-  rest_activate_resource(&res_event, "test/button");
+  rest_activate_resource(&res_event, "test/event");
 #if PLATFORM_HAS_BUTTON
   SENSORS_ACTIVATE(button_sensor);
 #endif
@@ -189,7 +236,7 @@ PROCESS_THREAD(coap_server, ev, data)
       PRINTF("*******BUTTON*******\n");
 
       /* Call the event_handler for this application-specific event. */
-      res_event.trigger();
+      //      res_event.trigger();
     }
 #endif /* PLATFORM_HAS_BUTTON */
 

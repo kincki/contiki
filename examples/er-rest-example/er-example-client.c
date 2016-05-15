@@ -72,10 +72,10 @@ uip_ipaddr_t server_ipaddr;
 static struct etimer et;
 
 /* Example URIs that can be queried. */
-#define NUMBER_OF_URLS 4
+#define NUMBER_OF_URLS 5
 /* leading and ending slashes only for demo purposes, get cropped automatically when setting the Uri-Path */
 char *service_urls[NUMBER_OF_URLS] =
-{ ".well-known/core", "/actuators/toggle", "battery/", "error/in//path" };
+  { "/sensors/temperature",".well-known/core", "/actuators/toggle", "battery/", "error/in//path" };
 #if PLATFORM_HAS_BUTTON
 static int uri_switch = 0;
 #endif
@@ -128,10 +128,14 @@ PROCESS_THREAD(er_example_client, ev, data)
       COAP_BLOCKING_REQUEST(&server_ipaddr, REMOTE_PORT, request,
                             client_chunk_handler);
 
+      //begin-koray
+      printf("RESTClient-1>> This is what I received: %s\n", (char *) request->payload);
+      //end-koray
+
       printf("\n--Done--\n");
 
       etimer_reset(&et);
-
+      
 #if PLATFORM_HAS_BUTTON
     } else if(ev == sensors_event && data == &button_sensor) {
 
@@ -147,6 +151,10 @@ PROCESS_THREAD(er_example_client, ev, data)
 
       COAP_BLOCKING_REQUEST(&server_ipaddr, REMOTE_PORT, request,
                             client_chunk_handler);
+
+      //begin-koray
+      printf("RESTClient-2>> This is what I received: %s\n", (char *) request->payload);
+      //end-koray
 
       printf("\n--Done--\n");
 

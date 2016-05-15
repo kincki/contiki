@@ -166,13 +166,21 @@ broadcast_recv(struct broadcast_conn *c, const linkaddr_t *from)
 
 	  if (promotedLeaderID < get_leader_id())
 	    { // I have to update my leadership structure
-	      set_leader(promotedLeaderID, senderID, LDR_BEACON, sLeadMe->refreshTime);
-	      send_leadership_beacon(&s_leader);
-	      etimer_restart(&et_leader);
-	      printf("Received -> The Leader is set to %d\n", get_leader_id());
+#if ERROR_ON_MOTE3 // if the system contains an error on mote3
+	      if (3 != node_id) {
+#endif
+		set_leader(promotedLeaderID, senderID, LDR_BEACON, sLeadMe->refreshTime);
+		send_leadership_beacon(&s_leader);
+		etimer_restart(&et_leader);
+		printf("Received -> The Leader is set to %d\n", get_leader_id());
 	      
-	      if (get_leader_id() != node_id)
+		if (get_leader_id() != node_id)
 		amILeader = false;
+#if ERROR_ON_MOTE3 // if the system contains an error on mote3
+	      } else if (2 == promotedLeaderID) {
+		printf("Received -> I (3) don't trust 2's leadership!\n");
+	      }		
+#endif
 	    }
 	  else if ( get_leader_id() == promotedLeaderID )
 	    {

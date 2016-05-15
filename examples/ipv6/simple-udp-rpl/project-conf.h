@@ -96,7 +96,6 @@
 
 /* Enable client-side support for COAP observe */
 #define COAP_OBSERVE_CLIENT 1
-#endif /* __PROJECT_ERBIUM_CONF_H__ */
 
 /* Enable Light Sensor for Example */
 #define PLATFORM_HAS_LIGHT 1
@@ -105,11 +104,16 @@
 #define PLATFORM_HAS_LEDS 1
 
 /* Enable Temperature Resource on the Server */
-#define  PLATFORM_HAS_TEMPERATURE 1
+#define  PLATFORM_HAS_TEMPERATURE 0
 
 /* Enable Button Sensor */
 #define PLATFORM_HAS_BUTTON 1
 
 /* Enable Dining Philosphers Events */
 #define TEST_CEP_DINERS 1
+
+/* Introduce Random Error to Token Ring Algorithm */
+#define RANDOM_TOKEN_ERROR 1
+
+#endif /* __PROJECT_ERBIUM_CONF_H__ */
 

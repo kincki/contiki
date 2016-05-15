@@ -73,7 +73,8 @@
 /* Toggle interval in seconds */
 #define TOGGLE_INTERVAL 30
 /* The path of the resource to observe */
-#define OBS_RESOURCE_URI "test/push"
+//#define OBS_RESOURCE_URI "test/push"
+#define OBS_RESOURCE_URI "sensors/temperature"
 
 /*----------------------------------------------------------------------------*/
 static uip_ipaddr_t server_ipaddr[1]; /* holds the server ip address */

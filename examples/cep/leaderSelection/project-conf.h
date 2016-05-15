@@ -96,7 +96,6 @@
 
 /* Enable client-side support for COAP observe */
 #define COAP_OBSERVE_CLIENT 1
-#endif /* __PROJECT_ERBIUM_CONF_H__ */
 
 /* Enable Light Sensor for Example */
 #define PLATFORM_HAS_LIGHT 1
@@ -112,4 +111,8 @@
 
 /* Enable Dining Philosphers Events */
 #define TEST_CEP_DINERS 1
+
+/* Enable/Disable Mote-3 Error */
+#define ERROR_ON_MOTE3 1
+#endif /* __PROJECT_ERBIUM_CONF_H__ */
 

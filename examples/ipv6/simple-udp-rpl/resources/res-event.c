@@ -40,6 +40,8 @@
 #include "rest-engine.h"
 #include "er-coap.h"
 
+#include "sys/node-id.h"
+
 #define DEBUG 0
 #if DEBUG
 #include <stdio.h>
@@ -54,6 +56,9 @@
 
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_event_handler();
+
+//this timestamp is used for determining time of occurrence of an event
+static long int timestamp;
 
 /*
  * Example for an event resource.
@@ -71,14 +76,21 @@ EVENT_RESOURCE(res_event,
 /*
  * Use local resource state that is accessed by res_get_handler() and altered by res_event_handler() or PUT or POST.
  */
-static int32_t event_counter = 0;
+//static int32_t event_counter = 0;
 
 static void
 res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-  REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-  REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "EVENT %lu", event_counter));
+  if (timestamp) { // if I have the token to send data
 
+
+    printf("RES-Event: Observe Request Sent @time: %lu\n", timestamp);
+
+    REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+    REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "EVENT.%d.%lu", node_id, timestamp));
+  } else {
+    printf("RES-Event: I don't have any event yet, sorry!\n");
+  }
   /* A post_handler that handles subscriptions/observing will be called for periodic resources by the framework. */
 }
 /*
@@ -87,13 +99,17 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
  */
 static void
 res_event_handler()
-{
+{  
+
+  timestamp = clock_time();
   /* Do the update triggered by the event here, e.g., sampling a sensor. */
-  ++event_counter;
+  //  ++event_counter;
 
   /* Usually a condition is defined under with subscribers are notified, e.g., event was above a threshold. */
   if(1) {
-    PRINTF("TICK %u for /%s\n", event_counter, res_event.url);
+    //  PRINTF("TICK %u for /%s\n", event_counter, res_event.url);
+
+    printf("RES-Event.Trigger @time: %lu\n", timestamp);
 
     /* Notify the registered observers which will trigger the res_get_handler to create the response. */
     REST.notify_subscribers(&res_event);

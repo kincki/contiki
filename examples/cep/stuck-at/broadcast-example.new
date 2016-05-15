@@ -1,0 +1,483 @@
+/*
+ * Copyright (c) 2011, Swedish Institute of Computer Science.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * This file is part of the Contiki operating system.
+ *
+ */
+
+#include "contiki.h"
+#include "lib/random.h"
+#include "sys/ctimer.h"
+#include "sys/etimer.h"
+#include "net/ip/uip.h"
+#include "net/ipv6/uip-ds6.h"
+
+#include "simple-udp.h"
+
+#include <stdio.h>
+#include <string.h>
+
+#include "sys/node-id.h"
+
+// Headers for Erbium REST Engine
+#include "contiki-net.h"
+#include "rest-engine.h"
+#include <stdbool.h>
+
+#define UDP_PORT 1234
+
+#define SEND_INTERVAL		(20 * CLOCK_SECOND)
+#define SEND_TIME		(random_rand() % (SEND_INTERVAL))
+
+#if PLATFORM_HAS_BUTTON
+#include "dev/button-sensor.h"
+#endif
+
+#define DEBUG 0
+#if DEBUG
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+#define PRINT6ADDR(addr) PRINTF("[%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x]", ((uint8_t *)addr)[0], ((uint8_t *)addr)[1], ((uint8_t *)addr)[2], ((uint8_t *)addr)[3], ((uint8_t *)addr)[4], ((uint8_t *)addr)[5], ((uint8_t *)addr)[6], ((uint8_t *)addr)[7], ((uint8_t *)addr)[8], ((uint8_t *)addr)[9], ((uint8_t *)addr)[10], ((uint8_t *)addr)[11], ((uint8_t *)addr)[12], ((uint8_t *)addr)[13], ((uint8_t *)addr)[14], ((uint8_t *)addr)[15])
+#define PRINTLLADDR(lladdr) PRINTF("[%02x:%02x:%02x:%02x:%02x:%02x]", (lladdr)->addr[0], (lladdr)->addr[1], (lladdr)->addr[2], (lladdr)->addr[3], (lladdr)->addr[4], (lladdr)->addr[5])
+#else
+#define PRINTF(...)
+#define PRINT6ADDR(addr)
+#define PRINTLLADDR(addr)
+#endif
+
+/*
+ * Resources to be activated need to be imported through the extern keyword.
+ * The build system automatically compiles the resources in the corresponding sub-directory.
+ */
+extern resource_t res_event;
+
+/*
+ * IPv6 udp connection variable for broadcast connection.
+ * All messages sent over this connection will be relayed to all neighbors in the RPL neighborhood.
+ */
+static struct simple_udp_connection broadcast_connection;
+
+/*--------------------------CONTIKI PROCESSES------------------------------------------*/
+/*
+ * CoAP Server process is responsible for implementing CoAP services.
+ * It is initially designed to suppor a single resource, named "res_event".
+ */ 
+PROCESS(coap_server, "Erbium CoAP Server");
+
+/*
+ * Broadcast Example Process is responsible for implementing simple broadcast
+ * over IPv6 connection. 
+ */
+PROCESS(broadcast_example_process, "UDP broadcast example process");
+
+/*
+ * This MACRO initiates all the Contiki Processes defined in this file.
+ * You can autostart >= 1 Contiki Process(es) in an AUTOSTART call
+ */
+AUTOSTART_PROCESSES(&broadcast_example_process, &coap_server);
+
+/*---------------------------LEADERSHIP PROCESS CONSTANTS----------------------------------*/
+
+#define NUM_MOTES 5 // NUMBER OF NETWORKS PREDEFINED BEFORE THE SIMULATION
+
+#define RVK_TIMEOUT 4 // WAIT FOR THIS PERIOD BEFORE PROMOTING YOURSELF AS LEADER
+
+#define CONF_TIMEOUT 8 // WAIT FOR THIS PERIOD BEFORE SENDING OUT CONFLICT ALARM
+
+/*-------------------------LEADERSHIP DATA TYPES--------------------------------------*/
+/*
+ * This enumaration defines MESSAGE_TYPES used when exchaning leadership status 
+ * in a broadcast message
+ */
+typedef enum {
+  LDR_BEACON = 10, 	// VERY FIRST BEACON MESSAGE FOR THIS LEADER
+  LDR_REFRESH = 20, 	// FOLLOW-UP MESSAGES FOR SAME LEADER	
+  LDR_REVOKE = 30,	// REVOKE UNREACHABLE LEADER	
+  LDR_CONFLICT = 40    // RELAY MESSAGE FOR LEADER BY SOME OTHER MOTE
+} eLdrMsgType;
+
+/* 
+ * This structure represents the data type that is used in xferring leadership beacons.
+ * @param <refreshTime> assumes that all motes are time synchronized.
+ */
+typedef struct {
+  uint8_t leader;	// the id of leader mote
+  uint8_t lSource; // the source of leadership beacon
+  clock_time_t refreshTime;
+  eLdrMsgType lMsgType; // determines the type of message 	
+} strLeader;
+
+static strLeader s_leader;
+
+/*
+ * Mote-scope leadership status variables 
+ */
+static bool isLeaderAssigned = false; // initially no leader is assigned
+static bool amILeader = false; // initially no body is leader
+static struct etimer et_leader; // timer for keeping track of leader beacon status messages
+static struct etimer et_revoke; // timer for promoting oneself as leader
+static bool revokeStatus = false; // keep track of the status of revoke timer
+
+/*
+ * A data structure to represent conflicting leadership situations
+ */
+typedef struct {
+  uint8_t confLeader; // conflicting leader ID
+  uint8_t sourceID; // who reported this conflict
+  struct etimer confTimer;
+  bool bSet; // determines if timer is set
+} confStr;
+
+static confStr confTmrArr[NUM_MOTES];
+
+/*-----------------------Function Prototypes--------------------------*/
+
+// This method is used for sending out leadership beacons that contains
+// leadership structure contents.
+void send_leadership_beacon(strLeader*);
+
+// This method sets the Leader structure with new values and current clock_time
+void set_leader(uint8_t, uint8_t, eLdrMsgType, clock_time_t);
+
+// This method retrieves the leader id from the leader struct
+uint8_t get_leader_id();
+
+// This method retrieves the source of leadership structure
+uint8_t get_source_id();
+
+// This method retrieves the refresh time from the leadership structure
+clock_time_t get_refreshTime();
+
+// This method checks whether the incoming message is fresh
+bool is_msg_fresh(clock_time_t);
+
+// This method retrieves the leadership message type
+uint8_t get_leader_status();
+
+/*---------------------------------------------------------------------------*/
+static void
+receiver(struct simple_udp_connection *c,
+         const uip_ipaddr_t *sender_addr,
+         uint16_t sender_port,
+         const uip_ipaddr_t *receiver_addr,
+         uint16_t receiver_port,
+         const uint8_t *data,
+         uint16_t datalen)
+{
+  printf("Data received on port %d from port %d with length %d\n",
+         receiver_port, sender_port, datalen);
+  
+  printf("Data received from ");
+  uip_debug_ipaddr_print(sender_addr);
+  printf("\n");
+
+  uint16_t promotedLeaderID; // this is the leader ID that is conveyed in this message
+  uint8_t senderID; // this is the ID of message originator
+  strLeader confLeader; // this variable defines conflictin leaders
+  strLeader *sLeadMe; // this variable represents incoming leader structure
+  uint8_t index; // looop counter
+
+  // sender Mote-ID is sent as the last segment in the IPv6 address
+  senderID = (uint8_t) sender_addr->u8[15];
+  sLeadMe  = (strLeader *) data;
+
+  promotedLeaderID = (uint16_t) sLeadMe->leader;
+  printf("Received ->  LBeacon(%d) from Mote-%d\n", promotedLeaderID, senderID);
+
+}
+
+/*--------------------------------PROCESS BROADCAST----------------------------------*/
+PROCESS_THREAD(broadcast_example_process, ev, data)
+{
+  static struct etimer periodic_timer;
+  static struct etimer send_timer;
+  static struct etimer et;
+
+  PROCESS_BEGIN();
+
+  int index = 0; // loop counter
+  strLeader confLeader; // it is going to be used in case a conflict occurs
+
+  simple_udp_register(&broadcast_connection, UDP_PORT,
+                      NULL, UDP_PORT,
+                      receiver);
+
+  // initialize leader beaconing structure, because if you don't explicitly
+  // initialize to something, computer will initialize its members to 0, since it is 
+  // defined with 'static' storage class.
+	
+  set_leader(node_id, node_id, LDR_BEACON, clock_time());
+  isLeaderAssigned = true;
+  amILeader = true;
+
+  // INITIALIZE Conflict Timers
+
+  for ( index = 0; index < NUM_MOTES; index++ )
+    confTmrArr[index].bSet = false;
+
+  /* Set up a timer for waiting Leadership Beacon messages for 10 seconds */
+  etimer_set(&et_leader, CLOCK_SECOND * 10 + random_rand() % (CLOCK_SECOND * 10));
+
+  etimer_set(&periodic_timer, SEND_INTERVAL);
+  while(1) {
+
+    /* Delay 2-4 seconds */
+    etimer_set(&et, CLOCK_SECOND * 2 + random_rand() % (CLOCK_SECOND * 2));
+    
+    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
+
+    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
+    etimer_reset(&periodic_timer);
+    etimer_set(&send_timer, SEND_TIME);
+
+    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&send_timer));
+    printf("Sending broadcast\n");
+
+    if (false == isLeaderAssigned)
+      { // this statement should not be entered, if a prior leadership message received!
+	  
+	// so, if it enters this statement, I'm the first mote to start broadcasting leadership beacons
+	set_leader(node_id, node_id, LDR_BEACON, clock_time());
+	amILeader = true;
+	  
+	//send my nodeID as the leadership beacon
+	send_leadership_beacon(&s_leader);
+	printf("Sent -> Candidate LBeacon(%d)\n", s_leader.leader);
+	  
+	// restart the timer
+	etimer_restart(&et_leader);
+	// amILeader = true; // assumes that if no leader is assigned I'm the leader.
+      }
+    else if (true == amILeader)
+      { // if I am the leader, I should keep sending periodic Leadership Beacon Messages.
+	  
+	//send my nodeID as the leadership beacon
+	s_leader.refreshTime = clock_time();
+	  
+	send_leadership_beacon(&s_leader);
+	printf("Sent -> Still I'm LBeacon(%d)\n", node_id);
+	  
+	// restart the timer
+	etimer_restart(&et_leader);
+      }
+    else
+      { // if I'm not the leader, I should keep relaying the Leadership Beacons to outer regions of the network;
+	// although, this feature is not yet used.
+	  
+	//send the nodeID of the leader as the beacon
+	if ( s_leader.lMsgType != LDR_REVOKE )
+	  {
+	    send_leadership_beacon(&s_leader);
+	    printf("Sent -> Relay LBeacon(%d)\n", get_leader_id() );
+	  }
+      }
+      
+    // Check-out all the timers for further decision making
+
+    if ( (etimer_expired(&et_leader)) && (false == revokeStatus) )
+      { // Leader Beacon Timer Has Expired!
+	printf("I (%d) Sensed that Leader (%d) is Unreachable!\n", node_id, get_leader_id() );
+	  
+	set_leader(s_leader.leader, node_id, LDR_REVOKE, get_refreshTime());
+	  
+	// notify all network that I cannot reach leader
+	send_leadership_beacon(&s_leader);
+	printf("Sent -> LBeacon(%d, Unreachable)\n", get_leader_id());
+	etimer_set(&et_revoke, CLOCK_SECOND * RVK_TIMEOUT + random_rand() % (CLOCK_SECOND * RVK_TIMEOUT));
+	printf("Sent -> REVOKE Timer Started \n");
+	etimer_stop(&et_leader);
+	revokeStatus = true;
+      }
+
+    if ( true == revokeStatus )
+      {
+	if (etimer_expired(&et_revoke))
+	  { // it is time to promote myself as the new leader
+	    printf("Sent -> It is time to promote myself as the new leader\n");
+	    set_leader(node_id, node_id, LDR_BEACON, clock_time());
+	    amILeader = true;
+	    send_leadership_beacon(&s_leader);
+	    printf("Sent -> I Declare Myself as the Next Leader\n");
+	    printf("Sent -> REVOKE Timer Stopped\n");
+	    etimer_stop(&et_revoke);
+	    etimer_restart(&et_leader);
+	    revokeStatus = false;
+	  }
+      }
+
+    // there are more than one timer for several conflicting leaders
+    for ( index = 0; index < NUM_MOTES; index++ )
+      {
+	if ( true == confTmrArr[index].bSet )
+	  {
+	    if ( etimer_expired( &(confTmrArr[index].confTimer) ) )
+	      {//  if Conflict Timer Expired
+		//	Trigger a Conflicting Leaders Event
+		printf("Sent -> CONFLICT: Trigger a Conflicting Leader Event w/ %d from Mote-%d\n", confTmrArr[index].confLeader, confTmrArr[index].sourceID);
+		confLeader.leader = get_leader_id();
+		confLeader.lSource = confTmrArr[index].confLeader;
+		confLeader.refreshTime = clock_time();
+		confLeader.lMsgType = LDR_CONFLICT;
+			  
+		send_leadership_beacon(&confLeader);			  
+		etimer_stop(&(confTmrArr[index].confTimer));		  
+	      }
+	  }
+      }
+  }
+
+  PROCESS_END();
+}
+
+/*---------------------------PROCESS COAP SERVER--------------------------------------*/
+PROCESS_THREAD(coap_server, ev, data)
+{
+
+  PROCESS_BEGIN();
+
+  PROCESS_PAUSE();
+
+  PRINTF("Starting Erbium CoAP Server\n");
+
+#ifdef RF_CHANNEL
+  PRINTF("RF channel: %u\n", RF_CHANNEL);
+#endif
+#ifdef IEEE802154_PANID
+  PRINTF("PAN ID: 0x%04X\n", IEEE802154_PANID);
+#endif
+
+  PRINTF("uIP buffer: %u\n", UIP_BUFSIZE);
+  PRINTF("LL header: %u\n", UIP_LLH_LEN);
+  PRINTF("IP+UDP header: %u\n", UIP_IPUDPH_LEN);
+  PRINTF("REST max chunk: %u\n", REST_MAX_CHUNK_SIZE);
+
+  /* Initialize the REST engine. */
+  rest_init_engine();
+
+  /*
+   * Bind the resources to their Uri-Path.
+   * WARNING: Activating twice only means alternate path, not two instances!
+   * All static variables are the same for each URI path.
+   */
+
+  rest_activate_resource(&res_event, "test/button");
+#if PLATFORM_HAS_BUTTON
+  SENSORS_ACTIVATE(button_sensor);
+#endif
+
+  /* Define application-specific events here. */
+  while(1) {
+    PROCESS_WAIT_EVENT();
+#if PLATFORM_HAS_BUTTON
+    if(ev == sensors_event && data == &button_sensor) {
+      PRINTF("*******BUTTON*******\n");
+
+      /* Call the event_handler for this application-specific event. */
+      res_event.trigger();
+    }
+#endif /* PLATFORM_HAS_BUTTON */
+
+  } /* while (1) */
+
+  PROCESS_END();
+}
+/*---------------------------------------------------------------------------*/
+
+
+/*-------------------------LOCAL FUNCTION IMPLEMENTATIONS--------------------*/
+
+//This method sends out current content of leadership structure as a beacon
+void
+send_leadership_beacon(strLeader *sLeader)
+{
+  uip_ipaddr_t addr;
+
+  // this is where broadcast address is generated
+  uip_create_linklocal_allnodes_mcast(&addr);   
+  simple_udp_sendto(&broadcast_connection, sLeader, sizeof(*sLeader) + 1, &addr);
+}
+
+/*---------------------------------------------------------------------------*/
+// This method is used to set new values for leadership structure
+void
+set_leader(uint8_t newLeader, uint8_t newSource, eLdrMsgType msgType, clock_time_t rTime)
+{
+  s_leader.leader = newLeader;
+  s_leader.lSource = newSource;
+  s_leader.lMsgType = msgType;
+  s_leader.refreshTime = rTime;
+}
+
+/*---------------------------------------------------------------------------*/
+// This method retrieves the leadership message type
+uint8_t
+get_leader_status()
+{
+  return s_leader.lMsgType;
+}
+/*---------------------------------------------------------------------------*/
+// This method retrieves the leader id from leader structure
+uint8_t
+get_leader_id()
+{
+  return s_leader.leader;
+}
+
+/*---------------------------------------------------------------------------*/
+// This method retrieves the source of leadership message 
+uint8_t
+get_source_id()
+{
+  return s_leader.lSource;
+}
+
+/*---------------------------------------------------------------------------*/
+// This method retrieves the refresh time from the leadership structure
+clock_time_t 
+get_refreshTime()
+{
+  return s_leader.refreshTime;
+}
+
+// This method checks whether the incoming message is fresh (sent in 10 seconds)
+bool 
+is_msg_fresh(clock_time_t rTime)
+{
+  int seconds = 0;
+  bool bFresh = true;
+	
+  /* seconds = (clock_time() - rTime) / CLOCK_SECOND;  */
+  seconds = ( rTime - get_refreshTime() ) / CLOCK_SECOND; 
+  
+  if (seconds < 10)
+    ;
+  else
+    bFresh = false;
+  
+  return bFresh;
+}

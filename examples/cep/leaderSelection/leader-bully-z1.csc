@@ -43,8 +43,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>92.92186778259061</x>
-        <y>92.64604506712205</y>
+        <x>89.81861384717487</x>
+        <y>89.19798513888233</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -61,8 +61,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>41.050283584704786</x>
-        <y>96.25220034911227</y>
+        <x>36.85132219850389</x>
+        <y>52.46303160730282</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -79,8 +79,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>17.86973535112112</x>
-        <y>1.911899074728285</y>
+        <x>24.468103243722545</x>
+        <y>30.404851338234437</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -97,8 +97,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>79.00759924063227</x>
-        <y>67.51546566275508</y>
+        <x>62.377038970556995</x>
+        <y>59.11754289035328</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -133,7 +133,7 @@
   <plugin>
     org.contikios.cooja.plugins.SimControl
     <width>280</width>
-    <z>2</z>
+    <z>3</z>
     <height>160</height>
     <location_x>400</location_x>
     <location_y>0</location_y>
@@ -147,7 +147,7 @@
       <skin>org.contikios.cooja.plugins.skins.TrafficVisualizerSkin</skin>
       <skin>org.contikios.cooja.plugins.skins.UDGMVisualizerSkin</skin>
       <skin>org.contikios.cooja.plugins.skins.MoteTypeVisualizerSkin</skin>
-      <viewport>3.3341578338891984 0.0 0.0 3.3341578338891984 9.301654241295996 9.352699449661946</viewport>
+      <viewport>2.9001816117230654 0.0 0.0 2.9001816117230654 47.366474906984166 14.703583091405584</viewport>
     </plugin_config>
     <width>400</width>
     <z>1</z>
@@ -158,12 +158,12 @@
   <plugin>
     org.contikios.cooja.plugins.LogListener
     <plugin_config>
-      <filter />
+      <filter>ID:3</filter>
       <formatted_time />
       <coloring />
     </plugin_config>
     <width>766</width>
-    <z>0</z>
+    <z>2</z>
     <height>362</height>
     <location_x>400</location_x>
     <location_y>160</location_y>
@@ -190,11 +190,17 @@
   <plugin>
     org.contikios.cooja.plugins.Notes
     <plugin_config>
-      <notes>Enter notes here</notes>
+      <notes>This simulation demonstrates bully leader election implementation.
+
+The simulation can demonstrate an erroneous situation where Mote-3 
+discards leadership messages from Mote-2. In order to enable this error, 
+you should set ERROR_ON_MOTE3 constant to 1 in leader-cnd.c file.
+
+Move Mote-4 in order to demonstrate how the algorithm works.</notes>
       <decorations>true</decorations>
     </plugin_config>
     <width>486</width>
-    <z>3</z>
+    <z>0</z>
     <height>160</height>
     <location_x>680</location_x>
     <location_y>0</location_y>

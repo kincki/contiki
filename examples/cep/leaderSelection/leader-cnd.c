@@ -59,6 +59,8 @@ AUTOSTART_PROCESSES(&leader_mote);
 
 #define CONF_TIMEOUT 8 // WAIT FOR THIS PERIOD BEFORE SENDING OUT CONFLICT ALARM
 
+#define ERROR_ON_MOTE3 1 // ENABLE/DISABLE A PREJUDICE ON MOTE3 AGAINST MOTE2 LEADERSHIP
+
 /*-------------------------MESSAGE TYPES--------------------------------------*/
 typedef enum {
   LDR_BEACON = 10, 	// VERY FIRST BEACON MESSAGE FOR THIS LEADER
@@ -161,6 +163,12 @@ broadcast_recv(struct broadcast_conn *c, const linkaddr_t *from)
 
 	  if (promotedLeaderID < get_leader_id())
 	    { // I have to update my leadership structure
+#if ERROR_ON_MOTE3 // if the system contains an error on mote3
+	      if ((3 == node_id) && (2 == promotedLeaderID) ) {
+		printf("Received -> I (3) don't trust 2's leadership!\n");
+		break;
+	      }
+#endif
 	      set_leader(promotedLeaderID, senderID, LDR_BEACON, sLeadMe->refreshTime);
 	      send_leadership_beacon(&s_leader);
 	      etimer_restart(&et_leader);
