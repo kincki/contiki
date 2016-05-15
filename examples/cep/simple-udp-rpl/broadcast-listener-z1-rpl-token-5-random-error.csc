@@ -7,8 +7,8 @@
   <project EXPORT="discard">[APPS_DIR]/collect-view</project>
   <project EXPORT="discard">[APPS_DIR]/powertracker</project>
   <simulation>
-    <title>RPL Broadcast Example with Z1</title>
-    <speedlimit>10.0</speedlimit>
+    <title>TokenRing RV</title>
+    <speedlimit>1.0</speedlimit>
     <randomseed>123456</randomseed>
     <motedelay_us>1000000</motedelay_us>
     <radiomedium>
@@ -24,8 +24,8 @@
     <motetype>
       org.contikios.cooja.mspmote.Z1MoteType
       <identifier>z11</identifier>
-      <description>Z1 Broadcast Example</description>
-      <firmware EXPORT="copy">[CONTIKI_DIR]/examples/cep/simple-udp-rpl/broadcast-example.z1</firmware>
+      <description>Z1-Broadcast-NoCoAP</description>
+      <firmware EXPORT="copy">[CONTIKI_DIR]/examples/cep/simple-udp-rpl/tokener/broadcast-example.z1</firmware>
       <moteinterface>org.contikios.cooja.interfaces.Position</moteinterface>
       <moteinterface>org.contikios.cooja.interfaces.RimeAddress</moteinterface>
       <moteinterface>org.contikios.cooja.interfaces.IPAddress</moteinterface>
@@ -42,7 +42,25 @@
     <motetype>
       org.contikios.cooja.mspmote.Z1MoteType
       <identifier>z12</identifier>
-      <description>Z1 RPL Border Router Mote Type</description>
+      <description>Z1-Broadcast-Listener</description>
+      <firmware EXPORT="copy">[CONTIKI_DIR]/examples/cep/simple-udp-rpl/broadcast-listener.z1</firmware>
+      <moteinterface>org.contikios.cooja.interfaces.Position</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.RimeAddress</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.IPAddress</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.Mote2MoteRelations</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.MoteAttributes</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspClock</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspMoteID</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspButton</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.Msp802154Radio</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspDefaultSerial</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspLED</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspDebugOutput</moteinterface>
+    </motetype>
+    <motetype>
+      org.contikios.cooja.mspmote.Z1MoteType
+      <identifier>z13</identifier>
+      <description>Z1-Border-Router</description>
       <firmware EXPORT="copy">[CONTIKI_DIR]/examples/ipv6/rpl-border-router/border-router.z1</firmware>
       <moteinterface>org.contikios.cooja.interfaces.Position</moteinterface>
       <moteinterface>org.contikios.cooja.interfaces.RimeAddress</moteinterface>
@@ -61,8 +79,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>22.47271607860013</x>
-        <y>86.66449643499283</y>
+        <x>67.23742983953272</x>
+        <y>35.44574996172915</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -79,8 +97,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>25.98435908694984</x>
-        <y>56.98274591537851</y>
+        <x>30.225886669871002</x>
+        <y>62.587394007857306</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -97,8 +115,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>28.209350247190102</x>
-        <y>68.89285795228511</y>
+        <x>31.625893637096535</x>
+        <y>25.435933713764452</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -115,8 +133,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>11.71067009123612</x>
-        <y>79.63766272179816</y>
+        <x>50.12478647134542</x>
+        <y>35.64544110686606</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -133,8 +151,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>7.756792168559579</x>
-        <y>55.54538036843647</y>
+        <x>53.767469885171025</x>
+        <y>58.30471698697111</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -151,8 +169,8 @@
       <breakpoints />
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>21.503982940304326</x>
-        <y>66.51309604861947</y>
+        <x>42.07528569490599</x>
+        <y>54.74563814837487</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -161,18 +179,36 @@
       </interface_config>
       <interface_config>
         org.contikios.cooja.mspmote.interfaces.MspMoteID
-        <id>11</id>
+        <id>6</id>
       </interface_config>
       <motetype_identifier>z12</motetype_identifier>
+    </mote>
+    <mote>
+      <breakpoints />
+      <interface_config>
+        org.contikios.cooja.interfaces.Position
+        <x>43.59330260650487</x>
+        <y>86.36724769844716</y>
+        <z>0.0</z>
+      </interface_config>
+      <interface_config>
+        org.contikios.cooja.mspmote.interfaces.MspClock
+        <deviation>1.0</deviation>
+      </interface_config>
+      <interface_config>
+        org.contikios.cooja.mspmote.interfaces.MspMoteID
+        <id>7</id>
+      </interface_config>
+      <motetype_identifier>z13</motetype_identifier>
     </mote>
   </simulation>
   <plugin>
     org.contikios.cooja.plugins.SimControl
-    <width>355</width>
-    <z>0</z>
-    <height>152</height>
-    <location_x>1005</location_x>
-    <location_y>129</location_y>
+    <width>280</width>
+    <z>1</z>
+    <height>160</height>
+    <location_x>400</location_x>
+    <location_y>0</location_y>
   </plugin>
   <plugin>
     org.contikios.cooja.plugins.Visualizer
@@ -183,52 +219,71 @@
       <skin>org.contikios.cooja.plugins.skins.TrafficVisualizerSkin</skin>
       <skin>org.contikios.cooja.plugins.skins.UDGMVisualizerSkin</skin>
       <skin>org.contikios.cooja.plugins.skins.MoteTypeVisualizerSkin</skin>
-      <viewport>7.128036070939985 0.0 0.0 7.128036070939985 63.81601976398584 -384.8385657493878</viewport>
+      <viewport>5.162295607551266 0.0 0.0 5.162295607551266 -57.567225356936795 -115.58053615725866</viewport>
     </plugin_config>
-    <width>396</width>
+    <width>400</width>
     <z>3</z>
-    <height>298</height>
+    <height>400</height>
     <location_x>1</location_x>
     <location_y>1</location_y>
   </plugin>
   <plugin>
     org.contikios.cooja.plugins.LogListener
     <plugin_config>
-      <filter>I got</filter>
+      <filter>ID:5</filter>
       <formatted_time />
       <coloring />
     </plugin_config>
-    <width>838</width>
-    <z>1</z>
-    <height>409</height>
-    <location_x>403</location_x>
-    <location_y>284</location_y>
+    <width>766</width>
+    <z>2</z>
+    <height>240</height>
+    <location_x>400</location_x>
+    <location_y>160</location_y>
+  </plugin>
+  <plugin>
+    org.contikios.cooja.plugins.TimeLine
+    <plugin_config>
+      <mote>0</mote>
+      <mote>1</mote>
+      <mote>2</mote>
+      <mote>3</mote>
+      <mote>4</mote>
+      <mote>5</mote>
+      <mote>6</mote>
+      <showRadioRXTX />
+      <showRadioHW />
+      <showLEDs />
+      <zoomfactor>500.0</zoomfactor>
+    </plugin_config>
+    <width>1166</width>
+    <z>5</z>
+    <height>166</height>
+    <location_x>0</location_x>
+    <location_y>527</location_y>
   </plugin>
   <plugin>
     org.contikios.cooja.plugins.Notes
     <plugin_config>
-      <notes>This simulation implements a Token Ring communication pattern between \
-5 z1 type motes. 
+      <notes>Mote-6 implemented in broadcast-listener.c file. Its functionalities are:
+1) Start/Stop Test by listening to res_put_handler (toggles on/off)
+2) Listen to broadcast messages passively,
+3) Act as a CoAP Server and Send intercepted messages to CoAP Observer Clients
 
-The object file for this simulation is named "broadcast_example.z1-random-token"
+Mote-[1,5] implemented in tokener/broadcast-example.c. It implements a
+simple token ring protocol at application layer. it randomly produces errors
 
-The group communication is supposed to start with a message from mote-1.
-After the start of communication, motes with ids that are 1 increments of 
-last broadcast mote attains the token for communicating its own message.
-
-On random occasions, a mote goes awry and decides to broadcast its message
-before it attains the token; thus, violates the order of communication.</notes>
+Mote-7 is border router.</notes>
       <decorations>true</decorations>
     </plugin_config>
-    <width>596</width>
-    <z>2</z>
-    <height>280</height>
-    <location_x>405</location_x>
-    <location_y>1</location_y>
+    <width>486</width>
+    <z>0</z>
+    <height>160</height>
+    <location_x>680</location_x>
+    <location_y>0</location_y>
   </plugin>
   <plugin>
     org.contikios.cooja.serialsocket.SerialSocketServer
-    <mote_arg>5</mote_arg>
+    <mote_arg>6</mote_arg>
     <plugin_config>
       <port>60001</port>
       <bound>true</bound>
@@ -236,8 +291,8 @@ before it attains the token; thus, violates the order of communication.</notes>
     <width>362</width>
     <z>4</z>
     <height>116</height>
-    <location_x>1005</location_x>
-    <location_y>8</location_y>
+    <location_x>9</location_x>
+    <location_y>401</location_y>
   </plugin>
 </simconf>
 

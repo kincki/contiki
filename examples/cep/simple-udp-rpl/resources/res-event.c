@@ -41,6 +41,7 @@
 #include "er-coap.h"
 
 #include "sys/node-id.h"
+#include "tokenring.h"
 
 #define DEBUG 0
 #if DEBUG
@@ -54,6 +55,7 @@
 #define PRINTLLADDR(addr)
 #endif
 
+static void res_put_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_event_handler();
 
@@ -69,14 +71,14 @@ EVENT_RESOURCE(res_event,
                "title=\"Event demo\";obs",
                res_get_handler,
                NULL,
-               NULL,
+               res_put_handler,
                NULL,
                res_event_handler);
 
 /*
  * Use local resource state that is accessed by res_get_handler() and altered by res_event_handler() or PUT or POST.
  */
-//static int32_t event_counter = 0;
+const token_data_t *token;
 
 static void
 res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
@@ -87,12 +89,14 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
     printf("RES-Event: Observe Request Sent @time: %lu\n", timestamp);
 
     REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-    REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "EVENT.%d.%lu", node_id, timestamp));
+    // REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "EVENT.%d.%lu", node_id, timestamp));
+    REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "EVENT.%d.%lu", token->source_mote_id, (long int)token->timeStamp));
   } else {
     printf("RES-Event: I don't have any event yet, sorry!\n");
   }
   /* A post_handler that handles subscriptions/observing will be called for periodic resources by the framework. */
 }
+
 /*
  * Additionally, res_event_handler must be implemented for each EVENT_RESOURCE.
  * It is called through <res_name>.trigger(), usually from the server process.
@@ -102,6 +106,11 @@ res_event_handler()
 {  
 
   timestamp = clock_time();
+
+  token = get_tokenring_data();
+
+  printf("res-event mote_id: %d\n", token->source_mote_id);
+
   /* Do the update triggered by the event here, e.g., sampling a sensor. */
   //  ++event_counter;
 
@@ -114,4 +123,13 @@ res_event_handler()
     /* Notify the registered observers which will trigger the res_get_handler to create the response. */
     REST.notify_subscribers(&res_event);
   }
+}
+
+static void
+res_put_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+  printf("TOGGLE TEST\n");
+
+  toggle_test();
+
 }

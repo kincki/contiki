@@ -1,4 +1,4 @@
-all: broadcast-example
+all: broadcast-listener 
 APPS=servreg-hack
 CONTIKI=../../..
 

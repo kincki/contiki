@@ -45,14 +45,18 @@
 
 // Headers for Erbium REST Engine
 #include "contiki-net.h"
+#include "rest-engine.h"
 #include <stdbool.h>
 
-#if RANDOM_TOKEN_ERROR
 #include "lib/random.h"
 #include "sys/clock.h"
 
+#include "tokenring.h"
+
+#if RANDOM_TOKEN_ERROR
+
 #define RANDOM_ERROR 14
-#endif //  RANDOM_TOKEN_ERROR
+#endif //RANDOM_TOKEN_ERROR
 
 #define UDP_PORT 1234
 
@@ -78,13 +82,24 @@
 #endif
 
 /*
- * Token Passing Communication Paradigm:
- * Any mote that has something to say must possess the communication token.
- * Otherwise, it cannot transmit any data.
- * Token is initialized from mote-1, and transferred to other motes.
- * If a mote sends a message out of token order, this is a system failure
+ * Resources to be activated need to be imported through the extern keyword.
+ * The build system automatically compiles the resources in the corresponding sub-directory.
  */
-static uint8_t token;
+extern resource_t res_event;
+
+/*
+ * The data structure for token event representation
+ */
+token_data_t *new_token;
+/* initially there is no last token, so when mote-1 sends a message, 
+ * it should behave normally
+ */
+uint8_t lastToken = NUM_MOTES;
+
+static int numOfViolations = 0;
+
+//test is initially off
+uint8_t test_started = 0; 
 
 /*
  * IPv6 udp connection variable for broadcast connection.
@@ -92,19 +107,68 @@ static uint8_t token;
  */
 static struct simple_udp_connection broadcast_connection;
 
+
+/*
+ * Control execution of token ring test
+ */
+const void toggle_test()
+{
+  uip_ipaddr_t addr;
+
+  //toggle test_started 
+  test_started ^= 1;
+ 
+  printf("LISTENER>> Toggle Test: %d\n", test_started);
+
+  //broadcast test execution state (1: Started, 0: Stopped)
+  uip_create_linklocal_allnodes_mcast(&addr);
+  simple_udp_sendto(&broadcast_connection, (uint8_t *) &node_id, 4, &addr);
+}
+
+/*
+ * Determine if this token  is out of  order
+ */
+uint8_t isInOrder(uint8_t token)
+{
+  uint8_t result = 0;
+
+  if (token != 1) {
+    if ( (token - lastToken) != 1 ) {
+      printf("Out of order token! (Last: %d, New: %d)\n", lastToken, token);
+      result = 0;
+    } else {
+      printf("In order token! (Last: %d, New: %d)\n", lastToken, token);
+      result = 1;
+    } 
+  } else {
+    if ( lastToken == NUM_MOTES ) {
+      printf("In order token! (Last: %d, New: %d)\n", lastToken, token);
+      result = 1;
+    } else {
+      printf("Out of order token! (Last: %d, New: %d)\n", lastToken, token);
+      result = 0;
+    }
+  }
+  return result;
+}
 /*--------------------------CONTIKI PROCESSES------------------------------------------*/
+/*
+ * CoAP Server process is responsible for implementing CoAP services.
+ * It is initially designed to suppor a single resource, named "res_event".
+ */ 
+PROCESS(coap_server, "Erbium CoAP Server");
 
 /*
  * Broadcast Example Process is responsible for implementing simple broadcast
  * over IPv6 connection. 
  */
-PROCESS(broadcast_example_process, "UDP broadcast example process");
+PROCESS(broadcast_example_process, "UDP broadcast process");
 
 /*
  * This MACRO initiates all the Contiki Processes defined in this file.
  * You can autostart >= 1 Contiki Process(es) in an AUTOSTART call
  */
-AUTOSTART_PROCESSES(&broadcast_example_process);
+AUTOSTART_PROCESSES(&broadcast_example_process, &coap_server);
 
 
 /*---------------------------------------------------------------------------*/
@@ -120,58 +184,89 @@ receiver(struct simple_udp_connection *c,
   printf("Data (%d) received on port %d from port %d with length %d\n", 
 	 *data, receiver_port, sender_port, datalen);
 
-#if RANDOM_TOKEN_ERROR
-  if (0 == random_rand() % RANDOM_ERROR) {
-    // this is written just to introduce random error to the algorithm
-    printf("RANDOM Error Occurred\n");
-    token = 1;
-  }
-#endif
+  //prepare a new token
+  new_token->source_mote_id = *data;
+  new_token->timeStamp = clock_time();
 
-  if ( (node_id - ((*data) % NUM_MOTES)) == 1)
-    token = 1;
+  if (!isInOrder(new_token->source_mote_id))
+    {
+      printf("Token Ring Protocol Violated %d Times!\n", ++numOfViolations);
+    }  
+  
+  //update last token
+  lastToken = new_token->source_mote_id;
+
+  res_event.trigger();  
+}
+/*------------------------------------------------------------------*/
+
+const token_data_t *get_tokenring_data()
+{
+  return new_token;
 }
 
-/*--------------------------------PROCESS BROADCAST----------------------------------*/
+/*--------------------PROCESS BROADCAST-----------------------------*/
 PROCESS_THREAD(broadcast_example_process, ev, data)
 {
-  static struct etimer periodic_timer;
-  static struct etimer send_timer;
-  uip_ipaddr_t addr;
-
-  static uint8_t initialize = 1; //this is used for mote-1 only for intialization
-#if RANDOM_TOKEN_ERROR
-  random_init(clock_time() % 100);
-#endif
-
   PROCESS_BEGIN();
 
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
                       receiver);
 
-  etimer_set(&periodic_timer, SEND_INTERVAL);
+  PROCESS_END();
+}
+
+/*---------------------------PROCESS COAP SERVER--------------------------------------*/
+PROCESS_THREAD(coap_server, ev, data)
+{
+
+  PROCESS_BEGIN();
+
+  PROCESS_PAUSE();
+
+  PRINTF("Starting Erbium CoAP Server\n");
+
+#ifdef RF_CHANNEL
+  PRINTF("RF channel: %u\n", RF_CHANNEL);
+#endif
+#ifdef IEEE802154_PANID
+  PRINTF("PAN ID: 0x%04X\n", IEEE802154_PANID);
+#endif
+
+  PRINTF("uIP buffer: %u\n", UIP_BUFSIZE);
+  PRINTF("LL header: %u\n", UIP_LLH_LEN);
+  PRINTF("IP+UDP header: %u\n", UIP_IPUDPH_LEN);
+  PRINTF("REST max chunk: %u\n", REST_MAX_CHUNK_SIZE);
+
+  /* Initialize the REST engine. */
+  rest_init_engine();
+
+  /*
+   * Bind the resources to their Uri-Path.
+   * WARNING: Activating twice only means alternate path, not two instances!
+   * All static variables are the same for each URI path.
+   */
+
+  rest_activate_resource(&res_event, "test/event");
+#if PLATFORM_HAS_BUTTON
+  SENSORS_ACTIVATE(button_sensor);
+#endif
+
+  /* Define application-specific events here. */
   while(1) {
-    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
-    etimer_reset(&periodic_timer);
-    etimer_set(&send_timer, SEND_TIME);
+    PROCESS_WAIT_EVENT();
+#if PLATFORM_HAS_BUTTON
+    if(ev == sensors_event && data == &button_sensor) {
+      PRINTF("*******BUTTON*******\n");
 
-    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&send_timer));
-    //printf("Sending broadcast\n");
-    uip_create_linklocal_allnodes_mcast(&addr);
-
-    // initialize transmission by mote-1
-    if (1 == node_id && 1 == initialize) {
-      token = 1;
-      initialize = 0; // this statement will never execute again
+      /* Call the event_handler for this application-specific event. */
+      //      res_event.trigger();
     }
+#endif /* PLATFORM_HAS_BUTTON */
 
-    if (token) { 
-      printf("I got the token, it's my turn\n");
-      simple_udp_sendto(&broadcast_connection, (uint8_t *) &node_id, 4, &addr);
-      token = 0;
-    }
-  }
+  } /* while (1) */
 
   PROCESS_END();
 }
+/*---------------------------------------------------------------------------*/

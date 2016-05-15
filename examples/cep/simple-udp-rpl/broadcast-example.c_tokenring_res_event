@@ -38,6 +38,7 @@
 #include "net/ipv6/uip-ds6.h"
 
 #include "simple-udp.h"
+#include "tokenring_data.h"
 
 #include <stdio.h>
 
@@ -45,6 +46,7 @@
 
 // Headers for Erbium REST Engine
 #include "contiki-net.h"
+#include "rest-engine.h"
 #include <stdbool.h>
 
 #if RANDOM_TOKEN_ERROR
@@ -87,12 +89,23 @@
 static uint8_t token;
 
 /*
+ * Resources to be activated need to be imported through the extern keyword.
+ * The build system automatically compiles the resources in the corresponding sub-directory.
+ */
+extern resource_t res_event;
+
+/*
  * IPv6 udp connection variable for broadcast connection.
  * All messages sent over this connection will be relayed to all neighbors in the RPL neighborhood.
  */
 static struct simple_udp_connection broadcast_connection;
 
 /*--------------------------CONTIKI PROCESSES------------------------------------------*/
+/*
+ * CoAP Server process is responsible for implementing CoAP services.
+ * It is initially designed to suppor a single resource, named "res_event".
+ */ 
+PROCESS(coap_server, "Erbium CoAP Server");
 
 /*
  * Broadcast Example Process is responsible for implementing simple broadcast
@@ -104,7 +117,7 @@ PROCESS(broadcast_example_process, "UDP broadcast example process");
  * This MACRO initiates all the Contiki Processes defined in this file.
  * You can autostart >= 1 Contiki Process(es) in an AUTOSTART call
  */
-AUTOSTART_PROCESSES(&broadcast_example_process);
+AUTOSTART_PROCESSES(&broadcast_example_process, &coap_server);
 
 
 /*---------------------------------------------------------------------------*/
@@ -170,8 +183,66 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
       printf("I got the token, it's my turn\n");
       simple_udp_sendto(&broadcast_connection, (uint8_t *) &node_id, 4, &addr);
       token = 0;
+      
+      //trigger an event to all service subscribers
+      printf("RES-Event Process\n");
+      res_event.trigger();
     }
   }
 
   PROCESS_END();
 }
+
+/*---------------------------PROCESS COAP SERVER--------------------------------------*/
+PROCESS_THREAD(coap_server, ev, data)
+{
+
+  PROCESS_BEGIN();
+
+  PROCESS_PAUSE();
+
+  PRINTF("Starting Erbium CoAP Server\n");
+
+#ifdef RF_CHANNEL
+  PRINTF("RF channel: %u\n", RF_CHANNEL);
+#endif
+#ifdef IEEE802154_PANID
+  PRINTF("PAN ID: 0x%04X\n", IEEE802154_PANID);
+#endif
+
+  PRINTF("uIP buffer: %u\n", UIP_BUFSIZE);
+  PRINTF("LL header: %u\n", UIP_LLH_LEN);
+  PRINTF("IP+UDP header: %u\n", UIP_IPUDPH_LEN);
+  PRINTF("REST max chunk: %u\n", REST_MAX_CHUNK_SIZE);
+
+  /* Initialize the REST engine. */
+  rest_init_engine();
+
+  /*
+   * Bind the resources to their Uri-Path.
+   * WARNING: Activating twice only means alternate path, not two instances!
+   * All static variables are the same for each URI path.
+   */
+
+  rest_activate_resource(&res_event, "test/event");
+#if PLATFORM_HAS_BUTTON
+  SENSORS_ACTIVATE(button_sensor);
+#endif
+
+  /* Define application-specific events here. */
+  while(1) {
+    PROCESS_WAIT_EVENT();
+#if PLATFORM_HAS_BUTTON
+    if(ev == sensors_event && data == &button_sensor) {
+      PRINTF("*******BUTTON*******\n");
+
+      /* Call the event_handler for this application-specific event. */
+      //      res_event.trigger();
+    }
+#endif /* PLATFORM_HAS_BUTTON */
+
+  } /* while (1) */
+
+  PROCESS_END();
+}
+/*---------------------------------------------------------------------------*/
