@@ -51,12 +51,12 @@
 #include "lib/random.h"
 #include "sys/clock.h"
 
-#define RANDOM_ERROR 14
+#define RANDOM_ERROR 12
 #endif //  RANDOM_TOKEN_ERROR
 
 #define UDP_PORT 1234
 
-#define SEND_INTERVAL		(20 * CLOCK_SECOND)
+#define SEND_INTERVAL		(3 * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
 #define NUM_MOTES 5

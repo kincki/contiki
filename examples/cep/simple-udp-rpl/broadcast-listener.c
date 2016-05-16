@@ -97,6 +97,7 @@ token_data_t *new_token;
 uint8_t lastToken = NUM_MOTES;
 
 static int numOfViolations = 0;
+static int numOfEvents = 0;
 
 //test is initially off
 uint8_t test_started = 0; 
@@ -189,9 +190,9 @@ receiver(struct simple_udp_connection *c,
   new_token->timeStamp = clock_time();
 
   if (!isInOrder(new_token->source_mote_id))
-    {
-      printf("Token Ring Protocol Violated %d Times!\n", ++numOfViolations);
-    }  
+    numOfViolations++;
+
+  printf("Token Ring Protocol #Events: %d, #Violations: %d\n", ++numOfEvents, numOfViolations);
   
   //update last token
   lastToken = new_token->source_mote_id;

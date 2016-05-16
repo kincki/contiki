@@ -128,7 +128,7 @@ res_event_handler()
 static void
 res_put_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-  printf("TOGGLE TEST\n");
+  ("TOGGLE TEST\n");
 
   toggle_test();
 
