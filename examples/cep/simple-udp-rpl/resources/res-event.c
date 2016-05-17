@@ -88,7 +88,7 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
 
     REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
     REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, 
-							 "EVENT.%d.%d.%d", event_id, token->source_mote_id, (int)token->timeStamp));
+							 "EVENT.%d.%d.%lu", event_id, token->source_mote_id, (long int)token->timeStamp));
 
     //reset last_event_sent
     last_event_sent = event_id;
