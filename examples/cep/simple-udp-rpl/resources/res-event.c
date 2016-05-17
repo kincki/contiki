@@ -59,8 +59,9 @@ static void res_put_handler(void *request, void *response, uint8_t *buffer, uint
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_event_handler();
 
-//this timestamp is used for determining time of occurrence of an event
-static long int timestamp;
+//this event_id is used to uniquely identify each event occurring in this platform
+static int event_id = 0;
+static int last_event_sent = 0;
 
 /*
  * Example for an event resource.
@@ -83,16 +84,18 @@ const token_data_t *token;
 static void
 res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-  if (timestamp) { // if I have the token to send data
-
-
-    printf("RES-Event: Observe Request Sent @time: %lu\n", timestamp);
+  if (event_id != last_event_sent) { // if I have the event to send
 
     REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-    // REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "EVENT.%d.%lu", node_id, timestamp));
-    REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, "EVENT.%d.%lu", token->source_mote_id, (long int)token->timeStamp));
+    REST.set_response_payload(response, buffer, snprintf((char *)buffer, preferred_size, 
+							 "EVENT.%d.%d.%d", event_id, token->source_mote_id, (int)token->timeStamp));
+
+    //reset last_event_sent
+    last_event_sent = event_id;
+    printf("RES-Event: >> Event ID-Sent: %d <<\n", event_id);
+
   } else {
-    printf("RES-Event: I don't have any event yet, sorry!\n");
+    // printf("RES-Event: I don't have any event yet, sorry!\n");
   }
   /* A post_handler that handles subscriptions/observing will be called for periodic resources by the framework. */
 }
@@ -105,21 +108,14 @@ static void
 res_event_handler()
 {  
 
-  timestamp = clock_time();
-
   token = get_tokenring_data();
-
-  printf("res-event mote_id: %d\n", token->source_mote_id);
-
-  /* Do the update triggered by the event here, e.g., sampling a sensor. */
-  //  ++event_counter;
+  
+  //we received a new event, assign a new id to it.
+  ++event_id;
+  printf("RES-Event: >> Event ID: %d <<\n", event_id);
 
   /* Usually a condition is defined under with subscribers are notified, e.g., event was above a threshold. */
   if(1) {
-    //  PRINTF("TICK %u for /%s\n", event_counter, res_event.url);
-
-    printf("RES-Event.Trigger @time: %lu\n", timestamp);
-
     /* Notify the registered observers which will trigger the res_get_handler to create the response. */
     REST.notify_subscribers(&res_event);
   }
